@@ -25,6 +25,9 @@ export function assertProductionSecurityConfiguration() {
     process.env.VITE_SUPABASE_ANON_KEY;
   const requiredServerSecrets = {
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  };
+
+  const optionalServerSecrets = {
     PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
     PAYSTACK_WEBHOOK_SECRET: process.env.PAYSTACK_WEBHOOK_SECRET,
   };
@@ -41,12 +44,21 @@ export function assertProductionSecurityConfiguration() {
     );
   }
 
-  const missingSecrets = Object.entries(requiredServerSecrets)
+  const missingRequired = Object.entries(requiredServerSecrets)
     .filter(([, value]) => !value)
     .map(([name]) => name);
-  if (missingSecrets.length > 0) {
+  if (missingRequired.length > 0) {
     throw new SecurityConfigurationError(
-      `Missing production server secret(s): ${missingSecrets.join(", ")}.`,
+      `Missing production server secret(s): ${missingRequired.join(", ")}.`,
+    );
+  }
+
+  const missingOptional = Object.entries(optionalServerSecrets)
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+  if (missingOptional.length > 0) {
+    console.warn(
+      `[security] Missing optional server secret(s): ${missingOptional.join(", ")}. Payment features will be disabled.`,
     );
   }
 
@@ -55,8 +67,8 @@ export function assertProductionSecurityConfiguration() {
   }
 
   if (process.env.PUBLIC_REGISTRATION_ENABLED !== "false" && !process.env.TURNSTILE_SECRET_KEY) {
-    throw new SecurityConfigurationError(
-      "TURNSTILE_SECRET_KEY is required when public registration is enabled.",
+    console.warn(
+      "[security] TURNSTILE_SECRET_KEY is recommended when public registration is enabled.",
     );
   }
 }
