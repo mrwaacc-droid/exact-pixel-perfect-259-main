@@ -34,7 +34,7 @@ function TeacherCourseDetailPage() {
         action={
           <Link
             to="/teacher/courses"
-            className="inline-flex items-center rounded-xl border border-[#E2E8F0] px-4 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC]"
+            className="inline-flex items-center rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[#8A7478] hover:bg-[var(--page-background)]"
           >
             Back to courses
           </Link>
@@ -42,25 +42,25 @@ function TeacherCourseDetailPage() {
       />
 
       {!course ? (
-        <Card className="border-[#E2E8F0] bg-white">
-          <CardContent className="p-6 text-sm text-[#64748B]">Course not found.</CardContent>
+        <Card className="border-[var(--border)] bg-white">
+          <CardContent className="p-6 text-sm text-[#8A7478]">Course not found.</CardContent>
         </Card>
       ) : (
         <div className="space-y-6">
           <div className="kr-stat-strip kr-stat-strip--3">
             <div className="kr-stat-card-item">
-              <Users className="mx-auto mb-2 h-4 w-4 text-[#64748B]" />
-              <p className="kr-stat-value text-[#0F172A]">{course.students}</p>
+              <Users className="mx-auto mb-2 h-4 w-4 text-[#8A7478]" />
+              <p className="kr-stat-value text-[#191314]">{course.students}</p>
               <p className="kr-stat-label">Students</p>
             </div>
             <div className="kr-stat-card-item">
-              <BookOpen className="mx-auto mb-2 h-4 w-4 text-[#64748B]" />
-              <p className="kr-stat-value text-[#0F172A]">{course.lessons.length}</p>
+              <BookOpen className="mx-auto mb-2 h-4 w-4 text-[#8A7478]" />
+              <p className="kr-stat-value text-[#191314]">{course.lessons.length}</p>
               <p className="kr-stat-label">Lessons</p>
             </div>
             <div className="kr-stat-card-item kr-stat-card-item--brand">
-              <BarChart2 className="mx-auto mb-2 h-4 w-4 text-[#1F7C80]" />
-              <p className="kr-stat-value text-[#1F7C80]">{course.progress}%</p>
+              <BarChart2 className="mx-auto mb-2 h-4 w-4 text-[var(--crimson)]" />
+              <p className="kr-stat-value text-[var(--crimson)]">{course.progress}%</p>
               <p className="kr-stat-label">Progress</p>
             </div>
           </div>
@@ -92,17 +92,17 @@ function TeacherCourseDetailPage() {
             />
           </div>
 
-          <Card className="border-[#E2E8F0] bg-white">
+          <Card className="border-[var(--border)] bg-white">
             <CardContent className="p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-bold text-[#0F172A]">Lesson queue</h2>
-                  <p className="text-sm text-[#64748B]">Next session: {course.nextSession}</p>
+                  <h2 className="text-lg font-bold text-[#191314]">Lesson queue</h2>
+                  <p className="text-sm text-[#8A7478]">Next session: {course.nextSession}</p>
                 </div>
                 <Link
                   to="/teacher/courses/$courseId/analytics"
                   params={{ courseId: course.id }}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] px-4 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC]"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[#8A7478] hover:bg-[var(--page-background)]"
                 >
                   <BarChart2 className="h-4 w-4" />
                   Analytics
@@ -112,11 +112,11 @@ function TeacherCourseDetailPage() {
                 {course.lessons.map((lesson) => (
                   <div
                     key={lesson.id}
-                    className="flex flex-col gap-3 rounded-xl border border-[#E2E8F0] p-4 sm:flex-row sm:items-center sm:justify-between"
+                    className="flex flex-col gap-3 rounded-xl border border-[var(--border)] p-4 sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-semibold text-[#0F172A]">{lesson.title}</h3>
+                        <h3 className="font-semibold text-[#191314]">{lesson.title}</h3>
                         <StatusBadge
                           variant={
                             lesson.status === "ready"
@@ -129,12 +129,12 @@ function TeacherCourseDetailPage() {
                           {lesson.status}
                         </StatusBadge>
                       </div>
-                      <p className="mt-1 text-sm text-[#64748B]">{lesson.objective}</p>
+                      <p className="mt-1 text-sm text-[#8A7478]">{lesson.objective}</p>
                     </div>
                     <Link
                       to="/classroom/preview/$lessonId"
                       params={{ lessonId: lesson.id }}
-                      className="inline-flex items-center justify-center rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1A5256]"
+                      className="inline-flex items-center justify-center rounded-xl bg-[var(--crimson)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--crimson-dark)]"
                     >
                       Preview
                     </Link>
@@ -163,11 +163,11 @@ function WorkspaceLink({
   return (
     <a
       href={to}
-      className="block rounded-2xl border border-[#E2E8F0] bg-white p-5 transition hover:border-[#1F7C80]/40 hover:shadow-sm"
+      className="block rounded-2xl border border-[var(--border)] bg-white p-5 transition hover:border-[var(--crimson)]/40 hover:shadow-sm"
     >
-      <div className="mb-3 inline-flex rounded-xl bg-[#E6F6F3] p-3 text-[#1F7C80]">{icon}</div>
-      <h3 className="font-bold text-[#0F172A]">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-[#64748B]">{text}</p>
+      <div className="mb-3 inline-flex rounded-xl bg-crimson-soft p-3 text-[var(--crimson)]">{icon}</div>
+      <h3 className="font-bold text-[#191314]">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-[#8A7478]">{text}</p>
     </a>
   );
 }

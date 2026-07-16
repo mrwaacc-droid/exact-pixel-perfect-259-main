@@ -16,15 +16,15 @@
 }
 
 :root:not(.dark) {
-  --helios-bg: #f8fafc;
+  --helios-bg: #FBF8F5;
   --helios-surface: #ffffff;
-  --helios-glass: rgba(15, 23, 42, 0.03);
-  --helios-glass-hover: rgba(15, 23, 42, 0.06);
+  --helios-glass: rgba(25, 19, 20, 0.03);
+  --helios-glass-hover: rgba(25, 19, 20, 0.06);
   --helios-primary-green: #059669;
   --helios-secondary-green: #047857;
   --helios-glow: rgba(5, 150, 105, 0.12);
-  --helios-text: #0f172a;
-  --helios-muted: #475569;
+  --helios-text: var(--ink);
+  --helios-muted: #6F5C60;
   --helios-border: rgba(5, 150, 105, 0.15);
   --helios-border-hover: rgba(5, 150, 105, 0.35);
 }
@@ -176,7 +176,7 @@
 .dark .helios-theme h6,
 .dark .helios-theme .text-slate-900,
 .dark .helios-theme .text-gray-900,
-.dark .helios-theme .text-\[\#0F172A\] {
+.dark .helios-theme .text-\[\#191314\] {
   color: #ffffff !important;
 }
 
@@ -203,21 +203,21 @@
 :root:not(.dark) .helios-theme h5,
 :root:not(.dark) .helios-theme h6,
 :root:not(.dark) .helios-theme .text-white {
-  color: #0f172a !important;
+  color: var(--ink) !important;
 }
 
 :root:not(.dark) .helios-theme p,
 :root:not(.dark) .helios-theme li,
 :root:not(.dark) .helios-theme .text-slate-300,
 :root:not(.dark) .helios-theme .text-gray-300 {
-  color: #334155 !important;
+  color: #3D3233 !important;
 }
 
 :root:not(.dark) .helios-theme .text-slate-400,
 :root:not(.dark) .helios-theme .text-gray-400,
 :root:not(.dark) .helios-theme .text-slate-500,
 :root:not(.dark) .helios-theme .text-muted-foreground {
-  color: #64748b !important;
+  color: #8A7478 !important;
 }
 
 /* Restored Button styles for landing */
@@ -394,8 +394,8 @@
 
 .helios-dashboard .nav-item.active,
 .helios-dashboard .nav-item[data-status="active"],
-.helios-dashboard .nav-item.bg-\[linear-gradient\(135deg\%\2C\#1F7C80\%\2C\#1A5256\)\],
-.helios-dashboard a.bg-\[linear-gradient\(135deg\%\2C\#1F7C80\%\2C\#1A5256\)\] {
+.helios-dashboard .nav-item.bg-\[linear-gradient\(135deg\%\2C\var(--crimson)\%\2C\var(--crimson-dark)\)\],
+.helios-dashboard a.bg-\[linear-gradient\(135deg\%\2C\var(--crimson)\%\2C\var(--crimson-dark)\)\] {
   background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 230, 118, 0.05)) !important;
   color: var(--helios-primary-green) !important;
   border: 1px solid rgba(0, 255, 136, 0.3) !important;

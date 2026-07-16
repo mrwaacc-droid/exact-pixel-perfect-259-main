@@ -13,13 +13,13 @@ export const Route = createFileRoute("/_authenticated/student/resources")({
 
 const TYPE_META: Record<string, { label: string; color: string }> = {
   pdf: { label: "PDF", color: "#dc2626" },
-  document: { label: "Doc", color: "#2563eb" },
+  document: { label: "Doc", color: "#7D2233" },
   slide: { label: "Slides", color: "#7c3aed" },
   image: { label: "Image", color: "#db2777" },
   link: { label: "Link", color: "#0891b2" },
   worksheet: { label: "Worksheet", color: "#16a34a" },
   syllabus: { label: "Syllabus", color: "#ea580c" },
-  text: { label: "Text", color: "#475569" },
+  text: { label: "Text", color: "var(--muted)" },
 };
 
 function StudentResources() {

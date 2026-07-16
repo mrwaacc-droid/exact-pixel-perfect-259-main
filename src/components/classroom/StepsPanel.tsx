@@ -35,7 +35,7 @@ export function StepsPanel({ classroomContext, onStepChange }: StepsPanelProps) 
                 disabled={isLocked}
                 className={`w-full flex items-start gap-3 p-3 rounded-lg transition-colors cursor-pointer hover:shadow-sm disabled:opacity-50 disabled:cursor-not-allowed ${
                   isCurrent
-                    ? "bg-[#e8f5f5] border border-[#a3d9d8]"
+                    ? "bg-[#F7E7EA] border border-[var(--crimson-soft)]"
                     : isCompleted
                       ? "bg-green-50/50"
                       : "bg-gray-50/50"
@@ -45,7 +45,7 @@ export function StepsPanel({ classroomContext, onStepChange }: StepsPanelProps) 
                   {isCompleted ? (
                     <CheckCircle size={20} className="text-green-600" />
                   ) : isCurrent ? (
-                    <Target size={20} className="text-[#1F7C80]" />
+                    <Target size={20} className="text-[var(--crimson)]" />
                   ) : (
                     <Circle size={20} className="text-gray-400" />
                   )}
@@ -55,7 +55,7 @@ export function StepsPanel({ classroomContext, onStepChange }: StepsPanelProps) 
                   <div
                     className={`text-sm font-medium ${
                       isCurrent
-                        ? "text-[#0F172A]"
+                        ? "text-[#191314]"
                         : isCompleted
                           ? "text-green-900"
                           : "text-gray-700"
@@ -72,7 +72,7 @@ export function StepsPanel({ classroomContext, onStepChange }: StepsPanelProps) 
 
                 {isCurrent && (
                   <div className="flex-shrink-0">
-                    <div className="w-2 h-2 rounded-full bg-[#1F7C80] animate-pulse" />
+                    <div className="w-2 h-2 rounded-full bg-[var(--crimson)] animate-pulse" />
                   </div>
                 )}
               </button>
@@ -84,13 +84,13 @@ export function StepsPanel({ classroomContext, onStepChange }: StepsPanelProps) 
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-gray-700">Progress</span>
-            <span className="text-xs font-semibold text-[#1F7C80]">
+            <span className="text-xs font-semibold text-[var(--crimson)]">
               {Math.round(((currentStepIndex + 1) / LESSON_STEPS.length) * 100)}%
             </span>
           </div>
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#1F7C80] rounded-full transition-all duration-300"
+              className="h-full bg-[var(--crimson)] rounded-full transition-all duration-300"
               style={{
                 width: `${((currentStepIndex + 1) / LESSON_STEPS.length) * 100}%`,
               }}

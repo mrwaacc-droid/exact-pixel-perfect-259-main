@@ -109,7 +109,7 @@ export function EnhancedClassroomPage({
       : 0;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#e8f5f5] to-[#e8f5f5] p-6">
+      <div className="min-h-screen bg-gradient-to-br from-[#F7E7EA] to-[#F7E7EA] p-6">
         <div className="max-w-4xl mx-auto space-y-6">
           <LessonCompletionSummary
             lessonTitle={lesson.title}
@@ -146,7 +146,7 @@ export function EnhancedClassroomPage({
   // Show exit ticket
   if (showExitTicket) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#e8f5f5] to-[#e8f5f5] p-6">
+      <div className="min-h-screen bg-gradient-to-br from-[#F7E7EA] to-[#F7E7EA] p-6">
         <div className="max-w-2xl mx-auto">
           <ExitTicketPrompt
             ticket={lesson.exitTicket}
@@ -154,10 +154,10 @@ export function EnhancedClassroomPage({
               setProgress((prev) =>
                 prev
                   ? {
-                      ...prev,
-                      exitTicketAnswered: true,
-                      completedAt: new Date().toISOString(),
-                    }
+                    ...prev,
+                    exitTicketAnswered: true,
+                    completedAt: new Date().toISOString(),
+                  }
                   : prev,
               );
               setShowCompletion(true);
@@ -199,7 +199,7 @@ export function EnhancedClassroomPage({
           <div className="mt-4">
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-[#1F7C80] h-2 rounded-full transition-all"
+                className="bg-[#7D2233] h-2 rounded-full transition-all"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -264,7 +264,7 @@ export function EnhancedClassroomPage({
                     setIsAnimating(false);
                   }
                 }}
-                className="gap-2 bg-[#1F7C80] hover:bg-[#1A5256]"
+                className="gap-2 bg-[#7D2233] hover:bg-[var(--crimson-dark)]"
               >
                 {currentStepIndex === lesson.steps.length - 1 ? "Finish Lesson" : "Next Step"}
                 <ChevronRight className="w-4 h-4" />
@@ -306,14 +306,14 @@ export function EnhancedClassroomPage({
         isOpen={showQuestion}
         questionText={
           !progress.midLessonQuestionAnswered &&
-          timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
+            timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
             ? lesson.requiredMidLessonQuestion?.questionText
             : lesson.questionCheckpoints[currentQuestionCheckpoint]?.promptText
         }
         onAnswer={(answer, method) => {
           const questionText =
             !progress.midLessonQuestionAnswered &&
-            timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
+              timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
               ? lesson.requiredMidLessonQuestion.questionText
               : lesson.questionCheckpoints[currentQuestionCheckpoint]?.promptText || "";
 
@@ -324,10 +324,10 @@ export function EnhancedClassroomPage({
               {
                 checkpointId:
                   !progress.midLessonQuestionAnswered &&
-                  timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
+                    timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
                     ? "mid-lesson"
                     : lesson.questionCheckpoints[currentQuestionCheckpoint]?.id ||
-                      `checkpoint-${currentQuestionCheckpoint}`,
+                    `checkpoint-${currentQuestionCheckpoint}`,
                 question: questionText,
                 answer,
                 timestamp: new Date().toISOString(),
@@ -335,7 +335,7 @@ export function EnhancedClassroomPage({
             ],
             midLessonQuestionAnswered:
               !progress.midLessonQuestionAnswered &&
-              timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
+                timeElapsed >= (lesson.estimatedDurationMinutes / 2) * 60
                 ? true
                 : progress.midLessonQuestionAnswered,
           });

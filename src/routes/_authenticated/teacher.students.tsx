@@ -152,7 +152,7 @@ const STATUS_META: Record<
     label: "On Track",
     variant: "info",
     icon: CheckCircle2,
-    color: "text-[#1F7C80]",
+    color: "text-[var(--crimson)]",
   },
   "at-risk": {
     label: "At Risk",
@@ -169,13 +169,13 @@ const STATUS_META: Record<
 };
 
 const AVATAR_COLORS = [
-  "from-[#1F7C80] to-[#3fa8ab]",
+  "from-[#7D2233] to-[#521326]",
   "from-green-600 to-emerald-400",
   "from-purple-600 to-violet-400",
   "from-rose-600 to-pink-400",
   "from-amber-600 to-yellow-400",
   "from-cyan-600 to-sky-400",
-  "from-teal-600 to-teal-400",
+  "from-[#7D2233] to-[#7D2233]",
   "from-indigo-600 to-indigo-400",
 ];
 
@@ -205,7 +205,7 @@ function TeacherStudents() {
       label: "Total Students",
       value: STUDENTS.length,
       icon: Users,
-      color: "text-[#0F172A]",
+      color: "text-[#191314]",
       variant: "",
     },
     {
@@ -268,18 +268,18 @@ function TeacherStudents() {
       {/* Filters */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A89890]" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search students…"
-            className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[#1F7C80] focus:outline-none focus:ring-2 focus:ring-[#1F7C80]/20"
+            className="w-full rounded-xl border border-[var(--border)] bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[var(--crimson)] focus:outline-none focus:ring-2 focus:ring-[var(--crimson)]/20"
           />
         </div>
         <select
           value={courseFilter}
           onChange={(e) => setCourseFilter(e.target.value)}
-          className="rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-sm text-[#0F172A] focus:border-[#1F7C80] focus:outline-none"
+          className="rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 text-sm text-[#191314] focus:border-[var(--crimson)] focus:outline-none"
         >
           <option value="all">All Courses</option>
           {courses.map((c) => (
@@ -291,7 +291,7 @@ function TeacherStudents() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as StudentStatus | "all")}
-          className="rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-sm text-[#0F172A] focus:border-[#1F7C80] focus:outline-none"
+          className="rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 text-sm text-[#191314] focus:border-[var(--crimson)] focus:outline-none"
         >
           <option value="all">All Status</option>
           <option value="excelling">Excelling</option>
@@ -303,10 +303,10 @@ function TeacherStudents() {
 
       {filtered.length === 0 ? (
         /* Premium empty state */
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white">
+        <div className="rounded-2xl border border-[var(--border)] bg-white">
           <div className="kr-empty-state">
             <div className="kr-empty-state-icon">
-              <Users className="h-6 w-6 text-[#1F7C80]" />
+              <Users className="h-6 w-6 text-[var(--crimson)]" />
             </div>
             <h3>No students match your filters</h3>
             <p>Try adjusting your search term, course, or status filter.</p>
@@ -315,37 +315,37 @@ function TeacherStudents() {
       ) : (
         <>
           {/* Desktop / Tablet: scrollable table (hidden on mobile) */}
-          <div className="kr-hide-on-mobile kr-table-wrap rounded-2xl border border-[#E2E8F0] bg-white">
+          <div className="kr-hide-on-mobile kr-table-wrap rounded-2xl border border-[var(--border)] bg-white">
             <table className="w-full min-w-[700px] text-sm">
-              <thead className="border-b border-[#E2E8F0] bg-[#F8FAFC]">
+              <thead className="border-b border-[var(--border)] bg-[var(--page-background)]">
                 <tr>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#8A7478]">
                     Student
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#8A7478]">
                     Course
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#8A7478]">
                     Progress
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#8A7478]">
                     Quiz Avg
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#8A7478]">
                     Status
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wide text-[#8A7478]">
                     Last Active
                   </th>
                   <th className="px-5 py-3" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F1F5F9]">
+              <tbody className="divide-y divide-[var(--beige-soft)]">
                 {filtered.map((student, idx) => {
                   const sm = STATUS_META[student.status];
                   const avatarColor = AVATAR_COLORS[idx % AVATAR_COLORS.length];
                   return (
-                    <tr key={student.id} className="hover:bg-[#F8FAFC] transition-colors">
+                    <tr key={student.id} className="hover:bg-[var(--page-background)] transition-colors">
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
                           <div
@@ -354,28 +354,28 @@ function TeacherStudents() {
                             {student.avatar}
                           </div>
                           <div>
-                            <p className="font-semibold text-[#0F172A]">{student.name}</p>
-                            <p className="text-xs text-[#94A3B8]">
+                            <p className="font-semibold text-[#191314]">{student.name}</p>
+                            <p className="text-xs text-[#A89890]">
                               🔥 {student.streak} day streak · {student.questionsAsked} questions
                             </p>
                           </div>
                         </div>
                       </td>
                       <td className="px-5 py-4">
-                        <span className="flex items-center gap-1.5 text-[#64748B]">
+                        <span className="flex items-center gap-1.5 text-[#8A7478]">
                           <BookOpen className="h-3.5 w-3.5 shrink-0" />
                           <span className="text-xs">{student.course}</span>
                         </span>
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
-                          <div className="h-2 w-20 overflow-hidden rounded-full bg-[#E2E8F0]">
+                          <div className="h-2 w-20 overflow-hidden rounded-full bg-[var(--border)]">
                             <div
-                              className="h-full rounded-full bg-gradient-to-r from-[#3fa8ab] to-[#1F7C80] transition-all"
+                              className="h-full rounded-full bg-gradient-to-r from-crimson to-crimson transition-all"
                               style={{ width: `${student.progress}%` }}
                             />
                           </div>
-                          <span className="text-xs font-semibold text-[#64748B]">
+                          <span className="text-xs font-semibold text-[#8A7478]">
                             {student.progress}%
                           </span>
                         </div>
@@ -391,12 +391,12 @@ function TeacherStudents() {
                         <StatusBadge variant={sm.variant}>{sm.label}</StatusBadge>
                       </td>
                       <td className="px-5 py-4">
-                        <span className="flex items-center gap-1 text-xs text-[#94A3B8]">
+                        <span className="flex items-center gap-1 text-xs text-[#A89890]">
                           <Clock className="h-3 w-3" /> {student.lastActive}
                         </span>
                       </td>
                       <td className="px-5 py-4">
-                        <button className="inline-flex items-center gap-1 rounded-lg border border-[#E2E8F0] px-2.5 py-1.5 text-xs font-semibold text-[#64748B] hover:bg-[#F1F5F9] hover:border-[#1F7C80]/30 transition-all">
+                        <button className="inline-flex items-center gap-1 rounded-lg border border-[var(--border)] px-2.5 py-1.5 text-xs font-semibold text-[#8A7478] hover:bg-[var(--beige-soft)] hover:border-[var(--crimson)]/30 transition-all">
                           <MessageSquare className="h-3 w-3" /> Message
                         </button>
                       </td>
@@ -422,24 +422,24 @@ function TeacherStudents() {
                       {student.avatar}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-bold text-[#0F172A] text-sm">{student.name}</p>
-                      <p className="text-xs text-[#64748B] truncate">{student.course}</p>
+                      <p className="font-bold text-[#191314] text-sm">{student.name}</p>
+                      <p className="text-xs text-[#8A7478] truncate">{student.course}</p>
                     </div>
                     <StatusBadge variant={sm.variant}>{sm.label}</StatusBadge>
                   </div>
 
                   {/* Stats row */}
                   <div className="kr-person-card-meta">
-                    <span className="flex items-center gap-1 text-xs text-[#64748B]">
+                    <span className="flex items-center gap-1 text-xs text-[#8A7478]">
                       <Flame className="h-3 w-3 text-orange-500" />
                       {student.streak}d streak
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-[#64748B]">
-                      <HelpCircle className="h-3 w-3 text-[#94A3B8]" />
+                    <span className="flex items-center gap-1 text-xs text-[#8A7478]">
+                      <HelpCircle className="h-3 w-3 text-[#A89890]" />
                       {student.questionsAsked} questions
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-[#64748B]">
-                      <Clock className="h-3 w-3 text-[#94A3B8]" />
+                    <span className="flex items-center gap-1 text-xs text-[#8A7478]">
+                      <Clock className="h-3 w-3 text-[#A89890]" />
                       {student.lastActive}
                     </span>
                   </div>
@@ -447,12 +447,12 @@ function TeacherStudents() {
                   {/* Progress row */}
                   <div>
                     <div className="mb-1 flex items-center justify-between text-xs">
-                      <span className="text-[#64748B]">Progress</span>
-                      <span className="font-bold text-[#0F172A]">{student.progress}%</span>
+                      <span className="text-[#8A7478]">Progress</span>
+                      <span className="font-bold text-[#191314]">{student.progress}%</span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-[#E2E8F0]">
+                    <div className="h-2 overflow-hidden rounded-full bg-[var(--border)]">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#3fa8ab] to-[#1F7C80]"
+                        className="h-full rounded-full bg-gradient-to-r from-crimson to-crimson"
                         style={{ width: `${student.progress}%` }}
                       />
                     </div>
@@ -465,7 +465,7 @@ function TeacherStudents() {
                     >
                       Quiz avg: {student.quizAvg}%
                     </span>
-                    <button className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-[#E2E8F0] px-3 py-1.5 text-xs font-semibold text-[#64748B] hover:bg-[#F1F5F9] transition-colors">
+                    <button className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[#8A7478] hover:bg-[var(--beige-soft)] transition-colors">
                       <MessageSquare className="h-3.5 w-3.5" /> Message
                     </button>
                   </div>

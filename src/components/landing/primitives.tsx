@@ -165,7 +165,7 @@ export function FeatureCard({
 }) {
   return (
     <SurfaceCard className="h-full">
-      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-soft-blue text-academic-blue">
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-crimson-soft text-crimson">
         {icon}
       </div>
       <h3 className="mt-4 text-[16px] font-semibold text-heading">{title}</h3>

@@ -314,7 +314,7 @@ export function useAutomatedClassroomEngine(
     }
 
     // Speak step title and then start board items
-    speakAndContinue(`Now, ${step.title.toLowerCase()}.`, () => {
+    speakAndContinue(`Alright. ${step.title}.`, () => {
       if (state.settings.autoPlay) {
         setTimeout(() => nextBoardItem(), 500);
       }
@@ -480,7 +480,7 @@ export function useAutomatedClassroomEngine(
 
           // Welcome message
           speakAndContinue(
-            `Welcome to today's lesson. Our goal is: ${lesson.objective}. Let's begin.`,
+            `Welcome to today's lesson. We're working on ${lesson.objective}. I'll take it step by step with you.`,
             () => {
               if (state.settings.autoPlay) {
                 setTimeout(() => nextBoardItem(), 1000);

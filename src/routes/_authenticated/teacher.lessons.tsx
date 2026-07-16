@@ -135,9 +135,9 @@ const STATUS_CONFIG: Record<
 };
 
 const SUBJECT_COLORS: Record<string, string> = {
-  Mathematics: "from-[#1F7C80] to-[#3fa8ab]",
-  Chemistry: "from-green-600 to-emerald-400",
-  "Computer Science": "from-purple-600 to-violet-400",
+  Mathematics: "from-[#7D2233] to-[#521326]",
+  Chemistry: "from-[#059669] to-[#047857]",
+  "Computer Science": "from-[#7c3aed] to-[#6d28d9]",
 };
 
 const config = dashboardConfigs.teacher;
@@ -172,26 +172,25 @@ function TeacherLessons() {
       {/* Search + Filter Bar — wraps cleanly on mobile */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-sm flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9CA3AF]" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search lessons or courses…"
-            className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[#1F7C80] focus:outline-none focus:ring-2 focus:ring-[#1F7C80]/20"
+            className="w-full rounded-xl border border-[#E5E7EB] bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[var(--crimson)] focus:outline-none focus:ring-2 focus:ring-[var(--crimson)]/20"
           />
         </div>
         {/* Filter pills — wrap on narrow widths */}
         <div className="flex flex-wrap items-center gap-2">
-          <Filter className="h-4 w-4 shrink-0 text-[#64748B]" />
+          <Filter className="h-4 w-4 shrink-0 text-[#6B7280]" />
           {(["all", "ready", "review", "draft"] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize transition-all ${
-                filter === f
-                  ? "bg-[#1F7C80] text-white shadow-sm"
-                  : "bg-white border border-[#E2E8F0] text-[#64748B] hover:border-[#1F7C80]/40 hover:text-[#1F7C80]"
-              }`}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize transition-all ${filter === f
+                ? "bg-[var(--crimson)] text-white shadow-sm"
+                : "bg-white border border-[#E5E7EB] text-[#6B7280] hover:border-[var(--crimson)]/40 hover:text-[var(--crimson)]"
+                }`}
             >
               {f === "all" ? "All" : f.charAt(0).toUpperCase() + f.slice(1)} (
               {counts[f as keyof typeof counts]})
@@ -218,19 +217,19 @@ function TeacherLessons() {
         </div>
         <div className="kr-stat-card-item">
           <div className="flex items-center justify-center mb-2">
-            <FileText className="h-4 w-4 text-[#94A3B8]" />
+            <FileText className="h-4 w-4 text-[#9CA3AF]" />
           </div>
-          <p className="kr-stat-value text-[#94A3B8]">{counts.draft}</p>
+          <p className="kr-stat-value text-[#9CA3AF]">{counts.draft}</p>
           <p className="kr-stat-label">In Draft</p>
         </div>
       </div>
 
       {/* Lesson Cards */}
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E2E8F0] bg-white">
+        <div className="rounded-2xl border border-dashed border-[#E5E7EB] bg-white">
           <div className="kr-empty-state">
             <div className="kr-empty-state-icon">
-              <FileText className="h-6 w-6 text-[#1F7C80]" />
+              <FileText className="h-6 w-6 text-[var(--crimson)]" />
             </div>
             <h3>No lessons found</h3>
             <p>{query ? `No lessons match "${query}".` : "No lessons in this category yet."}</p>
@@ -240,11 +239,11 @@ function TeacherLessons() {
         <div className="space-y-4">
           {filtered.map((lesson) => {
             const sc = STATUS_CONFIG[lesson.status];
-            const gradClass = SUBJECT_COLORS[lesson.subject] ?? "from-slate-600 to-slate-400";
+            const gradClass = SUBJECT_COLORS[lesson.subject] ?? "from-[#4B5563] to-[#374151]";
             return (
               <article
                 key={lesson.id}
-                className="rounded-2xl border border-[#E2E8F0] bg-white p-5 transition-all hover:border-[#1F7C80]/30 hover:shadow-md"
+                className="rounded-2xl border border-[#E5E7EB] bg-white p-5 transition-all hover:border-[var(--crimson)]/30 hover:shadow-md"
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                   {/* Subject icon */}
@@ -257,21 +256,21 @@ function TeacherLessons() {
                   {/* Main info */}
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-base font-bold text-[#0F172A]">{lesson.title}</h3>
+                      <h3 className="text-base font-bold text-[#221C1D]">{lesson.title}</h3>
                       <StatusBadge variant={sc.variant}>{sc.label}</StatusBadge>
                     </div>
-                    <p className="mt-0.5 text-sm text-[#64748B]">{lesson.course}</p>
-                    <p className="mt-1 text-xs text-[#94A3B8] line-clamp-1">{lesson.description}</p>
+                    <p className="mt-0.5 text-sm text-[#6B7280]">{lesson.course}</p>
+                    <p className="mt-1 text-xs text-[#9CA3AF] line-clamp-1">{lesson.description}</p>
 
                     {/* Meta row — wraps on mobile */}
-                    <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[#64748B]">
+                    <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[#6B7280]">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5" /> {lesson.duration}
                       </span>
                       <span className="flex items-center gap-1">
                         <BookOpen className="h-3.5 w-3.5" /> {lesson.steps} steps
                       </span>
-                      <span className="text-[#94A3B8]">Updated {lesson.lastUpdated}</span>
+                      <span className="text-[#9CA3AF]">Updated {lesson.lastUpdated}</span>
 
                       {/* Captions indicator */}
                       <span
@@ -296,7 +295,7 @@ function TeacherLessons() {
                     <Link
                       to="/classroom/preview/$lessonId"
                       params={{ lessonId: lesson.id }}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-[#E2E8F0] px-3 py-2 text-xs font-semibold text-[#64748B] hover:bg-[#F8FAFC] hover:border-[#1F7C80]/30 transition-all"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-[#E5E7EB] px-3 py-2 text-xs font-semibold text-[#6B7280] hover:bg-[#FBF8F5] hover:border-[var(--crimson)]/30 transition-all"
                     >
                       <Eye className="h-3.5 w-3.5" />
                       Preview
@@ -304,7 +303,7 @@ function TeacherLessons() {
                     {lesson.status === "ready" && (
                       <TeacherStartClassButton lessonId={lesson.id} label="Record live" compact />
                     )}
-                    <ChevronRight className="h-4 w-4 shrink-0 text-[#CBD5E1]" />
+                    <ChevronRight className="h-4 w-4 shrink-0 text-[#D1D5DB]" />
                   </div>
                 </div>
               </article>

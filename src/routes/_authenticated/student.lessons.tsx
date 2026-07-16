@@ -35,7 +35,7 @@ function StudentLessons() {
             </p>
             <Link
               to="/student/courses"
-              className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1A5256]"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-[var(--crimson)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--crimson-dark)]"
             >
               Browse Courses
             </Link>
@@ -55,8 +55,8 @@ function StudentLessons() {
                     done
                       ? "bg-[#dcfce7] text-[#15803d]"
                       : started
-                        ? "bg-[#dbeafe] text-[#1d4ed8]"
-                        : "bg-[#e8f5f5] text-[#1F7C80]"
+                        ? "bg-[#F7E7EA] text-[#7D2233]"
+                        : "bg-[var(--crimson-soft)] text-[var(--crimson)]"
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -75,7 +75,7 @@ function StudentLessons() {
                   className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold ${
                     done
                       ? "border border-[var(--gray-200)] text-[var(--gray-700)] hover:bg-[var(--gray-50)]"
-                      : "bg-[#1F7C80] text-white hover:bg-[#1A5256]"
+                      : "bg-[var(--crimson)] text-white hover:bg-[var(--crimson-dark)]"
                   }`}
                 >
                   {done ? "Replay" : started ? "Continue" : "Start"}

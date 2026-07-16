@@ -1,370 +1,265 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
 import {
-  Users,
+  ArrowRight,
   BarChart3,
-  Video,
+  Calendar,
+  Clock,
+  FileText,
   MessageSquare,
   TrendingUp,
-  Clock,
-  CheckCircle2,
-  Award,
-  Calendar,
-  BookOpen,
-  Eye,
+  Users,
 } from "lucide-react";
 import { dashboardConfigs } from "@/lib/dashboard-config";
 import { DashboardShell } from "@/components/dashboard/shared/DashboardShell";
+import { PageHeader } from "@/components/dashboard/shared/PageHeader";
 import { KpiCard } from "@/components/dashboard/shared/KpiCard";
 import { StatusBadge } from "@/components/dashboard/shared/StatusBadge";
-import { FeaturedActionCard } from "@/components/dashboard/shared/FeaturedActionCard";
-import { PageHeader } from "@/components/dashboard/shared/PageHeader";
-import { SessionCard } from "@/components/dashboard/shared/SessionCard";
-import { RealtimeMetricCard } from "@/components/dashboard/shared/RealtimeMetricCard";
-import { OnlineStatusDot } from "@/components/dashboard/shared/OnlineStatusDot";
-import { ActivityFeed } from "@/components/dashboard/shared/ActivityFeed";
+import {
+  parentLearners,
+  parentMessages,
+  parentReports,
+  parentSessions,
+} from "./parent-portal-data";
 
 const config = dashboardConfigs.parent;
 
-const mockLearners = [
-  {
-    id: "learner_1",
-    name: "John Doe",
-    course: "Mathematics Form 2",
-    institution: "Klassruum Demo Academy",
-    progress: 65,
-    quizAverage: 86,
-    lessonsCompleted: 12,
-    streak: 7,
-    online: true,
-  },
-  {
-    id: "learner_2",
-    name: "Sarah Doe",
-    course: "KCSE Chemistry Revision",
-    institution: "Klassruum Demo Academy",
-    progress: 42,
-    quizAverage: 81,
-    lessonsCompleted: 8,
-    streak: 4,
-    online: false,
-  },
-];
+function average(values: number[]) {
+  if (values.length === 0) return 0;
+  return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+}
 
-const mockSessions = [
-  {
-    title: "Quadratic Equations",
-    course: "Mathematics Form 2",
-    time: "Today at 2:30 PM",
-    duration: "45 min",
-    status: "completed" as const,
-    href: "/parent/sessions/sess_1",
-  },
-  {
-    title: "Chemical Reactions",
-    course: "KCSE Chemistry Revision",
-    time: "Yesterday at 4:00 PM",
-    duration: "38 min",
-    status: "completed" as const,
-    href: "/parent/sessions/sess_2",
-  },
-  {
-    title: "HTML Introduction",
-    course: "Computer Studies Basics",
-    time: "3 days ago at 9:30 AM",
-    duration: "41 min",
-    status: "completed" as const,
-    href: "/parent/sessions/sess_3",
-  },
-];
-
-const mockActivity = [
-  {
-    id: "1",
-    action: "Completed lesson",
-    description: 'John finished "Quadratic Equations" lesson',
-    timestamp: "Today at 2:45 PM",
-    variant: "success" as const,
-  },
-  {
-    id: "2",
-    action: "Quiz completed",
-    description: "John scored 92% on Quadratic Equations quiz",
-    timestamp: "Today at 2:42 PM",
-    variant: "success" as const,
-  },
-  {
-    id: "3",
-    action: "New assignment",
-    description: "Teacher assigned homework for Chemical Reactions",
-    timestamp: "Today at 1:30 PM",
-    variant: "default" as const,
-  },
-  {
-    id: "4",
-    action: "Progress update",
-    description: "Sarah completed 8 lessons this month",
-    timestamp: "Yesterday at 5:00 PM",
-    variant: "success" as const,
-  },
-];
+function sessionVariant(status: string) {
+  if (status === "completed") return "success" as const;
+  if (status === "needs_review") return "warning" as const;
+  return "info" as const;
+}
 
 export function ParentDashboard() {
-  const [selectedLearner, setSelectedLearner] = useState(mockLearners[0]);
+  const averageProgress = average(parentLearners.map((learner) => learner.progress));
+  const averageQuiz = average(parentLearners.map((learner) => learner.quizAverage));
+  const upcomingCount = parentSessions.filter((session) => session.status === "upcoming").length;
+  const unreadMessages = parentMessages.filter((message) => message.unread).length;
 
   return (
     <DashboardShell config={config} activePath="/parent/dashboard">
       <PageHeader
-        label="Parent Portal"
-        title="Monitor your child's progress"
-        subtitle="Track learning activities, review performance, and stay connected with teachers."
-      />
-
-      {/* Featured Current Activity */}
-      <FeaturedActionCard
-        title={`${selectedLearner.name} is learning ${selectedLearner.course}`}
-        description={selectedLearner.institution}
-        badge={<StatusBadge variant="success">Active Today</StatusBadge>}
-        content={
-          <div className="space-y-4">
-            <div className="grid grid-cols-4 gap-4">
-              <div>
-                <p className="text-xs font-semibold text-[#64748B]">Progress</p>
-                <p className="mt-1 text-3xl font-bold text-[#1F7C80]">
-                  {selectedLearner.progress}%
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-[#64748B]">Quiz Average</p>
-                <p className="mt-1 text-3xl font-bold text-[#0F172A]">
-                  {selectedLearner.quizAverage}%
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-[#64748B]">Lessons Done</p>
-                <p className="mt-1 text-3xl font-bold text-[#0F172A]">
-                  {selectedLearner.lessonsCompleted}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-[#64748B]">Study Streak</p>
-                <p className="mt-1 text-3xl font-bold text-[#0F172A]">{selectedLearner.streak}</p>
-              </div>
-            </div>
-            <div className="h-3 w-full rounded-full bg-[#E2E8F0]">
-              <div
-                className="h-full rounded-full bg-[#1F7C80] transition-all"
-                style={{ width: `${selectedLearner.progress}%` }}
-              />
-            </div>
-          </div>
+        label="Family learning view"
+        title="Parent Dashboard"
+        subtitle="Monitor linked learners, upcoming sessions, teacher feedback, and progress evidence from one calm workspace."
+        action={
+          <Link to="/parent/messages" className="kr-command-button kr-command-button--primary">
+            Message teachers
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         }
-        actions={[
-          {
-            label: "View Full Progress",
-            href: "/parent/progress",
-            variant: "primary",
-          },
-          {
-            label: "View Reports",
-            href: "/parent/reports",
-            variant: "secondary",
-          },
-          {
-            label: "Message Teacher",
-            href: "/parent/messages",
-            variant: "secondary",
-          },
-        ]}
       />
 
-      {/* KPI Cards */}
       <section className="kr-dashboard-kpi-grid mb-8">
         <KpiCard
-          title="Children"
-          value={mockLearners.length.toString()}
-          subtitle="Enrolled learners"
+          title="Linked learners"
+          value={parentLearners.length}
+          subtitle="Active family profiles"
           href="/parent/learners"
           icon={Users}
         />
         <KpiCard
-          title="Avg Score"
-          value="86%"
-          subtitle="Quiz performance"
+          title="Average progress"
+          value={`${averageProgress}%`}
+          subtitle="Across active courses"
           href="/parent/progress"
+          icon={TrendingUp}
+          trend="+8%"
+        />
+        <KpiCard
+          title="Quiz average"
+          value={`${averageQuiz}%`}
+          subtitle="Latest checkpoints"
+          href="/parent/reports"
           icon={BarChart3}
-          trend="+5%"
         />
         <KpiCard
-          title="Sessions"
-          value="24"
-          subtitle="This month"
+          title="Upcoming sessions"
+          value={upcomingCount}
+          subtitle="Next learning events"
           href="/parent/sessions"
-          icon={Video}
+          icon={Calendar}
         />
         <KpiCard
-          title="Study Time"
-          value="18h 30m"
-          subtitle="This week"
-          href="/parent/progress"
-          icon={Clock}
-        />
-        <KpiCard
-          title="Assignments"
-          value="8"
-          subtitle="Completed"
-          href="/parent/reports"
-          icon={CheckCircle2}
-        />
-        <KpiCard
-          title="Achievements"
-          value="12"
-          subtitle="Badges earned"
-          href="/parent/reports"
-          icon={Award}
+          title="Teacher updates"
+          value={unreadMessages}
+          subtitle="Unread messages"
+          href="/parent/messages"
+          icon={MessageSquare}
         />
       </section>
 
-      {/* Main Content Grid */}
-      <section className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {/* Left Column: Learners and Sessions */}
-        <div className="space-y-8 lg:col-span-2">
-          {/* My Learners */}
-          <div>
-            <div className="mb-5 flex items-center justify-between">
+      <section className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
+        <div className="space-y-6">
+          <div className="dashboard-card p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between gap-4">
               <div>
-                <h2 className="text-xl font-bold text-[#0F172A]">My Learners</h2>
-                <p className="mt-0.5 text-sm text-[#64748B]">Children enrolled in Klassruum</p>
+                <p className="kr-section-kicker">Learners</p>
+                <h2 className="text-xl font-extrabold text-heading">Linked learner progress</h2>
               </div>
-            </div>
-            <div className="space-y-3">
-              {mockLearners.map((learner) => (
-                <button
-                  key={learner.id}
-                  onClick={() => setSelectedLearner(learner)}
-                  className={`w-full text-left rounded-2xl border transition-all p-5 ${
-                    selectedLearner.id === learner.id
-                      ? "border-[#1F7C80] bg-[#EFF6FF] shadow-md"
-                      : "border-[#E2E8F0] bg-white hover:border-[#1F7C80]/30 hover:shadow-md"
-                  }`}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-[#0F172A]">{learner.name}</h3>
-                        {learner.online && <OnlineStatusDot online={true} />}
-                      </div>
-                      <p className="text-sm text-[#64748B] mt-0.5">{learner.course}</p>
-                      <p className="text-xs text-[#94A3B8]">{learner.institution}</p>
-                    </div>
-                    <StatusBadge variant={learner.online ? "success" : "warning"}>
-                      {learner.online ? "Online" : "Offline"}
-                    </StatusBadge>
-                  </div>
-
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-4 gap-2">
-                    <div className="rounded-lg bg-[#F8FAFC] p-2 text-center">
-                      <p className="text-xs font-bold text-[#1F7C80]">{learner.progress}%</p>
-                      <p className="text-[10px] text-[#64748B]">Progress</p>
-                    </div>
-                    <div className="rounded-lg bg-[#F8FAFC] p-2 text-center">
-                      <p className="text-xs font-bold text-[#0F172A]">{learner.quizAverage}%</p>
-                      <p className="text-[10px] text-[#64748B]">Quiz Avg</p>
-                    </div>
-                    <div className="rounded-lg bg-[#F8FAFC] p-2 text-center">
-                      <p className="text-xs font-bold text-[#0F172A]">{learner.lessonsCompleted}</p>
-                      <p className="text-[10px] text-[#64748B]">Lessons</p>
-                    </div>
-                    <div className="rounded-lg bg-[#F8FAFC] p-2 text-center">
-                      <p className="text-xs font-bold text-[#0F172A]">{learner.streak}</p>
-                      <p className="text-[10px] text-[#64748B]">Streak</p>
-                    </div>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="mt-3">
-                    <div className="h-2 w-full rounded-full bg-[#E2E8F0]">
-                      <div
-                        className="h-full rounded-full bg-[#1F7C80] transition-all"
-                        style={{ width: `${learner.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Recent Sessions */}
-          <div>
-            <div className="mb-5 flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-bold text-[#0F172A]">Recent Sessions</h2>
-                <p className="mt-0.5 text-sm text-[#64748B]">Learning activity history</p>
-              </div>
-              <Link
-                to="/parent/sessions"
-                className="text-sm font-bold text-[#1F7C80] hover:text-[#1A5256]"
-              >
+              <Link to="/parent/learners" className="text-sm font-bold text-crimson">
                 View all
               </Link>
             </div>
-            <div className="space-y-3">
-              {mockSessions.map((session) => (
-                <SessionCard
-                  key={session.title}
-                  title={session.title}
-                  course={session.course}
-                  time={session.time}
-                  duration={session.duration}
-                  status={session.status}
-                  href={session.href}
-                />
+
+            <div className="space-y-4">
+              {parentLearners.map((learner) => (
+                <Link
+                  key={learner.id}
+                  to="/parent/progress"
+                  className="block rounded-2xl border border-border bg-white p-4 transition hover:border-crimson/30 hover:shadow-sm"
+                >
+                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-base font-extrabold text-heading">{learner.name}</h3>
+                        <StatusBadge variant="info">{learner.level}</StatusBadge>
+                      </div>
+                      <p className="mt-1 text-sm text-muted">{learner.institution}</p>
+                      <p className="mt-3 text-sm font-semibold text-heading">
+                        {learner.activeCourse}
+                      </p>
+                      <p className="mt-1 text-sm text-muted">{learner.lastActivity}</p>
+                    </div>
+
+                    <div className="min-w-[220px]">
+                      <div className="mb-2 flex items-center justify-between text-xs font-bold text-muted">
+                        <span>Progress</span>
+                        <span>{learner.progress}%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-crimson-soft">
+                        <div
+                          className="h-full rounded-full bg-crimson"
+                          style={{ width: `${learner.progress}%` }}
+                        />
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                        <span className="rounded-xl border border-border bg-page-background p-2">
+                          Quiz avg: <strong>{learner.quizAverage}%</strong>
+                        </span>
+                        <span className="rounded-xl border border-border bg-page-background p-2">
+                          Streak: <strong>{learner.streak} days</strong>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 rounded-xl border border-border bg-page-background p-3 text-sm">
+                    <span className="font-bold text-heading">Support focus: </span>
+                    <span className="text-muted">{learner.supportNeed}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="dashboard-card p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div>
+                <p className="kr-section-kicker">Evidence</p>
+                <h2 className="text-xl font-extrabold text-heading">Recent reports</h2>
+              </div>
+              <Link to="/parent/reports" className="text-sm font-bold text-crimson">
+                Open reports
+              </Link>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              {parentReports.map((report) => (
+                <Link
+                  key={report.id}
+                  to={report.href}
+                  className="rounded-2xl border border-border bg-white p-4 transition hover:border-crimson/30"
+                >
+                  <FileText className="h-5 w-5 text-crimson" />
+                  <p className="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-muted">
+                    {report.learner} - {report.period}
+                  </p>
+                  <h3 className="mt-1 text-base font-extrabold text-heading">{report.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">{report.summary}</p>
+                </Link>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Right Column: Quick Info */}
-        <div className="space-y-6 lg:col-span-1">
-          {/* Learner Status */}
-          <RealtimeMetricCard
-            title={`${selectedLearner.name}'s Status`}
-            value={selectedLearner.online ? "Online" : "Offline"}
-            subtitle="Learning now"
-            isLive={selectedLearner.online}
-            icon={Eye}
-          />
+        <aside className="space-y-6">
+          <div className="dashboard-card p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div>
+                <p className="kr-section-kicker">Schedule</p>
+                <h2 className="text-xl font-extrabold text-heading">Learning sessions</h2>
+              </div>
+              <Link to="/parent/sessions" className="text-sm font-bold text-crimson">
+                View all
+              </Link>
+            </div>
 
-          {/* Recommended Actions */}
-          <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
-            <h3 className="font-bold text-[#0F172A] mb-4">Quick Actions</h3>
-            <div className="space-y-2">
-              <Link
-                to="/parent/progress"
-                className="block rounded-lg bg-[#EFF6FF] px-3 py-2.5 text-sm font-bold text-[#1F7C80] transition-all hover:bg-[#DBEAFE]"
-              >
-                View Progress Report
-              </Link>
-              <Link
-                to="/parent/reports"
-                className="block rounded-lg bg-[#F8FAFC] px-3 py-2.5 text-sm font-bold text-[#0F172A] border border-[#E2E8F0] transition-all hover:bg-[#EFF6FF]"
-              >
-                Download Report
-              </Link>
-              <Link
-                to="/parent/messages"
-                className="block rounded-lg bg-[#F8FAFC] px-3 py-2.5 text-sm font-bold text-[#0F172A] border border-[#E2E8F0] transition-all hover:bg-[#EFF6FF]"
-              >
-                Message Teacher
-              </Link>
+            <div className="space-y-3">
+              {parentSessions.map((session) => (
+                <Link
+                  key={session.id}
+                  to="/parent/sessions"
+                  className="block rounded-2xl border border-border bg-white p-4 transition hover:border-crimson/30"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-sm font-extrabold text-heading">{session.title}</h3>
+                      <p className="mt-1 text-xs text-muted">{session.learner}</p>
+                    </div>
+                    <StatusBadge variant={sessionVariant(session.status)}>
+                      {session.status.replace(/_/g, " ")}
+                    </StatusBadge>
+                  </div>
+                  <p className="mt-3 text-sm text-muted">{session.course}</p>
+                  <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-muted">
+                    <Clock className="h-3.5 w-3.5" />
+                    {session.time}
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-muted">{session.evidence}</p>
+                </Link>
+              ))}
             </div>
           </div>
 
-          {/* Recent Activity */}
-          <ActivityFeed title="Recent Activity" items={mockActivity} maxItems={4} />
-        </div>
+          <div className="dashboard-card p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div>
+                <p className="kr-section-kicker">Communication</p>
+                <h2 className="text-xl font-extrabold text-heading">Teacher updates</h2>
+              </div>
+              <Link to="/parent/messages" className="text-sm font-bold text-crimson">
+                Inbox
+              </Link>
+            </div>
+
+            <div className="space-y-3">
+              {parentMessages.map((message) => (
+                <Link
+                  key={message.id}
+                  to="/parent/messages"
+                  className="block rounded-2xl border border-border bg-white p-4 transition hover:border-crimson/30"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-sm font-extrabold text-heading">{message.subject}</h3>
+                      <p className="mt-1 text-xs text-muted">
+                        {message.from} - {message.learner}
+                      </p>
+                    </div>
+                    {message.unread && <span className="h-2 w-2 rounded-full bg-crimson" />}
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-muted">{message.preview}</p>
+                  <p className="mt-2 text-xs font-bold text-muted">{message.time}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </aside>
       </section>
     </DashboardShell>
   );

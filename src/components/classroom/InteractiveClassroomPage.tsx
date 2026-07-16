@@ -159,8 +159,8 @@ const SUBJECT_COLORS: Record<SubjectType, string> = {
   geography: "#0891b2",
   art: "#db2777",
   music: "#7c3aed",
-  ict: "#0284c7",
-  general: "#64748b",
+  ict: "#9A3247",
+  general: "var(--muted)",
 };
 
 export function InteractiveClassroomPage({
@@ -713,7 +713,7 @@ export function InteractiveClassroomPage({
 
           <Link
             to="/student/access"
-            className="flex items-center gap-2 rounded-lg bg-[#e8f5f5] px-3 py-2 text-xs font-medium text-[#1F7C80] hover:bg-[#d1eceb]"
+            className="flex items-center gap-2 rounded-lg bg-[var(--crimson-soft)] px-3 py-2 text-xs font-medium text-[var(--crimson)] hover:bg-[var(--crimson-soft)]"
           >
             <Accessibility className="h-4 w-4" />
             Access
@@ -799,7 +799,7 @@ export function InteractiveClassroomPage({
                   onClick={() => setState((prev) => ({ ...prev, speechRate: rate }))}
                   className={`flex-1 py-2 text-xs font-semibold rounded ${
                     state.speechRate === rate
-                      ? "bg-[#1F7C80] text-white"
+                      ? "bg-[var(--crimson)] text-white"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}
                 >

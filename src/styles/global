@@ -1,0 +1,207 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Klassruum Global — Warm Editorial Patterns
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* body styles handled by @layer base in styles.css */
+
+/* ── Primary Button (crimson) ──────────────────────────────────────────── */
+.btn-primary-academic {
+  background-color: var(--crimson);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: var(--radius);
+  transition: all 0.15s var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  height: 38px;
+}
+
+.btn-primary-academic:hover {
+  background-color: var(--crimson-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary-academic:active {
+  transform: scale(0.98);
+}
+
+/* ── Secondary Button (white with border) ──────────────────────────────── */
+.btn-secondary-academic {
+  background-color: var(--white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: all 0.15s var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  height: 38px;
+}
+
+.btn-secondary-academic:hover {
+  background-color: var(--beige-soft);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.btn-secondary-academic:active {
+  transform: scale(0.98);
+}
+
+/* ── Pattern Utilities ────────────────────────────────────────────────── */
+.notebook-pattern {
+  background-image:
+    linear-gradient(rgba(34, 27, 28, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 27, 28, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.grid-dot-pattern {
+  background-image: radial-gradient(rgba(160, 82, 45, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ── Warm paper texture for whiteboard areas ──────────────────────────── */
+.paper-texture {
+  background-color: #fffdf8;
+  background-image:
+    radial-gradient(rgba(160, 82, 45, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Container ────────────────────────────────────────────────────────── */
+.container-editorial {
+  width: min(calc(100% - 2rem), 1120px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 640px) {
+  .container-editorial {
+    width: min(calc(100% - 3rem), 1120px);
+  }
+}
+
+/* ── Section Utilities ────────────────────────────────────────────────── */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.section-padding-lg {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+/* ── Organic Section Frame ────────────────────────────────────────────── */
+.organic-frame {
+  position: relative;
+  border-radius: 24px 24px 24px 80px;
+  overflow: hidden;
+}
+
+.organic-frame-alt {
+  position: relative;
+  border-radius: 80px 24px 24px 24px;
+  overflow: hidden;
+}
+
+.arch-top {
+  border-radius: 50% 50% 24px 24px / 20% 20% 0 0;
+  overflow: hidden;
+}
+
+/* ── Editorial card shapes ────────────────────────────────────────────── */
+.card-organic {
+  border-radius: 16px 16px 16px 48px;
+}
+
+.card-organic-alt {
+  border-radius: 48px 16px 16px 16px;
+}
+
+.card-arch {
+  border-radius: 40px 16px 16px 16px;
+}
+
+/* ── Curved section separator ─────────────────────────────────────────── */
+.curve-top {
+  border-radius: 100% 100% 0 0 / 40px 40px 0 0;
+}
+
+.curve-bottom {
+  border-radius: 0 0 100% 100% / 0 0 40px 40px;
+}
+
+/* ── Animation utilities ──────────────────────────────────────────────── */
+@keyframes kr-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes kr-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes kr-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.animate-fade-up {
+  animation: kr-fade-up 0.5s var(--ease-out) both;
+}
+
+.animate-scale-in {
+  animation: kr-scale-in 0.4s var(--ease-out) both;
+}
+
+.animate-reveal {
+  animation: kr-reveal 0.6s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-scale-in,
+  .animate-reveal {
+    animation: none;
+  }
+}

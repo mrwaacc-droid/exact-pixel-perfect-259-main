@@ -9,8 +9,9 @@
  * board, what the teacher reads, what the teacher explains, learner notes,
  * accessibility text, question checkpoints, practice, summary, and reflection.
  *
- * Uses the Lovable AI gateway when LOVABLE_API_KEY is set; otherwise falls back
- * to a deterministic generator so the flow still works without AI.
+ * Uses the resilient AI provider chain (OpenAI / DeepSeek) when a provider key
+ * is set; otherwise falls back to a deterministic generator so the flow still
+ * works without AI.
  *
  * Auth: requires a signed-in staff user (RLS on lessons/lesson_sections/
  * teaching_items enforces owner/admin/teacher on insert).
@@ -64,6 +65,7 @@ const SectionSchema = z.object({
   title: z.string(),
   type: z.enum([
     "welcome",
+    "hook",
     "objective",
     "why_it_matters",
     "prerequisite_check",
@@ -72,11 +74,16 @@ const SectionSchema = z.object({
     "question_checkpoint",
     "required_middle_question",
     "guided_practice",
+    "second_example",
+    "practice_together",
     "independent_practice",
+    "question_session",
     "correction",
     "summary",
     "exit_reflection",
+    "exit_ticket",
     "homework",
+    "reflection",
   ]),
   estimatedMinutes: z.number().int().min(1).max(20),
   teachingItems: z.array(TeachingItemSchema).min(1).max(12),
@@ -237,15 +244,31 @@ REQUESTED LESSONS: ${args.requestedCount}
 
 Create exactly ${args.requestedCount} lessons unless the content is too limited. If content is limited, create the closest reasonable number and explain what is missing in "note".
 
-Each lesson MUST include, via sections in this order where sensible:
-welcome, objective/why_it_matters, prerequisite_check, concept, worked_example,
-question_checkpoint, required_middle_question, guided_practice, independent_practice,
-correction, summary, exit_reflection, homework.
+Each lesson MUST follow this exact 16-step pedagogical pipeline (using these section types in order):
+1. welcome (Welcome & greeting)
+2. hook (Real-world Hook or engagement context)
+3. objective (Learning Objectives & Success Criteria)
+4. prerequisite_check (Activate Prior Knowledge / prerequisite retrieval check)
+5. concept (Explain Concept on canvas)
+6. worked_example (First worked example / guided explanation)
+7. question_checkpoint (Check Understanding / Formative checkpoint question)
+8. correction (Misconception clarification and corrective explanation)
+9. second_example (Second worked example demonstrating transfer)
+10. practice_together (Practice Together / interactive collaborative problem)
+11. independent_practice (Independent Practice / self-guided graded problems)
+12. question_session (Open Question Session / 5-minute checkpoint for student questions)
+13. summary (Lesson Summary & key rules/common mistakes review)
+14. exit_ticket (Final exit assessment check)
+15. homework (Graded follow-up homework tasks)
+16. reflection (Student confidence and metacognitive reflection)
 
 Each lesson MUST be a real class, not a quick reading script:
 - estimatedDurationMinutes MUST be 30–60 minutes.
 - Build enough section minutes, examples, guided checks, recaps, and practice to justify the duration.
 - The teacher must explain slowly: write/read/explain/check understanding; do not rush from item to item.
+- The teacher must sound like a real human instructor in a live class: calm, observant, direct, and natural.
+- Avoid robotic teacher jargon such as "let us synthesize", "relate this to our objectives", "as per the objective", or anything that sounds like generic AI tutoring copy.
+- Prefer short, grounded teaching language like "Watch this part", "Don't rush this step", "Here's where learners usually slip", and "Check why this works".
 - Match the education level exactly: choose vocabulary, step size, examples, and practice difficulty for ${args.level ?? "the supplied course level"}${args.grade ? ` / Grade ${args.grade}` : ""}. Do not teach below or above that level.
 - Include three ability paths in the lesson_data metadata: support/reteach for struggling learners, core path for on-level learners, and challenge extension for fast learners.
 - For SPSS, Excel, Power BI, statistics software, or other tools, include screenshot-style teaching cues: where to click, what field/output to inspect, and how to interpret it.
@@ -355,7 +378,7 @@ function fallbackBatch(
               type: "heading",
               boardText: `Lesson goal: ${topic}`,
               exactSpokenText: `Lesson goal: ${topic}.`,
-              teacherExplanation: `Today we focus on ${topic}. We will build the idea step by step.`,
+              teacherExplanation: `Today we're working on ${topic}. I'll show it clearly first, then we'll try it together so you can see how it works.`,
               learnerNotes: `This lesson covers ${topic}.`,
               accessibleDescription: `Heading on the board: lesson goal, ${topic}.`,
               whyThisMatters: "Knowing the goal helps you focus on what success looks like.",
@@ -371,7 +394,7 @@ function fallbackBatch(
             type: "bullet" as const,
             boardText: c.split(" ").slice(0, 18).join(" "),
             exactSpokenText: c,
-            teacherExplanation: `${c} Let us slow this down: first identify the key term, then connect it to the lesson objective, then notice how it would appear in a worked example or real case. I will pause on this point because learners often rush past the meaning before they can apply it confidently.`,
+            teacherExplanation: `${c} Don't rush this part. First, notice the main idea. Then check what it means in a real example. This is usually the point where learners move too fast, so I want us to make it solid before we continue.`,
             learnerNotes: c,
             accessibleDescription: c,
             whyThisMatters: null,
@@ -387,7 +410,7 @@ function fallbackBatch(
               type: "question",
               boardText: "Try together: apply today's idea to an example.",
               exactSpokenText: "Let's try one together.",
-              teacherExplanation: "We solve a similar problem together, step by step. I will model the thinking, then ask you to predict the next small move before I continue. This makes the lesson interactive instead of simply reading notes.",
+              teacherExplanation: "We'll do this one together. I'll take the first move, then I'll pause and let you spot the next step before I carry on. That's how you know the method is starting to stick.",
               learnerNotes: "Practice the method with teacher guidance.",
               accessibleDescription: "Guided practice prompt on the board.",
               whyThisMatters: null,
@@ -404,7 +427,7 @@ function fallbackBatch(
               type: "bullet",
               boardText: `Today you learned: ${topic}.`,
               exactSpokenText: `Today you learned about ${topic}.`,
-              teacherExplanation: `We covered ${topic}. Review your notes and ask if anything is unclear.`,
+              teacherExplanation: `That's the main idea for today: ${topic}. Go back over your notes, and if one step still feels shaky, that's the bit to ask about or practise again.`,
               learnerNotes: `Summary: ${topic}.`,
               accessibleDescription: `Summary bullet on the board about ${topic}.`,
               whyThisMatters: null,
@@ -499,9 +522,8 @@ export const generateLessonsForCourse = createServerFn({ method: "POST" })
       }
     }
     if (!materialText) {
-      materialText = `Course: ${course.title}. Subject: ${
-        course.curriculum_subject ?? course.subject ?? ""
-      }. Generate foundational lessons for this course.`;
+      materialText = `Course: ${course.title}. Subject: ${course.curriculum_subject ?? course.subject ?? ""
+        }. Generate foundational lessons for this course.`;
     }
 
     // Generate (AI when available, otherwise deterministic fallback)
@@ -678,7 +700,7 @@ export const generateLessonsForCourse = createServerFn({ method: "POST" })
                 ((item.exactSpokenText.split(/\s+/).length +
                   item.teacherExplanation.split(/\s+/).length) /
                   115) *
-                  60,
+                60,
               ),
             ),
           ),

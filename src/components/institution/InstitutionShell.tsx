@@ -1,36 +1,10 @@
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { type ReactNode } from "react";
-import {
-  LayoutDashboard,
-  School,
-  FolderUp,
-  Settings,
-  LogOut,
-  BookOpen,
-  Users,
-  GraduationCap,
-  UserCheck,
-  ChartBar as BarChart3,
-  Calendar,
-  CreditCard,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-
-const items = [
-  { to: "/institution/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/institution/courses", label: "Courses", icon: BookOpen },
-  { to: "/institution/classrooms", label: "Classrooms", icon: School },
-  { to: "/institution/sessions", label: "Sessions", icon: Calendar },
-  { to: "/institution/resources", label: "Resources", icon: FolderUp },
-  { to: "/institution/students", label: "Students", icon: Users },
-  { to: "/institution/teachers", label: "Teachers", icon: GraduationCap },
-  { to: "/institution/enrollments", label: "Enrollments", icon: UserCheck },
-  { to: "/institution/analytics", label: "Analytics", icon: BarChart3 },
-  { to: "/institution/billing", label: "Billing", icon: CreditCard },
-  { to: "/institution/settings", label: "Settings", icon: Settings },
-] as const;
+import { useDashboardConfig } from "@/hooks/useDashboardConfig";
 
 export function InstitutionShell({
   title,
@@ -42,6 +16,8 @@ export function InstitutionShell({
   children: ReactNode;
 }) {
   const router = useRouter();
+  const location = useLocation();
+  const config = useDashboardConfig();
   const signOut = async () => {
     await supabase.auth.signOut();
     router.navigate({ to: "/auth", replace: true });
@@ -50,22 +26,25 @@ export function InstitutionShell({
     <div className="min-h-screen bg-background">
       <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-border bg-card/40 p-4 md:flex md:flex-col">
         <Link to="/" className="mb-8 px-2">
-          <Logo />
+          <Logo size={34} />
         </Link>
         <nav className="flex-1 space-y-1">
-          {items.map((i) => (
-            <Link
-              key={i.to}
-              to={i.to}
-              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
-              activeProps={{
-                className:
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-accent text-foreground",
-              }}
-            >
-              <i.icon className="h-4 w-4" /> {i.label}
-            </Link>
-          ))}
+          {config.sidebar.map((i) => {
+            const isActive =
+              location.pathname === i.href || location.pathname.startsWith(i.href + "/");
+            return (
+              <Link
+                key={i.href}
+                to={i.href}
+                className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ${isActive
+                    ? "bg-accent text-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                  }`}
+              >
+                <i.icon className="h-4 w-4" /> {i.label}
+              </Link>
+            );
+          })}
         </nav>
         <Button variant="ghost" size="sm" className="justify-start" onClick={signOut}>
           <LogOut className="h-4 w-4" /> Sign out

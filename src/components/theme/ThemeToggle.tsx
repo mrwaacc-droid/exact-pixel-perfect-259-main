@@ -53,7 +53,7 @@ export function ThemeToggle() {
           className="flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent cursor-pointer"
         >
           <div className="flex items-center gap-2">
-            <Laptop className="h-4 w-4 text-slate-500" />
+            <Laptop className="h-4 w-4 text-gray-500" />
             <span>System</span>
           </div>
           {theme === "system" && <Check className="h-4 w-4 text-primary" />}

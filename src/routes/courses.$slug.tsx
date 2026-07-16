@@ -30,7 +30,7 @@ function CourseDetailPage() {
       <header className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-[1100px] items-center justify-between px-5 sm:px-8">
           <Link to="/">
-            <Logo size={30} />
+            <Logo size={34} />
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/pricing" className="rounded-md px-4 py-2 text-sm font-medium text-body hover:text-heading">
@@ -38,7 +38,7 @@ function CourseDetailPage() {
             </Link>
             <Link
               to="/auth"
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-[#07111f] bg-[#07111f] px-5 py-2 text-sm font-bold !text-white hover:bg-[#10233f]"
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-[#221B1C] bg-[#221B1C] px-5 py-2 text-sm font-bold !text-white hover:bg-[#1A1415]"
             >
               Sign in
             </Link>
@@ -86,7 +86,7 @@ function CourseDetailPage() {
                   "Certificate of completion",
                 ].map((f) => (
                   <div key={f} className="flex items-center gap-2 text-sm text-body">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#10233f]" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#221B1C]" />
                     {f}
                   </div>
                 ))}
@@ -95,18 +95,18 @@ function CourseDetailPage() {
 
             {/* Purchase card */}
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-extrabold tracking-tight text-heading">
                     {formatCoursePrice(course.priceUsd, course.pricingLabel)}
                   </span>
                   {course.compareAtPriceUsd ? (
-                    <span className="text-sm font-semibold text-slate-400 line-through">
+                    <span className="text-sm font-semibold text-gray-400 line-through">
                       ${course.compareAtPriceUsd.toFixed(2)}
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-gray-500">
                   {isFreeCourse(course.priceUsd) ? "Free access" : "One-time payment · USD"}
                 </p>
 
@@ -120,7 +120,7 @@ function CourseDetailPage() {
                   {isFreeCourse(course.priceUsd) ? "Enroll free" : `Enroll for ${formatCoursePrice(course.priceUsd)}`}
                 </CTAButton>
 
-                <ul className="mt-6 space-y-2 text-xs text-slate-500">
+                <ul className="mt-6 space-y-2 text-xs text-gray-500">
                   <li className="flex items-center gap-2">
                     <Clock className="h-3.5 w-3.5" /> Self-paced, start anytime
                   </li>

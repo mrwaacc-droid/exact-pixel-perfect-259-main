@@ -64,7 +64,7 @@ function CheckoutPage() {
       <header className="border-b border-border bg-white">
         <div className="mx-auto flex h-16 max-w-[900px] items-center px-5 sm:px-8">
           <Link to="/">
-            <Logo size={28} />
+            <Logo size={34} />
           </Link>
         </div>
       </header>
@@ -75,13 +75,13 @@ function CheckoutPage() {
         ) : !course ? (
           <div className="rounded-lg border border-border bg-white p-10 text-center">
             <h1 className="text-xl font-bold">Course not found</h1>
-            <Link to="/pricing" className="mt-4 inline-block text-sm font-semibold text-[#1F7C80]">
+            <Link to="/pricing" className="mt-4 inline-block text-sm font-semibold text-[var(--crimson)]">
               Browse courses
             </Link>
           </div>
         ) : callbackReference && verifyMutation.isPending ? (
           <div className="rounded-lg border border-border bg-white p-10 text-center">
-            <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#1F7C80]" />
+            <Loader2 className="mx-auto h-8 w-8 animate-spin text-[var(--crimson)]" />
             <h1 className="mt-4 text-xl font-bold">Confirming your payment…</h1>
             <p className="mt-2 text-sm text-body">We're verifying your enrollment with Paystack.</p>
           </div>
@@ -94,7 +94,7 @@ function CheckoutPage() {
             </p>
             <Link
               to="/student/courses"
-              className="mt-6 inline-flex items-center gap-2 rounded-md bg-[#07111f] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#10233f]"
+              className="mt-6 inline-flex items-center gap-2 rounded-md bg-[#221B1C] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#1A1415]"
             >
               Go to My Courses <ArrowRight className="h-4 w-4" />
             </Link>
@@ -108,13 +108,13 @@ function CheckoutPage() {
             </p>
             <button
               onClick={pay}
-              className="mt-6 inline-flex items-center gap-2 rounded-md bg-[#1F7C80] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#1A5256]"
+              className="mt-6 inline-flex items-center gap-2 rounded-md bg-[var(--crimson)] px-5 py-2.5 text-sm font-bold text-white hover:bg-[var(--crimson-dark)]"
             >
               Try again
             </button>
           </div>
         ) : (
-          <div className="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
+          <div className="mx-auto max-w-md rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
             <h1 className="text-2xl font-extrabold tracking-tight">{course.title}</h1>
             {course.institutionName && (
               <p className="mt-1 text-sm text-muted">{course.institutionName}</p>
@@ -123,25 +123,25 @@ function CheckoutPage() {
               <span className="text-4xl font-extrabold">
                 {formatCoursePrice(course.priceUsd, course.pricingLabel)}
               </span>
-              <span className="text-sm font-semibold text-slate-400">USD · one-time</span>
+              <span className="text-sm font-semibold text-gray-400">USD · one-time</span>
             </div>
 
             <ul className="mt-6 space-y-2 text-sm text-body">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#10233f]" /> Full AI teacher-led lessons
+                <CheckCircle2 className="h-4 w-4 text-[#221B1C]" /> Full AI teacher-led lessons
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-[#10233f]" /> Lifetime access
+                <CheckCircle2 className="h-4 w-4 text-[#221B1C]" /> Lifetime access
               </li>
               <li className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#10233f]" /> Secure checkout via Paystack
+                <ShieldCheck className="h-4 w-4 text-[#221B1C]" /> Secure checkout via Paystack
               </li>
             </ul>
 
             <button
               onClick={pay}
               disabled={initMutation.isPending}
-              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#1F7C80] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1A5256] disabled:opacity-60"
+              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--crimson)] px-5 py-3 text-sm font-bold text-white transition hover:bg-[var(--crimson-dark)] disabled:opacity-60"
             >
               {initMutation.isPending ? (
                 <>
@@ -158,7 +158,7 @@ function CheckoutPage() {
                 {(initMutation.error as Error)?.message || "Could not start checkout. Check that USD payments are enabled."}
               </p>
             )}
-            <p className="mt-4 text-center text-[11px] text-slate-400">
+            <p className="mt-4 text-center text-[11px] text-gray-400">
               By enrolling you agree to Klassruum's terms. Instant access after payment.
             </p>
           </div>

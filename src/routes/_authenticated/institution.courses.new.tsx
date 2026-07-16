@@ -36,12 +36,12 @@ function NewInstitutionCoursePage() {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card>
           <CardContent className="space-y-4 p-6">
-            <div className="inline-flex rounded-2xl bg-[#E6F6F3] p-3 text-[#1F7C80]">
+            <div className="inline-flex rounded-2xl bg-crimson-soft p-3 text-[var(--crimson)]">
               <BookOpen className="h-6 w-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-[#0F172A]">Start a new course</h2>
-              <p className="mt-2 text-sm leading-7 text-[#475569]">
+              <h2 className="text-2xl font-bold text-[#191314]">Start a new course</h2>
+              <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
                 Create the course shell first, then add lessons, upload course materials, generate
                 lessons from source files, and publish when the content is ready.
               </p>
@@ -53,7 +53,7 @@ function NewInstitutionCoursePage() {
               <CreateCourseDialog
                 institutionId={institutionId}
                 trigger={
-                  <Button className="bg-[#1F7C80] hover:bg-[#1A5256]">
+                  <Button className="bg-[var(--crimson)] hover:bg-[var(--crimson-dark)]">
                     <Plus className="h-4 w-4" />
                     Create course
                   </Button>
@@ -95,10 +95,10 @@ function WorkflowCard({ icon, title, text }: { icon: ReactNode; title: string; t
     <Card>
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
-          <div className="rounded-xl bg-[#E6F6F3] p-2 text-[#1F7C80]">{icon}</div>
+          <div className="rounded-xl bg-crimson-soft p-2 text-[var(--crimson)]">{icon}</div>
           <div>
-            <h3 className="font-semibold text-[#0F172A]">{title}</h3>
-            <p className="mt-1 text-sm leading-6 text-[#64748B]">{text}</p>
+            <h3 className="font-semibold text-[#191314]">{title}</h3>
+            <p className="mt-1 text-sm leading-6 text-[#8A7478]">{text}</p>
           </div>
         </div>
       </CardContent>

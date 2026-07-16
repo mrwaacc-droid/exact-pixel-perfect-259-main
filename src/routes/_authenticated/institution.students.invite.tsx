@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 import { requireInstitutionStaff } from "@/lib/route-guards";
 
 export const Route = createFileRoute("/_authenticated/institution/students/invite")({
   beforeLoad: (ctx) => requireInstitutionStaff(ctx.context),
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       role="Institution Admin"
       title="Invite Students"
       description="A route prepared for inviting learners individually or in bulk to your institution."

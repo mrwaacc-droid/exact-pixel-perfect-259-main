@@ -120,7 +120,7 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 16px rgba(154, 50, 71, 0.15);
 }
 
 .teacher-avatar-inner {
@@ -285,7 +285,7 @@
 /* Transcript with activity states */
 .transcript-box.active {
   border-color: var(--primary-glow);
-  background: linear-gradient(180deg, var(--primary-light), #d1eceb);
+  background: linear-gradient(180deg, var(--primary-light), var(--crimson-soft));
 }
 
 .transcript-box.active .transcript-content {
@@ -353,8 +353,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(168, 152, 144, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 152, 144, 0.08) 1px, transparent 1px);
   background-size: 28px 28px;
   pointer-events: none;
 }
@@ -441,10 +441,10 @@
     #e8f4fc 50%,
     var(--primary-light) 100%
   );
-  border: 1px solid #a3d9d8;
+  border: 1px solid var(--crimson-soft);
   padding: 16px 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+  box-shadow: 0 2px 8px rgba(154, 50, 71, 0.08);
   position: relative;
 }
 
@@ -505,9 +505,9 @@
 }
 
 .whiteboard-item-active {
-  background: linear-gradient(90deg, var(--primary-light), #d1eceb 30%, var(--primary-light));
+  background: linear-gradient(90deg, var(--primary-light), var(--crimson-soft) 30%, var(--primary-light));
   border-left: 4px solid var(--primary);
-  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 2px 12px rgba(154, 50, 71, 0.12);
   transform: translateX(2px);
 }
 
@@ -548,8 +548,8 @@
 }
 
 .whiteboard-item-ict {
-  border-left-color: #0284c7;
-  background: linear-gradient(90deg, #f0f9ff, #e0f2fe 30%, #f0f9ff);
+  border-left-color: #9A3247;
+  background: linear-gradient(90deg, #FCF4F5, #F7E7EA 30%, #FCF4F5);
 }
 
 /* ---- Key Concept Card ---- */
@@ -814,9 +814,9 @@
 .quick-action-btn:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background: linear-gradient(135deg, var(--primary-light), #d1eceb);
+  background: linear-gradient(135deg, var(--primary-light), var(--crimson-soft));
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 12px rgba(154, 50, 71, 0.15);
 }
 
 .quick-action-btn:active {
@@ -827,14 +827,14 @@
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #ffffff;
   border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 2px 8px rgba(154, 50, 71, 0.25);
 }
 
 .quick-action-btn-primary:hover {
   background: linear-gradient(135deg, var(--primary-dark), var(--primary-dark));
   color: #ffffff;
   border-color: var(--primary-dark);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 16px rgba(154, 50, 71, 0.3);
   transform: translateY(-2px);
 }
 
@@ -884,7 +884,7 @@
 .chat-input:focus {
   border-color: var(--primary);
   background: var(--card);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(154, 50, 71, 0.1);
 }
 
 .chat-input::placeholder {
@@ -941,7 +941,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(25, 19, 20, 0.6);
   backdrop-filter: blur(4px);
 }
 
@@ -1126,7 +1126,7 @@
 }
 
 .audio-btn:hover {
-  background: linear-gradient(135deg, var(--border), #cbd5e1);
+  background: linear-gradient(135deg, var(--border), #D8CCC6);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -1178,13 +1178,13 @@
 .audio-speed-btn-active {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 2px 6px rgba(154, 50, 71, 0.3);
 }
 
 .audio-divider {
   width: 1px;
   height: 28px;
-  background: linear-gradient(180deg, transparent, #cbd5e1, transparent);
+  background: linear-gradient(180deg, transparent, #D8CCC6, transparent);
 }
 
 .audio-label {
@@ -1202,7 +1202,7 @@
 
 .audio-label:hover {
   color: var(--primary);
-  background: rgba(37, 99, 235, 0.06);
+  background: rgba(154, 50, 71, 0.06);
 }
 
 .audio-label-icon {
@@ -1227,7 +1227,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(25, 19, 20, 0.75);
   backdrop-filter: blur(12px);
   animation: fadeIn 0.3s ease;
 }
@@ -1296,10 +1296,10 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  background: linear-gradient(135deg, var(--primary-light), #d1eceb);
+  background: linear-gradient(135deg, var(--primary-light), var(--crimson-soft));
   color: var(--primary-dark);
   border-radius: 24px;
-  border: 1px solid #a3d9d8;
+  border: 1px solid var(--crimson-soft);
 }
 
 .welcome-badge svg {
@@ -1427,12 +1427,12 @@
 
 .step-item:hover {
   background: linear-gradient(135deg, var(--background), var(--muted));
-  border-color: #cbd5e1;
+  border-color: #D8CCC6;
   transform: translateX(4px);
 }
 
 .step-item-active {
-  background: linear-gradient(135deg, var(--primary-light), #d1eceb);
+  background: linear-gradient(135deg, var(--primary-light), var(--crimson-soft));
   border-color: var(--primary);
   box-shadow: 0 2px 12px rgba(79, 70, 229, 0.15);
 }
@@ -1463,17 +1463,17 @@
 .step-check-active {
   background: linear-gradient(135deg, var(--primary-glow), var(--primary));
   color: var(--primary-foreground);
-  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 6px rgba(194, 85, 101, 0.3);
   animation: pulseCheck 2s ease-in-out infinite;
 }
 
 @keyframes pulseCheck {
   0%,
   100% {
-    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 2px 6px rgba(194, 85, 101, 0.3);
   }
   50% {
-    box-shadow: 0 2px 12px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 2px 12px rgba(194, 85, 101, 0.5);
   }
 }
 
@@ -1532,7 +1532,7 @@
 }
 
 .settings-item:hover {
-  border-color: #cbd5e1;
+  border-color: #D8CCC6;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
@@ -1834,7 +1834,7 @@
   align-items: baseline;
   gap: 12px;
   padding: 10px 0;
-  border-bottom: 1px solid #f8fafc;
+  border-bottom: 1px solid #FBF8F5;
   animation: teaching-fade-in 0.4s ease;
 }
 
@@ -1858,7 +1858,7 @@
 
 .teaching-board-line-number {
   font-size: 0.7rem;
-  color: #cbd5e1;
+  color: #D8CCC6;
   font-weight: 600;
   min-width: 18px;
   text-align: right;
@@ -2036,8 +2036,8 @@
 }
 
 .teaching-step-type-question {
-  background: #e0f2fe;
-  color: #075985;
+  background: #F7E7EA;
+  color: #6B1C2E;
 }
 
 /* ---- Controls ---- */
@@ -2303,7 +2303,7 @@
 }
 
 .ai-video-speaking-ring-active .ai-video-speaking-ring-inner {
-  border-color: var(--ring-color, rgba(37, 99, 235, 0.4));
+  border-color: var(--ring-color, rgba(154, 50, 71, 0.4));
   animation: speakingRingPulseInner 1.5s ease-in-out infinite;
 }
 
@@ -2316,7 +2316,7 @@
 }
 
 .ai-video-speaking-ring-active .ai-video-speaking-ring-outer {
-  border-color: var(--ring-color, rgba(37, 99, 235, 0.2));
+  border-color: var(--ring-color, rgba(154, 50, 71, 0.2));
   animation: speakingRingPulseOuter 2s ease-in-out infinite;
 }
 
@@ -2485,7 +2485,7 @@
   height: 50px;
   background: linear-gradient(180deg, var(--primary), var(--primary-dark));
   border-radius: 8px 8px 16px 16px;
-  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 8px rgba(154, 50, 71, 0.2);
 }
 
 /* ---- Avatar Glow ---- */
@@ -2686,7 +2686,7 @@
 
 .ai-video-control-btn:hover:not(:disabled) {
   background: var(--muted);
-  border-color: #cbd5e1;
+  border-color: #D8CCC6;
 }
 
 .ai-video-control-btn:disabled {
@@ -2729,7 +2729,7 @@
 
 .ai-video-question-textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 2px rgba(154, 50, 71, 0.1);
 }
 
 .ai-video-question-actions {
@@ -2806,7 +2806,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(25, 19, 20, 0.85);
 }
 
 /* ---- Integrated Classroom Layout ---- */

@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { uploadCourseMaterial } from "@/lib/course-materials.functions";
+import { supabase } from "@/integrations/supabase/client";
 
 const MATERIAL_TYPES = [
   { value: "pdf", label: "PDF Document" },
@@ -72,10 +73,30 @@ export function MaterialUploadDialog({
       let extractedText: string | undefined;
 
       if (uploadMethod === "file" && form.file) {
-        // For Phase 1: just use file name as placeholder
-        // In production, upload to Supabase Storage and get URL
-        fileUrl = `temp:${form.file.name}`;
-        extractedText = `[File: ${form.file.name}] Please extract text from uploaded file.`;
+        const file = form.file;
+
+        // Pull the text out of the file so lesson generation can ground on it.
+        // Loaded lazily: the pdf parser is heavy and browser-only.
+        try {
+          const { extractMaterialText } = await import("@/lib/pdf-extract");
+          extractedText = (await extractMaterialText(file)) ?? undefined;
+        } catch {
+          extractedText = undefined;
+        }
+
+        // Store the original file; extraction failure alone shouldn't block upload.
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const path = `${courseId}/${crypto.randomUUID()}-${safeName}`;
+        const { error: uploadError } = await supabase.storage
+          .from("resources")
+          .upload(path, file);
+        if (uploadError && !extractedText) {
+          throw new Error(
+            `Could not store the file (${uploadError.message}). ` +
+              "Try again, or paste the content using the Text tab.",
+          );
+        }
+        fileUrl = uploadError ? undefined : path;
       } else if (uploadMethod === "text") {
         extractedText = form.text;
       } else if (uploadMethod === "link") {
@@ -183,11 +204,11 @@ export function MaterialUploadDialog({
                     </div>
                   </label>
                   {form.file && (
-                    <div className="mt-4 p-3 bg-[#e8f5f5] rounded flex items-center justify-between">
-                      <span className="text-sm text-[#0F172A] truncate">{form.file.name}</span>
+                    <div className="mt-4 p-3 bg-[#F7E7EA] rounded flex items-center justify-between">
+                      <span className="text-sm text-[#191314] truncate">{form.file.name}</span>
                       <button
                         onClick={() => setForm({ ...form, file: null })}
-                        className="text-[#1F7C80] hover:text-[#1A5256]"
+                        className="text-[#7D2233] hover:text-[#521326]"
                       >
                         <X className="h-4 w-4" />
                       </button>

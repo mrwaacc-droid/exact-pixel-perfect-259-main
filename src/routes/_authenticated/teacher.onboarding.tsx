@@ -137,8 +137,8 @@ function TeacherOnboardingWizard() {
                 key={s.key}
                 className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition ${
                   i <= step
-                    ? "bg-[#1F7C80] text-white"
-                    : "bg-[#E2E8F0] text-[#94A3B8]"
+                    ? "bg-crimson text-white"
+                    : "bg-[var(--border)] text-[#A89890]"
                 }`}
               >
                 {i < step ? <Check className="h-3.5 w-3.5" /> : i + 1}
@@ -153,8 +153,8 @@ function TeacherOnboardingWizard() {
         {step === 0 && (
           <Card>
             <CardContent className="p-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EAF8F7]">
-                <WandSparkles className="h-7 w-7 text-[#1F7C80]" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-crimson-soft">
+                <WandSparkles className="h-7 w-7 text-crimson" />
               </div>
               <h2 className="text-2xl font-black text-[#132033]">Welcome to Klassruum!</h2>
               <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-[#61758A]">
@@ -167,8 +167,8 @@ function TeacherOnboardingWizard() {
                   { icon: <BookOpen className="h-5 w-5" />, title: "Subjects", desc: "What you teach" },
                   { icon: <Calendar className="h-5 w-5" />, title: "Availability", desc: "When you can teach" },
                 ].map((item) => (
-                  <div key={item.title} className="rounded-2xl border border-[#E2E8F0] bg-[#FAFCFE] p-4 text-center">
-                    <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF8F7] text-[#1F7C80]">
+                  <div key={item.title} className="rounded-2xl border border-[var(--border)] bg-[#FAFCFE] p-4 text-center">
+                    <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-crimson-soft text-crimson">
                       {item.icon}
                     </div>
                     <p className="font-bold text-[#132033]">{item.title}</p>
@@ -210,7 +210,7 @@ function TeacherOnboardingWizard() {
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Tell learners about your teaching experience and style..."
                   rows={4}
-                  className="w-full rounded-xl border border-[#D9E7EE] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#1F7C80]"
+                  className="w-full rounded-xl border border-[#D9E7EE] bg-white px-4 py-3 text-sm outline-none transition focus:border-crimson"
                 />
               </div>
             </CardContent>
@@ -240,15 +240,15 @@ function TeacherOnboardingWizard() {
                     onClick={() => toggleSubject(subject)}
                     className={`flex items-center gap-3 rounded-xl border-2 p-3 text-left text-sm font-semibold transition ${
                       selectedSubjects.includes(subject)
-                        ? "border-[#1F7C80] bg-[#EAF8F7] text-[#1F7C80]"
-                        : "border-[#E2E8F0] bg-white text-[#132033] hover:border-[#CBD5E1]"
+                        ? "border-crimson bg-crimson-soft text-crimson"
+                        : "border-[var(--border)] bg-white text-[#132033] hover:border-[#D8CCC6]"
                     }`}
                   >
                     <div
                       className={`flex h-5 w-5 items-center justify-center rounded border ${
                         selectedSubjects.includes(subject)
-                          ? "border-[#1F7C80] bg-[#1F7C80]"
-                          : "border-[#CBD5E1] bg-white"
+                          ? "border-crimson bg-crimson"
+                          : "border-[#D8CCC6] bg-white"
                       }`}
                     >
                       {selectedSubjects.includes(subject) && (
@@ -285,12 +285,12 @@ function TeacherOnboardingWizard() {
 
               {slots.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-[#D9E7EE] bg-[#FBFDFC] p-8 text-center">
-                  <Clock className="mx-auto h-8 w-8 text-[#94A3B8]" />
+                  <Clock className="mx-auto h-8 w-8 text-[#A89890]" />
                   <h3 className="mt-3 font-bold text-[#132033]">No slots yet</h3>
                   <p className="mt-1 text-sm text-[#61758A]">
                     You can skip this for now and set your availability later in Settings.
                   </p>
-                  <Button className="mt-4 bg-[#1F7C80] hover:bg-[#1A5256]" onClick={addSlot}>
+                  <Button className="mt-4 bg-crimson hover:bg-crimson-dark" onClick={addSlot}>
                     <Plus className="mr-1.5 h-4 w-4" /> Add Your First Slot
                   </Button>
                 </div>
@@ -299,12 +299,12 @@ function TeacherOnboardingWizard() {
                   {slots.map((slot, index) => (
                     <div
                       key={index}
-                      className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#E2E8F0] bg-[#FAFCFE] p-4"
+                      className="flex flex-wrap items-center gap-3 rounded-2xl border border-[var(--border)] bg-[#FAFCFE] p-4"
                     >
                       <select
                         value={slot.day_of_week}
                         onChange={(e) => updateSlot(index, "day_of_week", Number(e.target.value))}
-                        className="rounded-xl border border-[#D9E7EE] bg-white px-3 py-2 text-sm font-semibold text-[#132033] outline-none focus:border-[#1F7C80]"
+                        className="rounded-xl border border-[#D9E7EE] bg-white px-3 py-2 text-sm font-semibold text-[#132033] outline-none focus:border-crimson"
                       >
                         {DAYS.map((day, i) => (
                           <option key={day} value={i}>
@@ -330,7 +330,7 @@ function TeacherOnboardingWizard() {
                       <button
                         type="button"
                         onClick={() => removeSlot(index)}
-                        className="ml-auto rounded-xl p-2 text-[#94A3B8] transition hover:bg-red-50 hover:text-red-500"
+                        className="ml-auto rounded-xl p-2 text-[#A89890] transition hover:bg-red-50 hover:text-red-500"
                       >
                         ×
                       </button>
@@ -354,17 +354,17 @@ function TeacherOnboardingWizard() {
                 Your teaching profile is ready. Here's a summary:
               </p>
               <div className="mx-auto mt-6 max-w-md space-y-3 text-left">
-                <div className="rounded-xl border border-[#E2E8F0] bg-[#FAFCFE] p-4">
+                <div className="rounded-xl border border-[var(--border)] bg-[#FAFCFE] p-4">
                   <p className="text-xs font-bold uppercase text-[#7B8EA2]">Name</p>
                   <p className="font-semibold text-[#132033]">{displayName || "Not set"}</p>
                 </div>
-                <div className="rounded-xl border border-[#E2E8F0] bg-[#FAFCFE] p-4">
+                <div className="rounded-xl border border-[var(--border)] bg-[#FAFCFE] p-4">
                   <p className="text-xs font-bold uppercase text-[#7B8EA2]">Subjects</p>
                   <p className="font-semibold text-[#132033]">
                     {selectedSubjects.length > 0 ? selectedSubjects.join(", ") : "None selected"}
                   </p>
                 </div>
-                <div className="rounded-xl border border-[#E2E8F0] bg-[#FAFCFE] p-4">
+                <div className="rounded-xl border border-[var(--border)] bg-[#FAFCFE] p-4">
                   <p className="text-xs font-bold uppercase text-[#7B8EA2]">Availability</p>
                   <p className="font-semibold text-[#132033]">
                     {slots.length > 0
@@ -387,11 +387,11 @@ function TeacherOnboardingWizard() {
             <div />
           )}
           {step < STEPS.length - 1 ? (
-            <Button className="bg-[#1F7C80] hover:bg-[#1A5256]" onClick={next}>
+            <Button className="bg-crimson hover:bg-crimson-dark" onClick={next}>
               Continue <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           ) : (
-            <Button className="bg-[#1F7C80] hover:bg-[#1A5256]" onClick={complete}>
+            <Button className="bg-crimson hover:bg-crimson-dark" onClick={complete}>
               Go to Dashboard <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           )}

@@ -71,13 +71,13 @@ function DemoClassroomPage() {
     const content = getDemoLessonContent(selectedLesson);
     if (!content) {
       return (
-        <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC]">
+        <div className="flex min-h-screen items-center justify-center bg-[#FBF8F5]">
           <div className="text-center">
-            <p className="text-[#64748B]">Lesson not found.</p>
+            <p className="text-[#6B5E57]">Lesson not found.</p>
             <button
               type="button"
               onClick={() => setSelectedLesson(null)}
-              className="mt-4 inline-flex h-10 items-center justify-center rounded-md bg-[#07111f] px-4 text-sm font-semibold text-white"
+              className="mt-4 inline-flex h-10 items-center justify-center rounded-md bg-[var(--ink)] px-4 text-sm font-semibold text-white"
             >
               Back to lessons
             </button>
@@ -91,22 +91,22 @@ function DemoClassroomPage() {
   }
 
   return (
-    <div className="demo-classroom-shell min-h-screen bg-[#F6F8FB] text-[#07111f]">
-      <header className="sticky top-0 z-40 border-b border-[#D8E0EA] bg-white/95 backdrop-blur">
+    <div className="demo-classroom-shell min-h-screen bg-[#FBF8F5] text-[var(--ink)]">
+      <header className="sticky top-0 z-40 border-b border-[#E5E0DB] bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2">
-            <Logo />
+            <Logo size={34} />
           </Link>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
               to="/auth"
-              className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border border-[#D8E0EA] bg-white px-3 text-xs font-semibold text-[#10233F] transition-colors hover:border-[#B8C7D9] hover:bg-[#F6F8FB] sm:px-4 sm:text-sm"
+              className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border border-[#E5E0DB] bg-white px-3 text-xs font-semibold text-[#1A1415] transition-colors hover:border-[#D5CFC9] hover:bg-[#FBF8F5] sm:px-4 sm:text-sm"
             >
               Sign in
             </Link>
             <Link
               to="/auth"
-              className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border border-[#07111F] bg-[#07111F] px-3 text-xs font-semibold text-white transition-colors hover:bg-[#10233F] sm:px-4 sm:text-sm"
+              className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border border-[#221B1C] bg-[#221B1C] px-3 text-xs font-semibold text-white transition-colors hover:bg-[#1A1415] sm:px-4 sm:text-sm"
             >
               Get started
             </Link>
@@ -116,16 +116,16 @@ function DemoClassroomPage() {
 
       <main className="mx-auto max-w-6xl px-5 py-8 sm:px-6 lg:py-10">
         <section className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-stretch">
-          <div className="border border-[#D8E0EA] bg-white p-6 shadow-[0_10px_28px_rgba(7,17,31,0.06)] sm:p-8">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-[#D8E0EA] bg-[#F6F8FB] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-[#10233F]">
+          <div className="border border-[#E5E0DB] bg-white p-6 shadow-[0_10px_28px_rgba(34,27,28,0.06)] sm:p-8">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-[#E5E0DB] bg-[#FBF8F5] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-[#1A1415]">
               <Sparkles className="h-3.5 w-3.5" />
               No account needed
             </div>
 
-            <h1 className="max-w-2xl font-headings text-3xl font-extrabold leading-tight tracking-tight text-[#07111F] sm:text-4xl">
+            <h1 className="max-w-2xl font-headings text-3xl font-extrabold leading-tight tracking-tight text-[#221B1C] sm:text-4xl">
               Choose a lesson, then enter the classroom.
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-[#475569]">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-[#57494A]">
               Try a full teaching session with voice, board work, captions, notes, and learner
               support running together. The demo starts immediately in your browser.
             </p>
@@ -137,7 +137,7 @@ function DemoClassroomPage() {
             </div>
           </div>
 
-          <div className="border border-[#D8E0EA] bg-[#07111F] p-6 text-white shadow-[0_10px_28px_rgba(7,17,31,0.14)]">
+          <div className="border border-[#E5E0DB] bg-[#221B1C] p-6 text-white shadow-[0_10px_28px_rgba(34,27,28,0.14)]">
             <div className="flex items-center justify-between gap-4 border-b border-white/12 pb-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/50">
@@ -146,7 +146,7 @@ function DemoClassroomPage() {
                 <p className="mt-1 text-lg font-bold text-white">What opens next</p>
               </div>
               <div className="flex h-10 w-10 items-center justify-center border border-white/12 bg-white/8">
-                <PanelTop className="h-5 w-5 text-cyan-100" />
+                <PanelTop className="h-5 w-5 text-[var(--crimson-soft)]" />
               </div>
             </div>
 
@@ -157,10 +157,10 @@ function DemoClassroomPage() {
                 ["Learner support", "Questions, notes, transcript, and access tools stay close."],
               ].map(([title, desc]) => (
                 <div key={title} className="flex gap-3">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan-200" />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--crimson-soft)]" />
                   <div>
                     <p className="text-sm font-bold text-white">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-white/62">{desc}</p>
+                    <p className="mt-1 text-sm leading-6 text-white/60">{desc}</p>
                   </div>
                 </div>
               ))}
@@ -171,14 +171,14 @@ function DemoClassroomPage() {
         <section className="mt-8" aria-label="Demo lessons">
           <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#64748B]">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#6B5E57]">
                 Demo lessons
               </p>
-              <h2 className="mt-1 font-headings text-xl font-extrabold text-[#07111F]">
+              <h2 className="mt-1 font-headings text-xl font-extrabold text-[#221B1C]">
                 Pick one teaching path
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-6 text-[#64748B]">
+            <p className="max-w-md text-sm leading-6 text-[#6B5E57]">
               Each lesson opens the same classroom environment, tuned to the subject and teacher.
             </p>
           </div>
@@ -220,17 +220,17 @@ function DemoClassroomPage() {
           />
         </section>
 
-        <section className="mt-8 border border-[#D8E0EA] bg-white p-5 text-left shadow-[0_10px_28px_rgba(7,17,31,0.06)] sm:p-6">
-          <div className="flex flex-col justify-between gap-3 border-b border-[#E8EEF5] pb-5 sm:flex-row sm:items-end">
+        <section className="mt-8 border border-[#E5E0DB] bg-white p-5 text-left shadow-[0_10px_28px_rgba(34,27,28,0.06)] sm:p-6">
+          <div className="flex flex-col justify-between gap-3 border-b border-[#EDEBE8] pb-5 sm:flex-row sm:items-end">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#64748B]">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#6B5E57]">
                 What to expect
               </p>
-              <h2 className="mt-1 font-headings text-xl font-extrabold text-[#07111F]">
+              <h2 className="mt-1 font-headings text-xl font-extrabold text-[#221B1C]">
                 A classroom rhythm, not a video playlist
               </h2>
             </div>
-            <ShieldCheck className="hidden h-6 w-6 text-[#10233F] sm:block" />
+            <ShieldCheck className="hidden h-6 w-6 text-[#1A1415] sm:block" />
           </div>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -253,19 +253,19 @@ function DemoClassroomPage() {
               ],
             ].map(([title, desc], i) => (
               <div key={title} className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-[#D8E0EA] bg-[#F6F8FB] text-sm font-bold text-[#10233F]">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-[#E5E0DB] bg-[#FBF8F5] text-sm font-bold text-[#1A1415]">
                   {i + 1}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#07111F]">{title}</h3>
-                  <p className="text-sm text-[#64748B]">{desc}</p>
+                  <h3 className="font-semibold text-[#221B1C]">{title}</h3>
+                  <p className="text-sm text-[#6B5E57]">{desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <p className="mt-8 text-center text-sm text-[#94A3B8]">
+        <p className="mt-8 text-center text-sm text-[#9A8D88]">
           This demo runs entirely in your browser. No account or installation required.
         </p>
       </main>
@@ -281,7 +281,7 @@ function LessonCard({ lesson, onSelect }: { lesson: DemoLessonMeta; onSelect: ()
     <button
       type="button"
       onClick={onSelect}
-      className="group flex h-full flex-col overflow-hidden border border-[#D8E0EA] bg-white text-left shadow-[0_10px_28px_rgba(7,17,31,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#B8C7D9] hover:shadow-[0_18px_42px_rgba(7,17,31,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10233F] focus-visible:ring-offset-2"
+      className="group flex h-full flex-col overflow-hidden border border-[#E5E0DB] bg-white text-left shadow-[0_10px_28px_rgba(34,27,28,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#D5CFC9] hover:shadow-[0_18px_42px_rgba(34,27,28,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1415] focus-visible:ring-offset-2"
     >
       <div className={`h-1.5 ${visual.bar}`} />
       <div className="flex flex-1 flex-col p-5">
@@ -290,20 +290,20 @@ function LessonCard({ lesson, onSelect }: { lesson: DemoLessonMeta; onSelect: ()
             <LessonIcon className="h-6 w-6" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748B]">
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#6B5E57]">
               {lesson.subject}
             </p>
-            <h3 className="mt-1 text-lg font-extrabold leading-tight text-[#07111F] transition-colors group-hover:text-[#10233F]">
+            <h3 className="mt-1 text-lg font-extrabold leading-tight text-[#221B1C] transition-colors group-hover:text-[#1A1415]">
               {lesson.title}
             </h3>
           </div>
         </div>
 
-        <p className="text-sm font-semibold text-[#475569]">{lesson.course}</p>
-        <p className="mt-3 flex-1 text-sm leading-6 text-[#475569]">{lesson.description}</p>
+        <p className="text-sm font-semibold text-[#57494A]">{lesson.course}</p>
+        <p className="mt-3 flex-1 text-sm leading-6 text-[#57494A]">{lesson.description}</p>
 
-        <div className="mt-5 border-t border-[#E8EEF5] pt-4">
-          <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[#64748B]">
+        <div className="mt-5 border-t border-[#EDEBE8] pt-4">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[#6B5E57]">
             <span className="flex items-center gap-1">
               <GraduationCap className="h-3.5 w-3.5" />
               {lesson.teacher}
@@ -313,7 +313,7 @@ function LessonCard({ lesson, onSelect }: { lesson: DemoLessonMeta; onSelect: ()
               {lesson.duration}
             </span>
           </div>
-          <span className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md border border-[#07111F] bg-[#07111F] text-sm font-bold text-white transition-colors group-hover:bg-[#10233F]">
+          <span className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md border border-[#221B1C] bg-[#221B1C] text-sm font-bold text-white transition-colors group-hover:bg-[#1A1415]">
             <PlayCircle className="h-4 w-4" />
             Start lesson
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -326,9 +326,9 @@ function LessonCard({ lesson, onSelect }: { lesson: DemoLessonMeta; onSelect: ()
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#E8EEF5] bg-[#F6F8FB] p-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#64748B]">{label}</p>
-      <p className="mt-2 text-lg font-bold tracking-tight text-[#07111F]">{value}</p>
+    <div className="rounded-md border border-[#EDEBE8] bg-[#FBF8F5] p-3">
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6B5E57]">{label}</p>
+      <p className="mt-2 text-lg font-bold tracking-tight text-[#221B1C]">{value}</p>
     </div>
   );
 }
@@ -343,12 +343,12 @@ function FeatureCard({
   desc: string;
 }) {
   return (
-    <div className="rounded-lg border border-[#D8E0EA] bg-white p-4 shadow-[0_10px_28px_rgba(7,17,31,0.05)]">
-      <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#D8E0EA] bg-[#F6F8FB] text-[#10233F]">
+    <div className="rounded-lg border border-[#E5E0DB] bg-white p-4 shadow-[0_10px_28px_rgba(34,27,28,0.05)]">
+      <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#E5E0DB] bg-[#FBF8F5] text-[#1A1415]">
         <Icon className="h-5 w-5" />
       </div>
-      <h3 className="mt-3 font-semibold text-[#07111F]">{title}</h3>
-      <p className="mt-1 text-sm leading-6 text-[#64748B]">{desc}</p>
+      <h3 className="mt-3 font-semibold text-[#221B1C]">{title}</h3>
+      <p className="mt-1 text-sm leading-6 text-[#6B5E57]">{desc}</p>
     </div>
   );
 }
@@ -361,8 +361,8 @@ function getLessonVisual(lesson: DemoLessonMeta): {
   if (lesson.subject === "Mathematics") {
     return {
       icon: Calculator,
-      iconBg: "bg-[#2563EB]",
-      bar: "bg-[#2563EB]",
+      iconBg: "bg-[var(--crimson)]",
+      bar: "bg-[var(--crimson)]",
     };
   }
 

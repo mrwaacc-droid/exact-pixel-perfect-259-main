@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 
 export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/teachers")({
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       title="Course Teachers"
       description="Manage teachers assigned to this course"
       role="Institution Admin"

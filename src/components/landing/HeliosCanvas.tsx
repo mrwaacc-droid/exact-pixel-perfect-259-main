@@ -16,7 +16,7 @@ export const HeliosCanvas: React.FC<HeliosCanvasProps> = () => {
   return (
     <div
       className={`fixed inset-0 pointer-events-none overflow-hidden z-0 transition-colors duration-300 ${
-        isDark ? "bg-[#030712]" : "bg-[#f8fafc]"
+        isDark ? "bg-[#030712]" : "bg-[#FBF8F5]"
       }`}
       aria-hidden="true"
     >
@@ -72,8 +72,8 @@ export const HeliosCanvas: React.FC<HeliosCanvasProps> = () => {
           backgroundImage: isDark
             ? `linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
                linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px)`
-            : `linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px),
-               linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px)`,
+            : `linear-gradient(to right, rgba(25, 19, 20, 0.08) 1px, transparent 1px),
+               linear-gradient(to bottom, rgba(25, 19, 20, 0.08) 1px, transparent 1px)`,
           backgroundSize: "48px 48px",
         }}
       />

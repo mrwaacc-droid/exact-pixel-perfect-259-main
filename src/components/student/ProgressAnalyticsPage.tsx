@@ -94,7 +94,7 @@ export function ProgressAnalyticsPage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             to="/student/dashboard"
-            className="flex items-center gap-2 text-[#1F7C80] hover:text-[#1A5256] font-medium"
+            className="flex items-center gap-2 text-[#7D2233] hover:text-[#521326] font-medium"
           >
             <ArrowLeft size={18} />
             Back to Dashboard
@@ -111,7 +111,7 @@ export function ProgressAnalyticsPage() {
           <Card>
             <CardContent className="pt-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#1F7C80] mb-2">
+                <div className="text-3xl font-bold text-[#7D2233] mb-2">
                   {analyticsData.totalLessonsCompleted}
                 </div>
                 <div className="text-sm text-gray-600">Lessons Completed</div>
@@ -219,7 +219,7 @@ export function ProgressAnalyticsPage() {
                     <div className="flex-1 flex items-center gap-2">
                       <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
                         <div
-                          className="bg-[#1F7C80] h-full transition-all"
+                          className="bg-[#7D2233] h-full transition-all"
                           style={{
                             width: `${(day.minutes / maxWeeklyMinutes) * 100}%`,
                           }}

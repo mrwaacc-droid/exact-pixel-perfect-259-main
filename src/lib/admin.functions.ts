@@ -898,7 +898,7 @@ export const getPlatformAiSettings = createServerFn({ method: "GET" })
         name: "DeepSeek",
         configured: Boolean(process.env.DEEPSEEK_API_KEY),
         baseUrl: process.env.DEEPSEEK_BASE_URL ?? "https://api.deepseek.com",
-        model: process.env.DEEPSEEK_MODEL ?? "deepseek-chat",
+        model: process.env.DEEPSEEK_MODEL ?? "deepseek-v4-flash",
       },
       {
         name: "OpenAI",

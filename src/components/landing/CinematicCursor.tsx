@@ -134,11 +134,11 @@ export function CinematicCursor() {
     >
       <div
         ref={dotRef}
-        className="lp-cursor-dot absolute w-2 h-2 rounded-full bg-[#1F7C80] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_rgba(31,124,128,0.8),0_0_24px_rgba(31,124,128,0.4)] transition-transform duration-100 ease-out"
+        className="lp-cursor-dot absolute w-2 h-2 rounded-full bg-[var(--crimson)] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_rgba(31,124,128,0.8),0_0_24px_rgba(31,124,128,0.4)] transition-transform duration-100 ease-out"
       />
       <div
         ref={ringRef}
-        className="lp-cursor-ring absolute w-9 h-9 rounded-full border-1.5 border-[#1F7C80]/50 -translate-x-1/2 -translate-y-1/2 transition-[width,height,border-color] duration-300 ease-out"
+        className="lp-cursor-ring absolute w-9 h-9 rounded-full border-1.5 border-[var(--crimson)]/50 -translate-x-1/2 -translate-y-1/2 transition-[width,height,border-color] duration-300 ease-out"
       />
     </div>
   );

@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 
 export const Route = createFileRoute("/_authenticated/admin/kingpin-courses/$courseId/materials")({
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       title="Course Materials"
       description="Manage KingPin course materials"
       role="Platform Admin"

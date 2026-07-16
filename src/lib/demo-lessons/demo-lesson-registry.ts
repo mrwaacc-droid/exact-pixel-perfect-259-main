@@ -43,7 +43,7 @@ export const DEMO_LESSON_LIST: DemoLessonMeta[] = [
     teacher: "Mr. Klass",
     duration: "~15 min",
     icon: "📐",
-    color: "bg-[#2563EB]",
+    color: "bg-[#9A3247]",
     description:
       "Learn to factor quadratic equations step by step — from identifying the equation to finding solutions.",
   },

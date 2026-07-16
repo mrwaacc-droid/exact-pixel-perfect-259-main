@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/generate-lessons")({
-  component: () => (
-    <RouteStubPage
-      title="Generate Lessons"
-      description="AI lesson generation settings"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+// Generation runs from the Materials tab of the course detail page.
+export const Route = createFileRoute(
+  "/_authenticated/institution/courses/$courseId/generate-lessons",
+)({
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/institution/courses/$courseId",
+      params: { courseId: params.courseId },
+    } as any);
+  },
 });

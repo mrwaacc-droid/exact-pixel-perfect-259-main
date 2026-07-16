@@ -20,7 +20,7 @@ function StudentSettings() {
     <StudentShell title="Settings">
       <div className="mx-auto max-w-2xl space-y-4">
         <div className="kr-pcard flex items-center gap-4 p-5">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e8f5f5] text-lg font-bold text-[#1F7C80]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-crimson-soft text-lg font-bold text-crimson">
             {(p?.fullName?.[0] ?? "S").toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">

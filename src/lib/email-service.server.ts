@@ -1,10 +1,14 @@
 import { getServerConfig } from "@/lib/config.server";
 
-type EmailTemplateKey =
+export type EmailTemplateKey =
   | "institution_member_invite"
   | "institution_invite_accepted"
   | "institution_owner_verify_email"
-  | "institution_owner_welcome";
+  | "institution_owner_welcome"
+  | "admission_status_update"
+  | "admission_enrollment_invite"
+  | "session_reminder"
+  | "certificate_issued";
 
 type EmailJobPayload = Record<string, unknown>;
 
@@ -25,13 +29,13 @@ type RenderedEmailTemplate = {
 
 const BRAND = {
   companyName: "Klassruum",
-  supportEmail: "support@klassruum.com",
-  replyTo: "support@klassruum.com",
-  siteUrl: "https://klassruum.com",
+  supportEmail: "support@klassruum.co.ke",
+  replyTo: "support@klassruum.co.ke",
+  siteUrl: "https://klassruum.co.ke",
   logoUrl: "/images/auth-side.png",
   primary: "#10233f",
-  secondary: "#1f7c80",
-  accent: "#2563eb",
+  secondary: "#7D2233",
+  accent: "#7D2233",
   ink: "#10233f",
   muted: "#5b6b82",
   border: "#dbe6f3",
@@ -138,7 +142,7 @@ function renderShell(params: {
                     Need help? Reply to this email or contact us at
                     <a href="mailto:${BRAND.supportEmail}" style="color:${BRAND.accent};text-decoration:none;font-weight:700;">${BRAND.supportEmail}</a>.
                     Visit
-                    <a href="${BRAND.siteUrl}" style="color:${BRAND.accent};text-decoration:none;font-weight:700;">klassruum.com</a>
+                    <a href="${BRAND.siteUrl}" style="color:${BRAND.accent};text-decoration:none;font-weight:700;">klassruum.co.ke</a>
                     for product and institution support.
                   </p>
                 </div>
@@ -356,6 +360,211 @@ function renderOwnerWelcomeTemplate(
   } satisfies RenderedEmailTemplate;
 }
 
+function renderAdmissionStatusTemplate(
+  subject: string,
+  recipientName?: string | null,
+  payload?: EmailJobPayload,
+) {
+  const status = escapeHtml(payload?.status ?? "updated");
+  const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+  const signInUrl = toAbsoluteUrl("/auth");
+
+  const bodyHtml = `
+    <p style="margin:0 0 16px 0;">Hello ${getRecipientLabel(recipientName)},</p>
+    <p style="margin:0 0 18px 0;">Your admission application status has changed to <strong style="text-transform:capitalize;">${status}</strong>.</p>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:0 0 20px 0;border-collapse:separate;border-spacing:0;">
+      <tr>
+        <td style="padding:18px 20px;border:1px solid ${BRAND.border};border-radius:20px;background:#fbfdff;">
+          <p style="margin:0 0 8px 0;font-size:13px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.secondary};">Application status</p>
+          <p style="margin:0;"><strong>Status:</strong> <span style="text-transform:capitalize;">${status}</span></p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 16px 0;">Sign in to your Klassruum account for the full details and any next steps.</p>
+  `;
+
+  const text = [
+    `Hello ${recipientName?.trim() || "there"},`,
+    "",
+    `Your admission application status has changed to ${String(payload?.status ?? "updated")}.`,
+    "",
+    `Sign in: ${signInUrl}`,
+    `Support: ${BRAND.supportEmail}`,
+  ].join("\n");
+
+  return {
+    html: renderShell({
+      preheader: `Your admission application is now ${status}.`,
+      title: `Application ${statusLabel}`,
+      eyebrow: "Admissions",
+      intro: "Here's the latest update on your Klassruum admission application.",
+      bodyHtml,
+      ctaLabel: "Sign in to Klassruum",
+      ctaUrl: signInUrl,
+      footerNote: "This update was sent automatically after your admission application status changed.",
+    }),
+    text,
+    fromEmail: BRAND.supportEmail,
+    fromName: "Klassruum Support",
+    replyTo: BRAND.replyTo,
+  } satisfies RenderedEmailTemplate;
+}
+
+function renderAdmissionEnrollmentInviteTemplate(
+  subject: string,
+  recipientName?: string | null,
+  payload?: EmailJobPayload,
+) {
+  const courseTitle = escapeHtml(payload?.course_title ?? "your course");
+  const inviteUrl = typeof payload?.invite_url === "string" ? payload.invite_url : BRAND.siteUrl;
+
+  const bodyHtml = `
+    <p style="margin:0 0 16px 0;">Hello ${getRecipientLabel(recipientName)},</p>
+    <p style="margin:0 0 18px 0;">Your admission application has been accepted. Complete your enrollment for <strong>${courseTitle}</strong> to get started.</p>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:0 0 20px 0;border-collapse:separate;border-spacing:0;">
+      <tr>
+        <td style="padding:18px 20px;border:1px solid ${BRAND.border};border-radius:20px;background:#fbfdff;">
+          <p style="margin:0 0 8px 0;font-size:13px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.secondary};">Enrollment details</p>
+          <p style="margin:0;"><strong>Course:</strong> ${courseTitle}</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 16px 0;">Use the button below to set up your account and complete enrollment securely.</p>
+  `;
+
+  const text = [
+    `Hello ${recipientName?.trim() || "there"},`,
+    "",
+    `Your admission application has been accepted. Complete your enrollment for ${String(payload?.course_title ?? "your course")}.`,
+    "",
+    `Complete enrollment: ${inviteUrl}`,
+    `Support: ${BRAND.supportEmail}`,
+  ].join("\n");
+
+  return {
+    html: renderShell({
+      preheader: `Complete your enrollment for ${String(payload?.course_title ?? "your course")}.`,
+      title: `Complete your enrollment`,
+      eyebrow: "Admissions",
+      intro: "You're one step away from starting your course on Klassruum.",
+      bodyHtml,
+      ctaLabel: "Complete enrollment",
+      ctaUrl: inviteUrl,
+      footerNote: "This invitation was generated after your admission application was accepted.",
+    }),
+    text,
+    fromEmail: BRAND.supportEmail,
+    fromName: "Klassruum Support",
+    replyTo: BRAND.replyTo,
+  } satisfies RenderedEmailTemplate;
+}
+
+function renderSessionReminderTemplate(
+  subject: string,
+  recipientName?: string | null,
+  payload?: EmailJobPayload,
+) {
+  const title = escapeHtml(payload?.title ?? "your session");
+  const startsAt = formatDate(payload?.starts_at);
+  const sessionId = typeof payload?.session_id === "string" ? payload.session_id : "";
+  const joinUrl = toAbsoluteUrl(sessionId ? `/classroom/session/${sessionId}` : "/student/dashboard");
+
+  const bodyHtml = `
+    <p style="margin:0 0 16px 0;">Hello ${getRecipientLabel(recipientName)},</p>
+    <p style="margin:0 0 18px 0;">This is a reminder that <strong>${title}</strong> is coming up.</p>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:0 0 20px 0;border-collapse:separate;border-spacing:0;">
+      <tr>
+        <td style="padding:18px 20px;border:1px solid ${BRAND.border};border-radius:20px;background:#fbfdff;">
+          <p style="margin:0 0 8px 0;font-size:13px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.secondary};">Session details</p>
+          <p style="margin:0 0 6px 0;"><strong>Session:</strong> ${title}</p>
+          <p style="margin:0;"><strong>Starts:</strong> ${escapeHtml(startsAt)}</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 16px 0;">Join a few minutes early to make sure your camera and microphone are ready.</p>
+  `;
+
+  const text = [
+    `Hello ${recipientName?.trim() || "there"},`,
+    "",
+    `Reminder: ${String(payload?.title ?? "your session")} is coming up.`,
+    `Starts: ${startsAt}`,
+    "",
+    `Join session: ${joinUrl}`,
+    `Support: ${BRAND.supportEmail}`,
+  ].join("\n");
+
+  return {
+    html: renderShell({
+      preheader: `Reminder: ${String(payload?.title ?? "your session")} is coming up.`,
+      title: "Upcoming session reminder",
+      eyebrow: "Classroom",
+      intro: "Your Klassruum session is coming up soon.",
+      bodyHtml,
+      ctaLabel: "Join session",
+      ctaUrl: joinUrl,
+      footerNote: "This reminder was sent automatically ahead of your scheduled Klassruum session.",
+    }),
+    text,
+    fromEmail: BRAND.supportEmail,
+    fromName: "Klassruum Support",
+    replyTo: BRAND.replyTo,
+  } satisfies RenderedEmailTemplate;
+}
+
+function renderCertificateIssuedTemplate(
+  subject: string,
+  recipientName?: string | null,
+  payload?: EmailJobPayload,
+) {
+  const certificateNumber = escapeHtml(payload?.certificate_number ?? "");
+  const verificationCode = escapeHtml(payload?.verification_code ?? "");
+  const dashboardUrl = toAbsoluteUrl("/student/dashboard");
+
+  const bodyHtml = `
+    <p style="margin:0 0 16px 0;">Hello ${getRecipientLabel(recipientName)},</p>
+    <p style="margin:0 0 18px 0;">Congratulations! Your Klassruum certificate is ready.</p>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:0 0 20px 0;border-collapse:separate;border-spacing:0;">
+      <tr>
+        <td style="padding:18px 20px;border:1px solid ${BRAND.border};border-radius:20px;background:#fbfdff;">
+          <p style="margin:0 0 8px 0;font-size:13px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.secondary};">Certificate details</p>
+          <p style="margin:0 0 6px 0;"><strong>Certificate number:</strong> ${certificateNumber}</p>
+          <p style="margin:0;"><strong>Verification code:</strong> ${verificationCode}</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 16px 0;">Sign in to your dashboard to view and download your certificate.</p>
+  `;
+
+  const text = [
+    `Hello ${recipientName?.trim() || "there"},`,
+    "",
+    "Congratulations! Your Klassruum certificate is ready.",
+    `Certificate number: ${String(payload?.certificate_number ?? "")}`,
+    `Verification code: ${String(payload?.verification_code ?? "")}`,
+    "",
+    `Open dashboard: ${dashboardUrl}`,
+    `Support: ${BRAND.supportEmail}`,
+  ].join("\n");
+
+  return {
+    html: renderShell({
+      preheader: "Your Klassruum certificate is ready.",
+      title: "Your certificate is ready",
+      eyebrow: "Certification",
+      intro: "You've completed your course. Your certificate is ready to view and download.",
+      bodyHtml,
+      ctaLabel: "Open dashboard",
+      ctaUrl: dashboardUrl,
+      footerNote: "This message was sent automatically after a Klassruum certificate was issued.",
+    }),
+    text,
+    fromEmail: BRAND.supportEmail,
+    fromName: "Klassruum Support",
+    replyTo: BRAND.replyTo,
+  } satisfies RenderedEmailTemplate;
+}
+
 export function renderEmailTemplate(input: RenderEmailTemplateInput): RenderedEmailTemplate {
   switch (input.templateKey) {
     case "institution_member_invite":
@@ -366,6 +575,14 @@ export function renderEmailTemplate(input: RenderEmailTemplateInput): RenderedEm
       return renderOwnerVerifyTemplate(input.subject, input.recipientName, input.payload);
     case "institution_owner_welcome":
       return renderOwnerWelcomeTemplate(input.subject, input.recipientName, input.payload);
+    case "admission_status_update":
+      return renderAdmissionStatusTemplate(input.subject, input.recipientName, input.payload);
+    case "admission_enrollment_invite":
+      return renderAdmissionEnrollmentInviteTemplate(input.subject, input.recipientName, input.payload);
+    case "session_reminder":
+      return renderSessionReminderTemplate(input.subject, input.recipientName, input.payload);
+    case "certificate_issued":
+      return renderCertificateIssuedTemplate(input.subject, input.recipientName, input.payload);
     default:
       throw new Error(`Unsupported email template: ${input.templateKey satisfies never}`);
   }
@@ -383,8 +600,6 @@ export type SendTransactionalEmailInput = {
 export async function sendTransactionalEmail(input: SendTransactionalEmailInput) {
   const senderFunctionUrl = process.env.SUPABASE_EMAIL_FUNCTION_URL?.trim();
   const senderFunctionBearer = process.env.SUPABASE_EMAIL_FUNCTION_BEARER?.trim();
-  const providerToken = process.env.RESEND_API_KEY?.trim() ?? process.env.EMAIL_PROVIDER_API_KEY?.trim();
-  const provider = process.env.EMAIL_PROVIDER?.trim() || "supabase_function";
 
   if (!senderFunctionUrl) {
     throw new Error("SUPABASE_EMAIL_FUNCTION_URL is not configured.");
@@ -397,8 +612,6 @@ export async function sendTransactionalEmail(input: SendTransactionalEmailInput)
       ...(senderFunctionBearer ? { authorization: `Bearer ${senderFunctionBearer}` } : {}),
     },
     body: JSON.stringify({
-      provider,
-      providerApiKey: providerToken,
       from: `${BRAND.companyName} <${BRAND.supportEmail}>`,
       replyTo: input.replyTo || BRAND.replyTo,
       to: [{ email: input.toEmail, name: input.toName || undefined }],
@@ -415,7 +628,7 @@ export async function sendTransactionalEmail(input: SendTransactionalEmailInput)
 
   const result = (await response.json().catch(() => ({}))) as { id?: string; provider?: string };
   return {
-    provider: result.provider || provider,
+    provider: result.provider || "resend",
     providerMessageId: result.id ?? null,
   };
 }

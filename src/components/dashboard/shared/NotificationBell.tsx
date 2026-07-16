@@ -9,7 +9,7 @@ type Props = {
   config: DashboardConfig;
 };
 
-export function notificationCenterHref(config: DashboardConfig): string {
+export function notificationCenterHref(config: DashboardConfig): string | null {
   if (config.role === "platform_admin") return "/admin/notifications";
   if (config.role === "institution") return "/institution/notifications";
   if (config.role === "parent") return "/parent/notifications";
@@ -39,7 +39,7 @@ function NotificationItem({
     <>
       <div className="flex min-w-0 items-start gap-3">
         <span
-          className={`mt-1 h-2 w-2 shrink-0 rounded-full ${item.readAt ? "bg-slate-300" : "bg-emerald-500"}`}
+          className={`mt-1 h-2 w-2 shrink-0 rounded-full ${item.readAt ? "bg-gray-300" : "bg-success"}`}
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
@@ -90,6 +90,7 @@ export function NotificationBell({ config }: Props) {
     isMarkingRead,
   } = useNotifications();
   const href = notificationCenterHref(config);
+  const showNotificationCenter = href !== null;
 
   useEffect(() => {
     if (!open) return;
@@ -179,15 +180,17 @@ export function NotificationBell({ config }: Props) {
             )}
           </div>
 
-          <div className="border-t border-border p-2">
-            <Link
-              to={href as any}
-              onClick={() => setOpen(false)}
-              className="flex min-h-10 items-center justify-center rounded-lg text-sm font-bold text-heading transition hover:bg-accent"
-            >
-              Open notification center
-            </Link>
-          </div>
+          {showNotificationCenter && (
+            <div className="border-t border-border p-2">
+              <Link
+                to={href as any}
+                onClick={() => setOpen(false)}
+                className="flex min-h-10 items-center justify-center rounded-lg text-sm font-bold text-heading transition hover:bg-accent"
+              >
+                Open notification center
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </div>

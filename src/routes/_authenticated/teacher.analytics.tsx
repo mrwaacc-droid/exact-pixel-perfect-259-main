@@ -50,7 +50,7 @@ const completionData = [
 ];
 
 const engagementData = [
-  { name: "Questions Asked", value: 87, color: "#1F7C80" },
+  { name: "Questions Asked", value: 87, color: "var(--crimson)" },
   { name: "Notes Created", value: 243, color: "#22C55E" },
   { name: "Replays Watched", value: 56, color: "#A855F7" },
   { name: "Quizzes Taken", value: 312, color: "#F59E0B" },
@@ -63,7 +63,7 @@ const topPerformers = [
   { name: "Fatima Bello", course: "Chemistry", score: 78, trend: "+4" },
 ];
 
-const COLORS = ["#1F7C80", "#22C55E", "#A855F7", "#F59E0B"];
+const COLORS = ["var(--crimson)", "#22C55E", "#A855F7", "#F59E0B"];
 
 const KPI_CONFIG = [
   {
@@ -71,9 +71,9 @@ const KPI_CONFIG = [
     value: "81%",
     change: "+3% this month",
     icon: Star,
-    color: "text-[#1F7C80]",
-    iconBg: "linear-gradient(135deg, #e8f5f5, #d1eceb)",
-    borderAccent: "#1F7C80",
+    color: "text-[var(--crimson)]",
+    iconBg: "linear-gradient(135deg, var(--crimson-soft), var(--crimson-soft))",
+    borderAccent: "var(--crimson)",
   },
   {
     label: "Completion Rate",
@@ -105,7 +105,7 @@ const KPI_CONFIG = [
 ];
 
 const RANK_COLORS = [
-  "from-[#1F7C80] to-[#3fa8ab]",
+  "from-[#7D2233] to-[#521326]",
   "from-green-600 to-emerald-400",
   "from-purple-600 to-violet-400",
   "from-amber-600 to-yellow-400",
@@ -125,9 +125,9 @@ function TeacherAnalytics() {
         {KPI_CONFIG.map((kpi) => (
           <div
             key={kpi.label}
-            className="rounded-2xl border border-[#E2E8F0] bg-white p-5 transition-all hover:shadow-md hover:border-[#1F7C80]/20 relative overflow-hidden"
+            className="rounded-2xl border border-[var(--border)] bg-white p-5 transition-all hover:shadow-md hover:border-[var(--crimson)]/20 relative overflow-hidden"
             style={{
-              boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.04)",
+              boxShadow: "0 1px 2px rgba(25, 19, 20,0.04), 0 8px 24px rgba(25, 19, 20,0.04)",
             }}
           >
             {/* Left accent bar */}
@@ -136,7 +136,7 @@ function TeacherAnalytics() {
               style={{ background: kpi.borderAccent }}
             />
             <div className="flex items-center justify-between pl-3">
-              <p className="text-sm font-semibold text-[#64748B]">{kpi.label}</p>
+              <p className="text-sm font-semibold text-[#8A7478]">{kpi.label}</p>
               <div
                 className="flex h-9 w-9 items-center justify-center rounded-xl shadow-sm"
                 style={{ background: kpi.iconBg }}
@@ -155,42 +155,42 @@ function TeacherAnalytics() {
       {/* Charts grid */}
       <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Quiz Score Trend */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#e8f5f5] to-[#d1eceb]">
-                <BarChart2 className="h-4 w-4 text-[#1F7C80]" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#F7E7EA] to-[#F7E7EA]">
+                <BarChart2 className="h-4 w-4 text-[#7D2233]" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F172A] leading-tight">Quiz Score Trends</h3>
-                <p className="text-xs text-[#94A3B8]">6-week rolling average</p>
+                <h3 className="font-bold text-[#191314] leading-tight">Quiz Score Trends</h3>
+                <p className="text-xs text-[#A89890]">6-week rolling average</p>
               </div>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={quizScoreTrend}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--beige-soft)" />
               <XAxis
                 dataKey="week"
-                tick={{ fontSize: 11, fill: "#94A3B8" }}
+                tick={{ fontSize: 11, fill: "#A89890" }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
                 domain={[60, 100]}
-                tick={{ fontSize: 11, fill: "#94A3B8" }}
+                tick={{ fontSize: 11, fill: "#A89890" }}
                 axisLine={false}
                 tickLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  border: "1px solid #E2E8F0",
+                  border: "1px solid var(--border)",
                   borderRadius: 12,
                   fontSize: 12,
                   boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
                 }}
               />
-              <Line type="monotone" dataKey="Math" stroke="#1F7C80" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="Math" stroke="var(--crimson)" strokeWidth={2.5} dot={false} />
               <Line
                 type="monotone"
                 dataKey="Chemistry"
@@ -203,11 +203,11 @@ function TeacherAnalytics() {
           </ResponsiveContainer>
           <div className="mt-3 flex items-center gap-4 text-xs">
             {[
-              { label: "Math F2", color: "#1F7C80" },
+              { label: "Math F2", color: "var(--crimson)" },
               { label: "Chemistry", color: "#22C55E" },
               { label: "CS Basics", color: "#A855F7" },
             ].map((l) => (
-              <span key={l.label} className="flex items-center gap-1.5 text-[#64748B]">
+              <span key={l.label} className="flex items-center gap-1.5 text-[#8A7478]">
                 <span className="h-2.5 w-2.5 rounded-full" style={{ background: l.color }} />
                 {l.label}
               </span>
@@ -216,36 +216,36 @@ function TeacherAnalytics() {
         </div>
 
         {/* Lesson Completion */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
           <div className="mb-4 flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#dcfce7] to-[#bbf7d0]">
               <CheckCircle2 className="h-4 w-4 text-green-600" />
             </div>
             <div>
-              <h3 className="font-bold text-[#0F172A] leading-tight">Lesson Completion</h3>
-              <p className="text-xs text-[#94A3B8]">By course, current cycle</p>
+              <h3 className="font-bold text-[#191314] leading-tight">Lesson Completion</h3>
+              <p className="text-xs text-[#A89890]">By course, current cycle</p>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={completionData} barSize={28}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--beige-soft)" vertical={false} />
               <XAxis
                 dataKey="course"
-                tick={{ fontSize: 11, fill: "#94A3B8" }}
+                tick={{ fontSize: 11, fill: "#A89890" }}
                 axisLine={false}
                 tickLine={false}
               />
-              <YAxis tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "#A89890" }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{
-                  border: "1px solid #E2E8F0",
+                  border: "1px solid var(--border)",
                   borderRadius: 12,
                   fontSize: 12,
                   boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
                 }}
               />
-              <Bar dataKey="completed" name="Completed" fill="#1F7C80" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="incomplete" name="In Progress" fill="#E2E8F0" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="completed" name="Completed" fill="var(--crimson)" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="incomplete" name="In Progress" fill="var(--border)" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -254,14 +254,14 @@ function TeacherAnalytics() {
       {/* Engagement + Top Performers */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Engagement Breakdown */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
           <div className="mb-4 flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#f3e8ff] to-[#e9d5ff]">
               <BarChart2 className="h-4 w-4 text-purple-600" />
             </div>
             <div>
-              <h3 className="font-bold text-[#0F172A] leading-tight">Engagement Breakdown</h3>
-              <p className="text-xs text-[#94A3B8]">All courses, last 30 days</p>
+              <h3 className="font-bold text-[#191314] leading-tight">Engagement Breakdown</h3>
+              <p className="text-xs text-[#A89890]">All courses, last 30 days</p>
             </div>
           </div>
           <div className="flex items-center gap-6">
@@ -283,14 +283,14 @@ function TeacherAnalytics() {
             <div className="flex-1 space-y-3">
               {engagementData.map((item, idx) => (
                 <div key={item.name} className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-sm text-[#64748B]">
+                  <span className="flex items-center gap-2 text-sm text-[#8A7478]">
                     <span
                       className="h-2.5 w-2.5 rounded-full"
                       style={{ background: COLORS[idx] }}
                     />
                     {item.name}
                   </span>
-                  <span className="text-sm font-bold text-[#0F172A]">{item.value}</span>
+                  <span className="text-sm font-bold text-[#191314]">{item.value}</span>
                 </div>
               ))}
             </div>
@@ -298,15 +298,15 @@ function TeacherAnalytics() {
         </div>
 
         {/* Top Performers */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#fef9c3] to-[#fde68a]">
                 <Star className="h-4 w-4 text-amber-600" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F172A] leading-tight">Top Performers</h3>
-                <p className="text-xs text-[#94A3B8]">This month</p>
+                <h3 className="font-bold text-[#191314] leading-tight">Top Performers</h3>
+                <p className="text-xs text-[#A89890]">This month</p>
               </div>
             </div>
           </div>
@@ -314,7 +314,7 @@ function TeacherAnalytics() {
             {topPerformers.map((p, i) => (
               <div
                 key={p.name}
-                className="flex items-center gap-3 rounded-xl border border-[#F1F5F9] bg-[#FAFCFC] px-3 py-2.5 transition-all hover:border-[#1F7C80]/20 hover:shadow-sm"
+                className="flex items-center gap-3 rounded-xl border border-[var(--beige-soft)] bg-[#FAFCFC] px-3 py-2.5 transition-all hover:border-[var(--crimson)]/20 hover:shadow-sm"
               >
                 {/* Gradient rank badge */}
                 <div
@@ -323,11 +323,11 @@ function TeacherAnalytics() {
                   #{i + 1}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-[#0F172A]">{p.name}</p>
-                  <p className="text-xs text-[#94A3B8]">{p.course}</p>
+                  <p className="text-sm font-semibold text-[#191314]">{p.name}</p>
+                  <p className="text-xs text-[#A89890]">{p.course}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold text-[#0F172A]">{p.score}%</p>
+                  <p className="text-sm font-bold text-[#191314]">{p.score}%</p>
                   <p className="flex items-center gap-0.5 justify-end text-xs font-semibold text-green-600">
                     <ArrowUpRight className="h-3 w-3" />
                     {p.trend}

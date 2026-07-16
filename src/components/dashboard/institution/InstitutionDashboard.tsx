@@ -93,14 +93,14 @@ export default function InstitutionDashboard() {
   if (!data.institution) {
     return (
       <DashboardShell config={config} activePath="/institution/dashboard">
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-10 text-center">
-          <h1 className="text-xl font-bold text-[#0F172A]">No institution found</h1>
-          <p className="mt-2 text-sm text-[#64748B]">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-10 text-center">
+          <h1 className="text-xl font-bold text-[#191314]">No institution found</h1>
+          <p className="mt-2 text-sm text-[#8A7478]">
             You are not a member of any institution yet. Register one to get started.
           </p>
           <Link
             to="/institutions/register"
-            className="mt-4 inline-flex h-11 items-center gap-2 rounded-xl bg-[#1F7C80] px-5 text-sm font-bold text-white transition-all hover:bg-[#1A5256]"
+            className="mt-4 inline-flex h-11 items-center gap-2 rounded-xl bg-[#7D2233] px-5 text-sm font-bold text-white transition-all hover:bg-[#521326]"
           >
             <Plus className="h-4 w-4" /> Register Institution
           </Link>
@@ -120,17 +120,17 @@ export default function InstitutionDashboard() {
 
 function InstitutionHeader({ name }: { name: string }) {
   return (
-    <section className="mb-8 rounded-2xl border border-[#E2E8F0] bg-white p-6 lg:p-8">
+    <section className="mb-8 rounded-2xl border border-[var(--border)] bg-white p-6 lg:p-8">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-5">
-          <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[#1F7C80] to-[#1A5256] text-2xl font-bold text-white">
+          <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[#7D2233] to-[#521326] text-2xl font-bold text-white">
             {name.slice(0, 1).toUpperCase()}
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-[#1F7C80]">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#7D2233]">
               Institution Dashboard
             </p>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#0F172A] lg:text-3xl">
+            <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#191314] lg:text-3xl">
               {name}
             </h1>
             <p className="mt-0.5">
@@ -141,28 +141,28 @@ function InstitutionHeader({ name }: { name: string }) {
         <div className="flex flex-wrap gap-2">
           <Link
             to="/institution/courses/new"
-            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl bg-[#1F7C80] px-5 text-sm font-bold text-white shadow-lg shadow-[#1F7C80]/25 transition-all hover:bg-[#1A5256]"
+            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl bg-[#7D2233] px-5 text-sm font-bold text-white shadow-lg shadow-[#7D2233]/25 transition-all hover:bg-[#521326]"
           >
             <Plus className="h-4 w-4" />
             Create Course
           </Link>
           <Link
             to="/institution/resources/upload"
-            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-[#E2E8F0] bg-white px-5 text-sm font-bold text-[#1F7C80] transition-all hover:bg-[#F8FAFC]"
+            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-[var(--border)] bg-white px-5 text-sm font-bold text-[#7D2233] transition-all hover:bg-[var(--page-background)]"
           >
             <Upload className="h-4 w-4" />
             Upload Resource
           </Link>
           <Link
             to="/institution/students/invite"
-            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-[#E2E8F0] bg-white px-5 text-sm font-bold text-[#1F7C80] transition-all hover:bg-[#F8FAFC]"
+            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-[var(--border)] bg-white px-5 text-sm font-bold text-[#7D2233] transition-all hover:bg-[var(--page-background)]"
           >
             <UserPlus className="h-4 w-4" />
             Invite Student
           </Link>
           <Link
             to="/institution/teachers/invite"
-            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-[#E2E8F0] bg-white px-5 text-sm font-bold text-[#1F7C80] transition-all hover:bg-[#F8FAFC]"
+            className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-[var(--border)] bg-white px-5 text-sm font-bold text-[#7D2233] transition-all hover:bg-[var(--page-background)]"
           >
             <GraduationCap className="h-4 w-4" />
             Invite Teacher
@@ -187,7 +187,7 @@ function KpiSection({ stats }: { stats: NonNullable<DashboardData["stats"]> }) {
         title="Students"
         value={stats.students}
         subtitle="Active learners"
-        href="/institution/students"
+        href="/institution/courses"
         icon={Users}
       />
       <KpiCard
@@ -215,7 +215,7 @@ function KpiSection({ stats }: { stats: NonNullable<DashboardData["stats"]> }) {
         title="Avg Progress"
         value={`${stats.avgProgress}%`}
         subtitle="Across learners"
-        href="/institution/analytics"
+        href="/institution/sessions"
         icon={Building2}
       />
     </section>
@@ -266,23 +266,23 @@ function MainContentGrid({ data }: { data: DashboardData }) {
 
 function CoursesOverviewPanel({ courses }: { courses: DashboardData["courses"] }) {
   return (
-    <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
+    <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-[#0F172A]">Courses Overview</h2>
-          <p className="mt-0.5 text-sm text-[#64748B]">
+          <h2 className="text-xl font-bold text-[#191314]">Courses Overview</h2>
+          <p className="mt-0.5 text-sm text-[#8A7478]">
             Manage your institution's learning programs
           </p>
         </div>
         <Link
           to="/institution/courses"
-          className="text-sm font-bold text-[#1F7C80] hover:text-[#1A5256]"
+          className="text-sm font-bold text-[#7D2233] hover:text-[#521326]"
         >
           View all
         </Link>
       </div>
       {courses.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-[#E2E8F0] p-6 text-center text-sm text-[#64748B]">
+        <p className="rounded-2xl border border-dashed border-[var(--border)] p-6 text-center text-sm text-[#8A7478]">
           No courses yet. Create your first course to get started.
         </p>
       ) : (
@@ -290,14 +290,14 @@ function CoursesOverviewPanel({ courses }: { courses: DashboardData["courses"] }
           {courses.map((c: any) => (
             <article
               key={c.id}
-              className="flex flex-col gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-4 transition-all hover:border-[#1F7C80]/30 hover:shadow-md sm:flex-row sm:items-center"
+              className="flex flex-col gap-3 rounded-xl border border-[var(--border)] bg-[var(--page-background)] p-4 transition-all hover:border-[#7D2233]/30 hover:shadow-md sm:flex-row sm:items-center"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#1F7C80] to-[#1A5256] text-xs font-bold text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#7D2233] to-[#521326] text-xs font-bold text-white">
                 {c.title.slice(0, 2).toUpperCase()}
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-bold text-[#0F172A]">{c.title}</h3>
-                <p className="text-xs text-[#64748B]">
+                <h3 className="font-bold text-[#191314]">{c.title}</h3>
+                <p className="text-xs text-[#8A7478]">
                   {c.subject ? `${c.subject} · ` : ""}
                   {c.students} students · {c.lessons} lessons
                 </p>
@@ -306,13 +306,6 @@ function CoursesOverviewPanel({ courses }: { courses: DashboardData["courses"] }
                 <StatusBadge variant={c.status === "published" ? "success" : "warning"}>
                   {c.status === "published" ? "Published" : "Draft"}
                 </StatusBadge>
-                <Link
-                  to="/institution/courses/$courseId"
-                  params={{ courseId: c.id }}
-                  className="inline-flex h-9 items-center rounded-lg border border-[#E2E8F0] bg-white px-4 text-xs font-bold text-[#1F7C80] transition-all hover:bg-[#EFF6FF]"
-                >
-                  Open
-                </Link>
               </div>
             </article>
           ))}
@@ -324,12 +317,12 @@ function CoursesOverviewPanel({ courses }: { courses: DashboardData["courses"] }
 
 function ActiveSessionsPanel({ sessions }: { sessions: DashboardData["activeSessions"] }) {
   return (
-    <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
-      <h2 className="text-xl font-bold text-[#0F172A]">Active Sessions</h2>
-      <p className="mt-0.5 text-sm text-[#64748B]">Live and upcoming classrooms</p>
+    <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
+      <h2 className="text-xl font-bold text-[#191314]">Active Sessions</h2>
+      <p className="mt-0.5 text-sm text-[#8A7478]">Live and upcoming classrooms</p>
       <div className="mt-4 space-y-2">
         {sessions.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-[#E2E8F0] p-4 text-center text-xs text-[#64748B]">
+          <p className="rounded-xl border border-dashed border-[var(--border)] p-4 text-center text-xs text-[#8A7478]">
             No live sessions right now.
           </p>
         ) : (
@@ -338,11 +331,11 @@ function ActiveSessionsPanel({ sessions }: { sessions: DashboardData["activeSess
               key={s.id}
               to="/classroom/session/$sessionId"
               params={{ sessionId: s.id }}
-              className="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 transition-all hover:border-[#1F7C80]/30 hover:shadow-sm"
+              className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--page-background)] p-3 transition-all hover:border-[#7D2233]/30 hover:shadow-sm"
             >
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-bold text-[#0F172A]">{s.title}</p>
-                <p className="text-xs text-[#64748B]">
+                <p className="text-sm font-bold text-[#191314]">{s.title}</p>
+                <p className="text-xs text-[#8A7478]">
                   {s.mode} · {timeAgo(s.startedAt)}
                 </p>
               </div>
@@ -359,12 +352,12 @@ function ActiveSessionsPanel({ sessions }: { sessions: DashboardData["activeSess
 
 function ResourceLibraryPanel({ materials }: { materials: DashboardData["recentMaterials"] }) {
   return (
-    <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
-      <h2 className="text-lg font-bold text-[#0F172A]">Resource Library</h2>
-      <p className="mt-0.5 text-sm text-[#64748B]">Recently uploaded materials</p>
+    <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
+      <h2 className="text-lg font-bold text-[#191314]">Resource Library</h2>
+      <p className="mt-0.5 text-sm text-[#8A7478]">Recently uploaded materials</p>
       <div className="mt-4 space-y-2">
         {materials.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-[#E2E8F0] p-4 text-center text-xs text-[#64748B]">
+          <p className="rounded-xl border border-dashed border-[var(--border)] p-4 text-center text-xs text-[#8A7478]">
             No materials uploaded yet.
           </p>
         ) : (
@@ -373,11 +366,11 @@ function ResourceLibraryPanel({ materials }: { materials: DashboardData["recentM
             .map((r: { id: string; title: string; type: string; processing_status: string }) => (
               <div
                 key={r.id}
-                className="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3"
+                className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--page-background)] p-3"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-bold text-[#0F172A]">{r.title}</p>
-                  <p className="text-xs text-[#64748B] capitalize">{r.type}</p>
+                  <p className="text-sm font-bold text-[#191314]">{r.title}</p>
+                  <p className="text-xs text-[#8A7478] capitalize">{r.type}</p>
                 </div>
                 <StatusBadge variant={r.processing_status === "ready" ? "success" : "warning"}>
                   {r.processing_status === "ready" ? "Ready" : r.processing_status}
@@ -389,14 +382,14 @@ function ResourceLibraryPanel({ materials }: { materials: DashboardData["recentM
       <div className="mt-4 flex gap-2">
         <Link
           to="/institution/resources/upload"
-          className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg bg-[#1F7C80] px-4 text-sm font-bold text-white transition-all hover:bg-[#1A5256]"
+          className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg bg-[#7D2233] px-4 text-sm font-bold text-white transition-all hover:bg-[#521326]"
         >
           <Upload className="h-4 w-4" />
           Upload
         </Link>
         <Link
           to="/institution/resources"
-          className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-[#E2E8F0] bg-white px-4 text-sm font-bold text-[#1F7C80] transition-all hover:bg-[#F8FAFC]"
+          className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 text-sm font-bold text-[#7D2233] transition-all hover:bg-[var(--page-background)]"
         >
           <FileText className="h-4 w-4" />
           Library

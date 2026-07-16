@@ -311,8 +311,8 @@ export function PlatformAdminDashboard() {
 
           <div className="space-y-3">
             <div className="flex items-start gap-3 rounded-lg border border-[var(--gray-100)] bg-[var(--gray-50)] p-3">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#d1eceb]">
-                <Building2 className="h-3 w-3 text-[#1F7C80]" />
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-crimson-soft">
+                <Building2 className="h-3 w-3 text-crimson" />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium text-[var(--gray-900)]">
@@ -395,13 +395,13 @@ export function PlatformAdminDashboard() {
             </div>
 
             <div className="flex items-start gap-3 rounded-lg border border-[var(--gray-100)] bg-[var(--gray-50)] p-3">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#d1eceb]">
-                <AlertTriangle className="h-3 w-3 text-[#1F7C80]" />
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-crimson-soft">
+                <AlertTriangle className="h-3 w-3 text-crimson" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-medium text-[var(--gray-900)]">Billing inquiry</p>
-                  <span className="text-xs font-medium text-[#1F7C80]">Low</span>
+                  <span className="text-xs font-medium text-crimson">Low</span>
                 </div>
                 <p className="text-xs text-[var(--gray-500)]">Question · 5 hours ago</p>
               </div>

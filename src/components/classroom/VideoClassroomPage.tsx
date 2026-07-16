@@ -1491,7 +1491,7 @@ export function VideoClassroomPage({
             {!completion.guidedPracticeAttempted && state.progress.stepIndex >= 3 && (
               <button
                 onClick={() => startPractice("guided")}
-                className="replay-button text-[#1F7C80] border-[#a3d9d8]"
+                className="replay-button text-[var(--crimson)] border-[var(--crimson-soft)]"
                 title="Guided practice"
               >
                 <Target className="h-3.5 w-3.5" /> Guided Practice
@@ -1507,7 +1507,7 @@ export function VideoClassroomPage({
               </button>
             )}
 
-            <div className="ml-auto flex items-center gap-1 text-xs text-slate-400">
+            <div className="ml-auto flex items-center gap-1 text-xs text-gray-400">
               <PenTool className="h-3 w-3" />
               {state.boardState.writtenItems.length} / {state.boardState.items.length} items
             </div>
@@ -1518,7 +1518,7 @@ export function VideoClassroomPage({
       {/* ═══ CAPTION BAR ══════════════════════════════════════ */}
       {state.captions.enabled && state.captions.currentText && !isFocusMode && (
         <div className="caption-bar">
-          <Subtitles className="mr-2 h-4 w-4 text-[#3fa8ab]" />
+          <Subtitles className="mr-2 h-4 w-4 text-[var(--crimson)]" />
           <span className="caption-text">{state.captions.currentText}</span>
         </div>
       )}
@@ -1777,11 +1777,11 @@ function ClassroomTopBar({
               ? "bg-red-100 text-red-600"
               : liveStatus === "paused"
                 ? "bg-yellow-100 text-yellow-700"
-                : "bg-slate-100 text-slate-500"
+                : "bg-slate-100 text-gray-500"
           }`}
         >
           <span
-            className={`h-2 w-2 rounded-full ${liveStatus === "live" ? "animate-pulse bg-red-500" : liveStatus === "paused" ? "bg-yellow-500" : "bg-slate-400"}`}
+            className={`h-2 w-2 rounded-full ${liveStatus === "live" ? "animate-pulse bg-red-500" : liveStatus === "paused" ? "bg-yellow-500" : "bg-gray-400"}`}
           />
           {liveStatus === "live" ? "Live" : liveStatus === "paused" ? "Paused" : "Ready"}
         </div>
@@ -1793,7 +1793,7 @@ function ClassroomTopBar({
         </div>
 
         {/* Current step */}
-        <div className="hidden items-center gap-1.5 rounded-full bg-[#e8f5f5] px-2.5 py-1 text-xs font-semibold text-[#1F7C80] lg:flex">
+        <div className="hidden items-center gap-1.5 rounded-full bg-[var(--crimson-soft)] px-2.5 py-1 text-xs font-semibold text-[var(--crimson)] lg:flex">
           <Target className="h-3 w-3" />
           {currentStep}
         </div>
@@ -1888,7 +1888,7 @@ function TeacherVideoPanel({
   const stateColor = (() => {
     switch (teacherState) {
       case "speaking":
-        return "bg-[#d1eceb] text-[#1A5256]";
+        return "bg-[var(--crimson-soft)] text-[var(--crimson-dark)]";
       case "writing":
         return "bg-purple-100 text-purple-700";
       case "listening":
@@ -1902,13 +1902,13 @@ function TeacherVideoPanel({
       case "paused":
         return "bg-yellow-100 text-yellow-700";
       case "explaining":
-        return "bg-[#e8f5f5] text-[#1A5256]";
+        return "bg-[var(--crimson-soft)] text-[var(--crimson-dark)]";
       case "asking_question":
         return "bg-amber-100 text-amber-700";
       case "preparing":
-        return "bg-slate-100 text-slate-600";
+        return "bg-slate-100 text-gray-600";
       default:
-        return "bg-slate-100 text-slate-600";
+        return "bg-slate-100 text-gray-600";
     }
   })();
 
@@ -1966,9 +1966,9 @@ function TeacherVideoPanel({
         </div>
       </div>
 
-      {/* ── Video Frame / Avatar Area (Phase 1 placeholder) ── */}
+      {/* Video frame / avatar area */}
       <div
-        className="relative mx-4 mt-3 overflow-hidden rounded-xl bg-gradient-to-br from-slate-800 to-slate-900"
+        className="relative mx-4 mt-3 overflow-hidden rounded-xl bg-gradient-to-br from-gray-800 to-gray-900"
         style={{ aspectRatio: "16/10" }}
       >
         {/* Teacher name overlay */}
@@ -1990,16 +1990,16 @@ function TeacherVideoPanel({
         {/* Avatar with speaking ring */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div
-            className={`relative h-20 w-20 rounded-full border-4 ${isSpeaking ? "border-[#3fa8ab] shadow-lg shadow-[#3fa8ab]/30" : "border-slate-600"}`}
+            className={`relative h-20 w-20 rounded-full border-4 ${isSpeaking ? "border-[var(--crimson)] shadow-lg shadow-[var(--crimson)]/30" : "border-gray-600"}`}
           >
-            <div className="absolute inset-1 rounded-full bg-gradient-to-br from-[#3fa8ab]/30 to-purple-400/30" />
-            <div className="absolute inset-3 flex items-center justify-center rounded-full bg-gradient-to-br from-[#1F7C80]/60 to-purple-500/60">
+            <div className="absolute inset-1 rounded-full bg-gradient-to-br from-[var(--crimson)]/30 to-purple-400/30" />
+            <div className="absolute inset-3 flex items-center justify-center rounded-full bg-gradient-to-br from-[var(--crimson)]/60 to-purple-500/60">
               <div
-                className={`h-6 w-6 rounded-full bg-gradient-to-br from-[#3fa8ab] to-purple-400 ${isSpeaking ? "animate-pulse" : ""}`}
+                className={`h-6 w-6 rounded-full bg-gradient-to-br from-[var(--crimson)] to-purple-400 ${isSpeaking ? "animate-pulse" : ""}`}
               />
             </div>
             {isSpeaking && (
-              <div className="absolute inset-0 animate-ping rounded-full border-2 border-[#3fa8ab]/20" />
+              <div className="absolute inset-0 animate-ping rounded-full border-2 border-[var(--crimson)]/20" />
             )}
             {teacherState === "writing" && (
               <div className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-purple-500 text-xs shadow-md">
@@ -2019,7 +2019,7 @@ function TeacherVideoPanel({
               {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
-                  className="w-[2px] rounded-full bg-[#3fa8ab]"
+                  className="w-[2px] rounded-full bg-[var(--crimson)]"
                   style={{
                     height: `${4 + Math.random() * 10}px`,
                     animation: `waveform 0.6s ease-in-out infinite alternate`,
@@ -2042,14 +2042,14 @@ function TeacherVideoPanel({
               <MicOff className="h-3 w-3 text-white" />
             )}
           </div>
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-600/80">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600/80">
             <VideoOff className="h-3 w-3 text-white" />
           </div>
         </div>
 
-        {/* "Video coming soon" label */}
-        <div className="absolute bottom-2 right-2 z-10 rounded bg-black/40 px-1.5 py-0.5 text-[8px] text-slate-300">
-          Video Phase 2
+        {/* Video readiness label */}
+        <div className="absolute bottom-2 right-2 z-10 rounded bg-black/40 px-1.5 py-0.5 text-[8px] text-gray-300">
+          Video standby
         </div>
       </div>
 
@@ -2071,7 +2071,7 @@ function TeacherVideoPanel({
 
       {/* Status badges */}
       <div className="flex flex-wrap justify-center gap-2 px-4">
-        <span className="rounded-full bg-[#e8f5f5] px-2.5 py-1 text-[10px] font-semibold text-[#1F7C80]">
+        <span className="rounded-full bg-[var(--crimson-soft)] px-2.5 py-1 text-[10px] font-semibold text-[var(--crimson)]">
           {teacherMode === "ai_teacher"
             ? "AI Teacher"
             : teacherMode === "human_teacher"
@@ -2079,7 +2079,7 @@ function TeacherVideoPanel({
               : "Hybrid"}
         </span>
         <span
-          className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${audioEnabled ? "bg-green-50 text-green-600" : "bg-slate-100 text-slate-500"}`}
+          className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${audioEnabled ? "bg-green-50 text-green-600" : "bg-slate-100 text-gray-500"}`}
         >
           {audioEnabled ? "Voice Active" : "Voice Off"}
         </span>
@@ -2200,7 +2200,7 @@ const LearningWhiteboard = forwardRef<
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: "radial-gradient(circle, #94a3b8 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, #A89890 1px, transparent 1px)",
           backgroundSize: "24px 24px",
         }}
       />
@@ -2240,7 +2240,7 @@ const LearningWhiteboard = forwardRef<
             {/* Writing cursor / hand */}
             {!reducedMotion && (
               <span
-                className="writing-cursor inline-block w-[2px] animate-pulse bg-[#e8f5f5]0"
+                className="writing-cursor inline-block w-[2px] animate-pulse bg-[var(--crimson-soft)]0"
                 style={{ height: "1em", verticalAlign: "text-bottom", marginLeft: "2px" }}
               />
             )}
@@ -2388,7 +2388,7 @@ function ClassroomControls({
       {learningMode !== "blind" && (
         <button
           onClick={onToggleAudio}
-          className={`${btnClass} flex items-center justify-center rounded-full ${audioEnabled ? "bg-[#d1eceb] text-[#1F7C80]" : "bg-slate-100 text-muted-foreground"}`}
+          className={`${btnClass} flex items-center justify-center rounded-full ${audioEnabled ? "bg-[var(--crimson-soft)] text-[var(--crimson)]" : "bg-slate-100 text-muted-foreground"}`}
           aria-label={audioEnabled ? "Mute audio" : "Unmute audio"}
         >
           {audioEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
@@ -2397,7 +2397,7 @@ function ClassroomControls({
 
       <button
         onClick={onToggleCaptions}
-        className={`${btnClass} flex items-center justify-center rounded-full ${captionsEnabled ? "bg-[#d1eceb] text-[#1F7C80]" : "bg-slate-100 text-muted-foreground"}`}
+        className={`${btnClass} flex items-center justify-center rounded-full ${captionsEnabled ? "bg-[var(--crimson-soft)] text-[var(--crimson)]" : "bg-slate-100 text-muted-foreground"}`}
         aria-label={captionsEnabled ? "Hide captions" : "Show captions"}
       >
         <Subtitles className="h-4 w-4" />
@@ -2421,36 +2421,36 @@ function ClassroomControls({
 
       <div className="mx-1 h-8 w-px bg-border" />
 
-      {/* Future video controls (disabled - Phase 2/3) */}
+      {/* Video controls queued behind live-session readiness */}
       <button
         disabled
-        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-slate-300 opacity-50`}
-        aria-label="Camera (coming soon)"
-        title="Camera — Coming in Phase 2"
+        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-gray-300 opacity-50`}
+        aria-label="Camera control"
+        title="Camera control"
       >
         <Video className="h-4 w-4" />
       </button>
       <button
         disabled
-        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-slate-300 opacity-50`}
-        aria-label="Raise hand (coming soon)"
-        title="Raise Hand — Coming in Phase 2"
+        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-gray-300 opacity-50`}
+        aria-label="Raise hand"
+        title="Raise hand"
       >
         <HandMetal className="h-4 w-4" />
       </button>
       <button
         disabled
-        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-slate-300 opacity-50`}
-        aria-label="Participants (coming soon)"
-        title="Participants — Coming in Phase 2"
+        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-gray-300 opacity-50`}
+        aria-label="Participants"
+        title="Participants"
       >
         <Users className="h-4 w-4" />
       </button>
       <button
         disabled
-        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-slate-300 opacity-50`}
-        aria-label="Screen share (coming soon)"
-        title="Screen Share — Coming in Phase 2"
+        className={`${btnClass} flex cursor-not-allowed items-center justify-center rounded-full bg-slate-50 text-gray-300 opacity-50`}
+        aria-label="Screen share"
+        title="Screen share"
       >
         <MonitorUp className="h-4 w-4" />
       </button>
@@ -3107,7 +3107,7 @@ function NotesDrawer({
             <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">
               Lesson Objective
             </h4>
-            <p className="text-sm text-foreground bg-[#e8f5f5] rounded-lg p-3">
+            <p className="text-sm text-foreground bg-[var(--crimson-soft)] rounded-lg p-3">
               {lesson.objective}
             </p>
           </div>
@@ -3310,7 +3310,7 @@ function LessonTimelineOverlay({
                       ? "bg-primary text-white"
                       : isPast
                         ? "bg-green-100 text-green-600"
-                        : "bg-slate-100 text-slate-400"
+                        : "bg-slate-100 text-gray-400"
                   }`}
                 >
                   {isPast ? <Check className="h-4 w-4" /> : idx + 1}
@@ -3337,23 +3337,23 @@ function LessonTimelineOverlay({
           <p className="text-xs font-bold text-muted-foreground mb-2">Completion Status</p>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div
-              className={completion.middleQuestionAnswered ? "text-green-600" : "text-slate-400"}
+              className={completion.middleQuestionAnswered ? "text-green-600" : "text-gray-400"}
             >
               {completion.middleQuestionAnswered ? "✅" : "⬜"} Middle Question
             </div>
             <div
-              className={completion.guidedPracticeAttempted ? "text-green-600" : "text-slate-400"}
+              className={completion.guidedPracticeAttempted ? "text-green-600" : "text-gray-400"}
             >
               {completion.guidedPracticeAttempted ? "✅" : "⬜"} Guided Practice
             </div>
             <div
               className={
-                completion.independentPracticeAttempted ? "text-green-600" : "text-slate-400"
+                completion.independentPracticeAttempted ? "text-green-600" : "text-gray-400"
               }
             >
               {completion.independentPracticeAttempted ? "✅" : "⬜"} Independent Practice
             </div>
-            <div className={completion.exitTicketAnswered ? "text-green-600" : "text-slate-400"}>
+            <div className={completion.exitTicketAnswered ? "text-green-600" : "text-gray-400"}>
               {completion.exitTicketAnswered ? "✅" : "⬜"} Exit Ticket
             </div>
           </div>
@@ -3408,7 +3408,7 @@ function LessonCompletionSummaryPanel({
           <div className="rounded-lg bg-slate-50 p-3">
             <p className="text-xs text-muted-foreground">Middle Question</p>
             <p
-              className={`text-sm font-bold ${completion.middleQuestionCorrect ? "text-green-600" : completion.middleQuestionAnswered ? "text-orange-600" : "text-slate-400"}`}
+              className={`text-sm font-bold ${completion.middleQuestionCorrect ? "text-green-600" : completion.middleQuestionAnswered ? "text-orange-600" : "text-gray-400"}`}
             >
               {completion.middleQuestionCorrect
                 ? "✅ Correct"
@@ -3420,7 +3420,7 @@ function LessonCompletionSummaryPanel({
           <div className="rounded-lg bg-slate-50 p-3">
             <p className="text-xs text-muted-foreground">Guided Practice</p>
             <p
-              className={`text-sm font-bold ${completion.guidedPracticeCorrect ? "text-green-600" : completion.guidedPracticeAttempted ? "text-orange-600" : "text-slate-400"}`}
+              className={`text-sm font-bold ${completion.guidedPracticeCorrect ? "text-green-600" : completion.guidedPracticeAttempted ? "text-orange-600" : "text-gray-400"}`}
             >
               {completion.guidedPracticeAttempted
                 ? completion.guidedPracticeCorrect
@@ -3432,7 +3432,7 @@ function LessonCompletionSummaryPanel({
           <div className="rounded-lg bg-slate-50 p-3">
             <p className="text-xs text-muted-foreground">Independent Practice</p>
             <p
-              className={`text-sm font-bold ${completion.independentPracticeCorrect ? "text-green-600" : completion.independentPracticeAttempted ? "text-orange-600" : "text-slate-400"}`}
+              className={`text-sm font-bold ${completion.independentPracticeCorrect ? "text-green-600" : completion.independentPracticeAttempted ? "text-orange-600" : "text-gray-400"}`}
             >
               {completion.independentPracticeAttempted
                 ? completion.independentPracticeCorrect
@@ -3444,7 +3444,7 @@ function LessonCompletionSummaryPanel({
           <div className="rounded-lg bg-slate-50 p-3">
             <p className="text-xs text-muted-foreground">Exit Ticket</p>
             <p
-              className={`text-sm font-bold ${completion.exitTicketCorrect ? "text-green-600" : completion.exitTicketAnswered ? "text-orange-600" : "text-slate-400"}`}
+              className={`text-sm font-bold ${completion.exitTicketCorrect ? "text-green-600" : completion.exitTicketAnswered ? "text-orange-600" : "text-gray-400"}`}
             >
               {completion.exitTicketAnswered
                 ? completion.exitTicketCorrect
@@ -3468,10 +3468,10 @@ function LessonCompletionSummaryPanel({
         )}
 
         {/* Recommended next steps */}
-        <div className="mt-4 rounded-lg bg-[#e8f5f5] p-3 text-left">
-          <p className="text-xs font-bold text-[#1F7C80] mb-1">Recommended Next Steps</p>
-          <p className="text-sm text-[#1A5256]">• Practice factor signs</p>
-          <p className="text-sm text-[#1A5256]">• Try equations with negative coefficients</p>
+        <div className="mt-4 rounded-lg bg-[var(--crimson-soft)] p-3 text-left">
+          <p className="text-xs font-bold text-[var(--crimson)] mb-1">Recommended Next Steps</p>
+          <p className="text-sm text-[var(--crimson-dark)]">• Practice factor signs</p>
+          <p className="text-sm text-[var(--crimson-dark)]">• Try equations with negative coefficients</p>
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-3">
@@ -3541,12 +3541,12 @@ function TranscriptDrawer({
                 <span
                   className={`inline-flex h-5 w-5 items-center justify-center rounded-full ${
                     entry.role === "student"
-                      ? "bg-[#d1eceb] text-[#1F7C80]"
+                      ? "bg-[var(--crimson-soft)] text-[var(--crimson)]"
                       : entry.role === "teacher"
                         ? "bg-green-100 text-green-600"
                         : entry.role === "board"
                           ? "bg-purple-100 text-purple-600"
-                          : "bg-slate-100 text-slate-500"
+                          : "bg-slate-100 text-gray-500"
                   }`}
                 >
                   {entry.role === "student"

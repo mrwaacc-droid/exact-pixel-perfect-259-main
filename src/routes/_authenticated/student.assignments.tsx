@@ -13,8 +13,8 @@ export const Route = createFileRoute("/_authenticated/student/assignments")({
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string }> = {
   pending: { label: "Pending", color: "#b45309", bg: "#fffbeb" },
-  in_progress: { label: "In progress", color: "#1d4ed8", bg: "#dbeafe" },
-  submitted: { label: "Submitted", color: "#1F7C80", bg: "#e8f5f5" },
+  in_progress: { label: "In progress", color: "#7D2233", bg: "#F7E7EA" },
+  submitted: { label: "Submitted", color: "var(--crimson)", bg: "var(--crimson-soft)" },
   graded: { label: "Graded", color: "#15803d", bg: "#dcfce7" },
   overdue: { label: "Overdue", color: "#b91c1c", bg: "#fee2e2" },
 };

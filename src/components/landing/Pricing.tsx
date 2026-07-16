@@ -76,90 +76,91 @@ export function Pricing() {
   ];
 
   return (
-    <section className="border-t border-slate-200 bg-white py-20 lg:py-24" id="pricing">
-      <div className="container-editorial">
-        <div className="mx-auto mb-12 grid max-w-5xl gap-6 border-b border-slate-200 pb-8 text-left md:grid-cols-[0.75fr_1fr] md:items-end">
+    <section className="cine-section" id="pricing" style={{ background: "#fff" }}>
+      <div className="mx-auto max-w-[1400px] px-6">
+        <div className="mx-auto mb-12 grid max-w-6xl gap-6 border-b border-border pb-8 text-left md:grid-cols-[0.75fr_1fr] md:items-end">
           <div>
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.16em] text-[#1F7C80]">
-              Pricing
-            </p>
-            <h2 className="font-headings text-[2.2rem] font-extrabold leading-[1.08] tracking-tight text-[#0f172a] sm:text-[2.75rem] md:text-[3.25rem]">
+            <span className="cine-section-eyebrow">Pricing</span>
+            <h2 className="cine-section-title mt-2">
               Simple ways to get started
             </h2>
           </div>
-          <p className="max-w-xl text-base leading-8 text-slate-600 md:ml-auto">
-            Start with a working classroom, then rent institution-ready virtual classrooms monthly
-            with teacher hiring, course assignment, billing, lessons, and reporting in one place.
+          <p className="max-w-xl text-[16px] leading-8 text-muted md:ml-auto">
+            Start with a working classroom, then rent institution-ready virtual classrooms monthly with teacher hiring, course assignment, billing, lessons, and reporting in one place.
           </p>
         </div>
 
-        <div className="mx-auto mb-5 flex max-w-5xl items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
+        <div className="mx-auto mb-5 flex max-w-6xl items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[0.14em] text-muted">
           <span>Choose a starting point</span>
-          <span className="hidden text-[#1F7C80] sm:inline">Monthly, annual savings, or custom scale</span>
+          <span className="hidden text-crimson sm:inline">Monthly, annual savings, or custom scale</span>
         </div>
 
-        <div className="mx-auto grid max-w-5xl grid-cols-1 items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-5 sm:grid-cols-2 2xl:max-w-[1320px] xl:grid-cols-4">
           {plans.map((plan) => (
             <article
               key={plan.name}
-              className={`pricing-track-card interactive-surface flex min-h-full flex-col overflow-hidden p-6 md:p-7 ${
-                plan.featured
-                  ? "relative border-[#07111f] bg-white shadow-[0_16px_40px_rgba(15,23,42,0.10)]"
-                  : "border-slate-200 bg-white"
-              }`}
+              className={`pricing-track-card interactive-surface relative flex min-h-full flex-col overflow-hidden p-6 sm:p-7 xl:p-8 ${plan.featured
+                ? "border border-white/10 text-white shadow-[0_24px_60px_-12px_rgba(125,34,51,0.45),0_8px_24px_-6px_rgba(0,0,0,0.5)] [background:linear-gradient(155deg,#1A0A0E_0%,#0A0608_55%,#15080C_100%)] before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_top,rgba(125,34,51,0.28),transparent_60%)] before:opacity-90"
+                : "border-border bg-white"
+                }`}
             >
-              {plan.featured && <div className="absolute inset-x-0 top-0 h-1.5 bg-[#07111f]" />}
+              {plan.featured && (
+                <>
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-crimson to-transparent" />
+                  <div className="pointer-events-none absolute -top-px left-1/2 h-24 w-3/4 -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgba(196,86,106,0.35),transparent_70%)] blur-md" />
+                  <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-crimson/50 to-transparent" />
+                </>
+              )}
 
               <div className="mb-7 flex items-start justify-between gap-4">
                 <span
-                  className={`inline-flex border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] ${
-                    plan.featured
-                      ? "border-[#07111f] bg-[#07111f] text-white"
-                      : "border-slate-200 bg-slate-50 text-slate-700"
-                  }`}
+                  className={`inline-flex border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] ${plan.featured
+                    ? "border-white/15 bg-white/8 text-white"
+                    : "border-border bg-[#FBF8F5] text-body"
+                    }`}
                 >
                   {plan.badge}
                 </span>
                 {plan.featured && (
-                  <span className="border border-[#1F7C80]/25 bg-[#E8F5F5] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#1A5256]">
+                  <span className="border border-crimson/25 bg-crimson-soft px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-crimson-dark">
                     Recommended
                   </span>
                 )}
               </div>
 
               <div>
-                <h3 className="font-sans text-xl font-extrabold text-slate-950">
+                <h3 className={`font-sans text-xl font-extrabold ${plan.featured ? "text-white" : "text-ink"}`}>
                   {plan.name}
                 </h3>
-                <div className="mt-4 flex items-baseline gap-2">
-                  <span className="font-sans text-4xl font-extrabold tracking-tight text-slate-950">
+                <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span className={`font-sans text-[2.35rem] font-extrabold leading-none tracking-tight xl:text-[2.6rem] ${plan.featured ? "text-white" : "text-ink"}`}>
                     {plan.price}
                   </span>
-                  <span className="text-sm font-medium text-slate-500">
+                  <span className={`max-w-[10rem] text-sm font-medium leading-5 ${plan.featured ? "text-white/65" : "text-muted"}`}>
                     / {plan.period}
                   </span>
                 </div>
-                <p className="mt-4 min-h-[72px] text-sm leading-6 text-slate-600">
+                <p className={`mt-4 min-h-[72px] text-sm leading-6 ${plan.featured ? "text-white/72" : "text-muted"}`}>
                   {plan.description}
                 </p>
                 {"annualNote" in plan && plan.annualNote ? (
-                  <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#1F7C80]">
+                  <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-crimson">
                     {plan.annualNote}
                   </p>
                 ) : null}
               </div>
 
-              <div className="my-7 h-px bg-slate-200" />
+                              <div className={`my-7 h-px ${plan.featured ? "bg-gradient-to-r from-transparent via-crimson/45 to-transparent" : "bg-border"}`} />
 
               <ul className="grid flex-1 gap-3">
                 {plan.features.map((inc) => (
                   <li
                     key={inc}
-                    className="flex items-start gap-2.5 text-sm leading-6 text-slate-700"
+                    className={`flex items-start gap-2.5 text-sm leading-6 ${plan.featured ? "text-white/85" : "text-body"}`}
                   >
                     <CheckCircle2
                       size={15}
-                      className={`mt-0.5 shrink-0 ${plan.featured ? "text-[#07111f]" : "text-[#1F7C80]"}`}
+                      className={`mt-0.5 shrink-0 ${plan.featured ? "text-[#E8B6BF]" : "text-crimson"}`}
                     />
                     <span>{inc}</span>
                   </li>
@@ -168,11 +169,10 @@ export function Pricing() {
 
               <Link
                 to={plan.cta.to}
-                className={`mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 px-4 text-sm font-bold transition-colors ${
-                  plan.featured
-                    ? "border border-[#07111f] bg-[#07111f] !text-white hover:bg-[#10233f]"
-                    : "border border-slate-300 bg-white !text-slate-950 hover:border-slate-400 hover:bg-slate-100"
-                }`}
+                className={`mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 px-4 text-sm font-bold transition-all ${plan.featured
+                  ? "border border-white/15 !text-white shadow-[0_8px_24px_-4px_rgba(125,34,51,0.6),inset_0_1px_0_rgba(255,255,255,0.12)] [background:linear-gradient(135deg,#9A3247_0%,#7D2233_50%,#521326_100%)] hover:[background:linear-gradient(135deg,#A9384F_0%,#8B2A3D_50%,#5C1829_100%)] hover:shadow-[0_10px_28px_-2px_rgba(125,34,51,0.7)] hover:-translate-y-0.5"
+                  : "border border-border bg-white !text-ink hover:border-border-strong hover:bg-[#FBF8F5]"
+                  }`}
               >
                 <span>{plan.cta.label}</span>
                 <ArrowRight size={15} />
@@ -181,18 +181,15 @@ export function Pricing() {
           ))}
         </div>
 
-        <div className="mx-auto mt-6 grid max-w-5xl gap-3 border-t border-slate-200 pt-5 text-sm leading-6 text-slate-600 md:grid-cols-3">
+        <div className="mx-auto mt-6 grid max-w-6xl gap-3 border-t border-border pt-5 text-sm leading-6 text-muted md:grid-cols-3 2xl:max-w-[1320px]">
           <p>
-            <strong className="font-bold text-slate-950">No guesswork:</strong> demo first, deploy
-            after fit is clear.
+            <strong className="font-bold text-ink">No guesswork:</strong> demo first, deploy after fit is clear.
           </p>
           <p>
-            <strong className="font-bold text-slate-950">Annual savings:</strong> paid plans include
-            built-in yearly discount options for longer commitments.
+            <strong className="font-bold text-ink">Annual savings:</strong> paid plans include built-in yearly discount options for longer commitments.
           </p>
           <p>
-            <strong className="font-bold text-slate-950">Teacher-ready:</strong> invite teachers,
-            assign courses, and run AI, human, or hybrid classrooms.
+            <strong className="font-bold text-ink">Teacher-ready:</strong> invite teachers, assign courses, and run AI, human, or hybrid classrooms.
           </p>
         </div>
       </div>

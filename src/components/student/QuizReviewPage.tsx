@@ -112,7 +112,7 @@ export function QuizReviewPage({ sessionId, courseId, lessonId, quizData }: Quiz
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             to={`/classroom/session/${sessionId}` as any}
-            className="flex items-center gap-2 text-[#1F7C80] hover:text-[#1A5256] font-medium"
+            className="flex items-center gap-2 text-[#7D2233] hover:text-[#521326] font-medium"
           >
             <ArrowLeft size={18} />
             Back to Session
@@ -125,7 +125,7 @@ export function QuizReviewPage({ sessionId, courseId, lessonId, quizData }: Quiz
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 py-8">
         {/* Score Card */}
-        <Card className="mb-8 border-[#a3d9d8] bg-gradient-to-br from-[#e8f5f5] to-[#e8f5f5]">
+        <Card className="mb-8 border-[#F7E7EA] bg-gradient-to-br from-[#F7E7EA] to-[#F7E7EA]">
           <CardContent className="pt-8 pb-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
@@ -133,7 +133,7 @@ export function QuizReviewPage({ sessionId, courseId, lessonId, quizData }: Quiz
                 <div className="text-sm text-gray-600">Score</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-[#1F7C80] mb-2">
+                <div className="text-4xl font-bold text-[#7D2233] mb-2">
                   {data.score}/{100}
                 </div>
                 <div className="text-sm text-gray-600">Points</div>
@@ -296,9 +296,9 @@ export function QuizReviewPage({ sessionId, courseId, lessonId, quizData }: Quiz
                         </div>
                       </div>
 
-                      <div className="bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg p-3">
+                      <div className="bg-[#F7E7EA] border border-[#F7E7EA] rounded-lg p-3">
                         <div className="flex gap-2">
-                          <HelpCircle className="text-[#1F7C80] flex-shrink-0" size={18} />
+                          <HelpCircle className="text-[#7D2233] flex-shrink-0" size={18} />
                           <div>
                             <h4 className="font-medium text-gray-900 text-sm">Explanation</h4>
                             <p className="text-sm text-gray-700 mt-1">{question.explanation}</p>
@@ -318,7 +318,7 @@ export function QuizReviewPage({ sessionId, courseId, lessonId, quizData }: Quiz
           <Link to={`/classroom/${lessonId}` as any}>
             <Button variant="outline">Review Lesson</Button>
           </Link>
-          <Button className="bg-[#1F7C80] hover:bg-[#1A5256]">Retake Quiz</Button>
+          <Button className="bg-[#7D2233] hover:bg-[#521326]">Retake Quiz</Button>
         </div>
       </main>
     </div>

@@ -66,7 +66,7 @@ function StudentCourses() {
                       <p className="line-clamp-2 text-sm text-muted-foreground">
                         {e.course.description}
                       </p>
-                      <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">
+                      <span className="inline-flex items-center gap-1 rounded-md bg-success-light px-2 py-0.5 text-xs font-semibold text-success-dark">
                         <CheckCircle2 className="h-3 w-3" /> Enrolled
                       </span>
                     </CardContent>
@@ -81,7 +81,7 @@ function StudentCourses() {
       {catalogQ.isLoading ? null : available.length === 0 ? null : (
         <>
           <div className="mb-3 flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-[#1F7C80]" />
+            <Sparkles className="h-4 w-4 text-crimson" />
             <h2 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">
               Available Courses
             </h2>
@@ -106,8 +106,8 @@ function StudentCourses() {
                     <span
                       className={`inline-flex w-fit items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold ${
                         isFreeCourse(c.priceUsd)
-                          ? "bg-emerald-50 text-emerald-700"
-                          : "bg-[#e8f5f5] text-[#1A5256]"
+                          ? "bg-success-light text-success-dark"
+                          : "bg-crimson-soft text-crimson-dark"
                       }`}
                     >
                       <Lock className="h-3 w-3" />

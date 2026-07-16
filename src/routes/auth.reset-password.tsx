@@ -82,25 +82,25 @@ function ResetPasswordPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--gray-50)]">
         <div className="text-center space-y-4">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[#1F7C80] border-t-transparent" />
-          <p className="text-sm text-[#A3ADAD]">Preparing your secure password reset…</p>
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-crimson border-t-transparent" />
+          <p className="text-sm text-[var(--muted)]">Preparing your secure password reset…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="auth-tech-page flex min-h-screen items-center justify-center px-6 py-12">
-      <div className="auth-tech-panel w-full max-w-md space-y-8 p-8">
+    <div className="auth-tech-page flex min-h-screen items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+      <div className="auth-tech-panel w-full max-w-md space-y-6 sm:space-y-8 p-5 sm:p-8">
         <div className="flex justify-center">
           <Link to="/" className="flex items-center">
-            <Logo size={40} />
+            <Logo size={34} />
           </Link>
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1A3233]">Choose a new password</h1>
-          <p className="mt-2 text-sm text-[#64748B]">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--ink)]">Choose a new password</h1>
+          <p className="mt-2 text-sm text-[var(--muted)]">
             Set a new password for your Klassruum account.
           </p>
         </div>

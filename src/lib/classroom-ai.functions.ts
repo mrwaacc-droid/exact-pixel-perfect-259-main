@@ -16,9 +16,9 @@
  * the flat `answer` / `wordCount` / `source` fields are still present so existing
  * callers keep working.
  *
- * Uses the Lovable AI gateway (structured `generateObject`). Falls back to a
- * deterministic, context-aware response when the gateway is unavailable, so the
- * class is never blocked.
+ * Uses the resilient AI provider chain (OpenAI / DeepSeek, structured
+ * `generateObject`). Falls back to a deterministic, context-aware response
+ * when no provider is available, so the class is never blocked.
  */
 
 import { createServerFn } from "@tanstack/react-start";
@@ -193,22 +193,43 @@ function looksUnclear(question: string): boolean {
   return vague.some((v) => q === v || q === v + "?" || (q.length <= 14 && q.includes(v)));
 }
 
+function snippet(value: string | undefined, fallback: string, max = 180): string {
+  const cleaned = (value ?? "").replace(/\s+/g, " ").trim();
+  if (!cleaned) return fallback;
+  return cleaned.length > max ? `${cleaned.slice(0, max).trim()}...` : cleaned;
+}
+
+function firstSentence(value: string | undefined, fallback: string): string {
+  const cleaned = snippet(value, fallback, 320);
+  const match = cleaned.match(/^(.+?[.!?])\s/);
+  return match?.[1] ?? cleaned;
+}
+
+function sectionLabel(value: string | undefined): string {
+  return (value ?? "this step").replace(/_/g, " ");
+}
+
+function buildClarificationOptions(ctx: z.infer<typeof ContextSchema>): string[] {
+  const options = new Set<string>();
+  if (ctx.currentBoardItem) options.add(`The board line: ${snippet(ctx.currentBoardItem, "", 48)}`);
+  if (ctx.currentSection) options.add(`The ${sectionLabel(ctx.currentSection)} part`);
+  if (ctx.teacherExplanation) options.add("The teacher's explanation");
+  if (ctx.learnerNotes) options.add("The notes so far");
+  options.add("Ask another way");
+  return Array.from(options).slice(0, 4);
+}
+
 function fallbackTeacherAnswer(
   ctx: z.infer<typeof ContextSchema>,
   question: string,
 ): TeacherAnswer {
   // Unclear (and not already a clarification round) → ask to clarify.
   if (looksUnclear(question) && !ctx.priorClarification) {
-    const section = ctx.currentSection ?? "this step";
+    const section = sectionLabel(ctx.currentSection);
     return {
       clarity: "unclear",
       clarificationQuestion: `I want to answer clearly. Which part of ${section} do you mean?`,
-      clarificationOptions: [
-        "Finding the numbers",
-        "Writing the brackets",
-        "Getting the final values",
-        "Type my question",
-      ],
+      clarificationOptions: buildClarificationOptions(ctx),
       shouldShowOnBoard: false,
       saveToNotes: false,
       suggestedFollowUp: "Pick the part that's confusing and I'll explain just that.",
@@ -245,6 +266,66 @@ function fallbackTeacherAnswer(
   };
 }
 
+function groundedFallbackTeacherAnswer(
+  ctx: z.infer<typeof ContextSchema>,
+  question: string,
+): TeacherAnswer {
+  if (looksUnclear(question) && !ctx.priorClarification) {
+    const section = sectionLabel(ctx.currentSection);
+    return {
+      clarity: "unclear",
+      clarificationQuestion: `I want to answer clearly. Which part of ${section} do you mean?`,
+      clarificationOptions: buildClarificationOptions(ctx),
+      shouldShowOnBoard: false,
+      saveToNotes: false,
+      suggestedFollowUp: "Pick the part that is confusing and I will explain just that.",
+      source: "fallback",
+    };
+  }
+
+  const boardLine = snippet(ctx.currentBoardItem, "the current board line");
+  const section = sectionLabel(ctx.currentSection);
+  const explanation = firstSentence(
+    ctx.teacherExplanation,
+    `this part connects directly to the lesson goal in ${ctx.lessonTitle}.`,
+  );
+  const notes = firstSentence(
+    ctx.learnerNotes,
+    "the useful note is to slow down, identify what is given, and check each step against the board.",
+  );
+  const learnerNeed =
+    ctx.learnerSentiment?.tone === "frustrated" || ctx.learnerProfile?.lastEmotion === "frustrated"
+      ? "I can hear that this may feel frustrating, so I am going to slow it down."
+      : "Let us slow it down and make the reasoning visible.";
+
+  const out = clampWords(
+    `Good question. ${learnerNeed} You are asking about "${snippet(question, "this question", 120)}", so I want you to look back at ${boardLine}. The first job is not to rush to an answer. First, name what the board is showing. In this section, ${section}, the key idea is this: ${explanation} Now connect that to your question. Ask yourself, what changed from the previous step, and what stayed the same? That tells you which rule or idea is being used. ${notes} A common mistake is to copy the next line without knowing why it follows from the last one. Instead, check the reason for each move before you accept it. If this is a calculation, explain each symbol before operating on it. If it is a diagram or language example, point to the exact part that proves the answer. Now try this check: can you say, in one sentence, why the current board line is true? If you can, you understand the step; if not, that is the exact part we should repeat together.`,
+  );
+
+  return {
+    clarity: "clear",
+    answer: out,
+    shouldShowOnBoard: true,
+    boardItems: [
+      {
+        type: "bullet",
+        text: `Focus on ${section}: what changed, what stayed the same, and why the step follows.`,
+      },
+      {
+        type: "bullet",
+        text: `Board line: ${snippet(ctx.currentBoardItem, "current board line", 90)}`,
+      },
+      {
+        type: "question",
+        text: "Can you say why this board line is true in one sentence?",
+      },
+    ],
+    saveToNotes: true,
+    suggestedFollowUp: "Should I repeat this with a smaller example?",
+    source: "fallback",
+  };
+}
+
 /** Normalise a structured TeacherAnswer into the back-compat result shape. */
 function toResult(a: TeacherAnswer): AnswerLearnerQuestionResult {
   const flat =
@@ -267,7 +348,7 @@ export const answerLearnerQuestion = createServerFn({ method: "POST" })
 
     const resilientCaller = createResilientModelCaller("teacher_answer");
     if (!resilientCaller) {
-      return toResult(fallbackTeacherAnswer(data.context, data.question));
+      return toResult(groundedFallbackTeacherAnswer(data.context, data.question));
     }
 
     try {
@@ -278,7 +359,7 @@ export const answerLearnerQuestion = createServerFn({ method: "POST" })
       );
 
       if (!result) {
-        return toResult(fallbackTeacherAnswer(data.context, data.question));
+        return toResult(groundedFallbackTeacherAnswer(data.context, data.question));
       }
 
       const { object } = result;
@@ -297,6 +378,6 @@ export const answerLearnerQuestion = createServerFn({ method: "POST" })
       };
       return toResult(normalised);
     } catch {
-      return toResult(fallbackTeacherAnswer(data.context, data.question));
+      return toResult(groundedFallbackTeacherAnswer(data.context, data.question));
     }
   });

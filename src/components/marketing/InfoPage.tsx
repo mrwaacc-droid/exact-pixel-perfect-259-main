@@ -41,7 +41,7 @@ export function InfoPage({
           <Link to="/" className="flex items-center">
             <Logo size={34} />
           </Link>
-          <nav className="flex items-center gap-6 text-sm font-semibold text-slate-500">
+          <nav className="flex items-center gap-6 text-sm font-semibold text-gray-500">
             <Link to="/" className="hidden transition-colors hover:text-heading sm:inline">
               Home
             </Link>
@@ -106,7 +106,7 @@ export function InfoPage({
                 </div>
                 <span className="rounded-full bg-soft-green border border-green-100 px-3 py-0.5 text-[11px] font-bold text-education-green">Online</span>
               </div>
-              <div className="mt-5 rounded-xl border border-white/10 bg-[#07111f] p-4 text-white shadow-inner">
+              <div className="mt-5 rounded-xl border border-white/10 bg-[var(--ink)] p-4 text-white shadow-inner">
                 <div className="flex items-center gap-2 text-[10px] text-muted font-bold uppercase tracking-wider">
                   <span className="h-1.5 w-1.5 rounded-full bg-education-green animate-pulse" />
                   AI teacher explaining

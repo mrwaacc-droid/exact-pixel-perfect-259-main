@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/materials/upload")({
-  component: () => (
-    <RouteStubPage
-      title="Upload Material"
-      description="Upload new course material"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+// Uploading happens through the Materials tab dialog on the course page.
+export const Route = createFileRoute(
+  "/_authenticated/institution/courses/$courseId/materials/upload",
+)({
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/institution/courses/$courseId",
+      params: { courseId: params.courseId },
+    } as any);
+  },
 });

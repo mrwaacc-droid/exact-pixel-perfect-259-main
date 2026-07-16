@@ -165,7 +165,7 @@ function CourseDetailPage() {
             <Link to="/institution/resources" className="underline">
               Resources library
             </Link>{" "}
-            to upload materials. Per-course attachment coming soon.
+            to upload and organize materials for this course.
           </p>
         </TabsContent>
 

@@ -71,6 +71,12 @@ export function assertProductionSecurityConfiguration() {
       "[security] TURNSTILE_SECRET_KEY is recommended when public registration is enabled.",
     );
   }
+
+  if (!process.env.ELEVENLABS_WEBHOOK_SECRET) {
+    console.warn(
+      "[security] ELEVENLABS_WEBHOOK_SECRET is not set — the ElevenLabs webhook endpoint will reject all deliveries.",
+    );
+  }
 }
 
 export function buildContentSecurityPolicy() {

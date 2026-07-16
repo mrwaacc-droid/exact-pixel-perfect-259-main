@@ -126,11 +126,11 @@ const STATE_CONFIG: Record<AITeacherState, StateConfig> = {
   },
   preparing: {
     label: "Preparing lesson…",
-    color: "text-[#1F7C80]",
-    bgColor: "bg-[#e8f5f5]",
-    borderColor: "border-[#a3d9d8]",
+    color: "text-[#7D2233]",
+    bgColor: "bg-[var(--crimson-soft)]",
+    borderColor: "border-[var(--crimson-soft)]",
     icon: Loader2,
-    ringColor: "rgba(37, 99, 235, 0.3)",
+    ringColor: "rgba(154, 50, 71, 0.3)",
   },
   writing: {
     label: "Writing on board…",
@@ -142,9 +142,9 @@ const STATE_CONFIG: Record<AITeacherState, StateConfig> = {
   },
   reading_board: {
     label: "Reading board…",
-    color: "text-[#1F7C80]",
-    bgColor: "bg-[#e8f5f5]",
-    borderColor: "border-[#a3d9d8]",
+    color: "text-[#7D2233]",
+    bgColor: "bg-[var(--crimson-soft)]",
+    borderColor: "border-[var(--crimson-soft)]",
     icon: BookMarked,
     ringColor: "rgba(79, 70, 229, 0.4)",
   },
@@ -182,16 +182,16 @@ const STATE_CONFIG: Record<AITeacherState, StateConfig> = {
   },
   answering: {
     label: "Answering…",
-    color: "text-[#1F7C80]",
-    bgColor: "bg-[#e8f5f5]",
-    borderColor: "border-[#a3d9d8]",
+    color: "text-[#7D2233]",
+    bgColor: "bg-[var(--crimson-soft)]",
+    borderColor: "border-[var(--crimson-soft)]",
     icon: MessageSquare,
-    ringColor: "rgba(37, 99, 235, 0.4)",
+    ringColor: "rgba(154, 50, 71, 0.4)",
   },
   encouraging: {
     label: "Great work!",
-    color: "text-emerald-600",
-    bgColor: "bg-emerald-50",
+    color: "text-success",
+    bgColor: "bg-success-light",
     borderColor: "border-emerald-300",
     icon: ThumbsUp,
     ringColor: "rgba(5, 150, 105, 0.4)",
@@ -350,7 +350,7 @@ function AITeacherAvatar({
 
           {/* Graduation cap */}
           <div className="ai-video-avatar-cap">
-            <GraduationCap size={20} className="text-[#1F7C80]" />
+            <GraduationCap size={20} className="text-[#7D2233]" />
           </div>
         </div>
 

@@ -434,4 +434,175 @@ export const listClassroomRentals = createServerFn({ method: "GET" })
     return { rentals: rows ?? [] };
   });
 
+// ===========================================================================
+// RENTAL PAYMENTS (Paystack)
+// ===========================================================================
+
+function randomRentalReference(): string {
+  const raw = (
+    globalThis.crypto?.randomUUID?.() ?? `${Date.now()}${Math.random().toString(36).slice(2)}`
+  ).replace(/-/g, "");
+  return `rental_${raw.slice(0, 24)}`;
+}
+
+/**
+ * initializeRentalCheckout — starts a Paystack checkout for a pending rental.
+ * Returns the authorization URL the browser should redirect to. The Paystack
+ * callback returns to the rentals page with ?reference=&rental_id= which the
+ * UI verifies via verifyRentalPayment.
+ */
+export const initializeRentalCheckout = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: unknown) =>
+    z
+      .object({
+        rental_id: z.string().regex(UUID_RE),
+        return_path: z.enum(["/institution/rentals", "/teacher/rentals"]).default("/institution/rentals"),
+      })
+      .parse(data),
+  )
+  .handler(async ({ data, context }: any) => {
+    const { supabase, userId, claims } = context;
+    if (!supabase) throw new Error("Payments are unavailable in demo mode.");
+
+    const db = supabase as any;
+    const { data: rental, error } = await db
+      .from("classroom_rentals")
+      .select("id, institution_id, amount_cents, currency, status")
+      .eq("id", data.rental_id)
+      .single();
+    if (error) throw new Error(error.message);
+    if (!rental) throw new Error("Rental not found.");
+    if (rental.status !== "pending") throw new Error("Only pending rentals can be paid for.");
+
+    const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (!secretKey) throw new Error("Payments are not configured yet. Set PAYSTACK_SECRET_KEY.");
+
+    const appUrl =
+      process.env.APP_URL ||
+      process.env.VITE_APP_URL ||
+      process.env.PUBLIC_APP_URL ||
+      "https://klassruum.co.ke";
+    const reference = randomRentalReference();
+    const callbackUrl = `${appUrl}${data.return_path}?reference=${encodeURIComponent(
+      reference,
+    )}&rental_id=${encodeURIComponent(rental.id)}`;
+
+    const email = (claims?.email as string) || `${userId}@klassruum.local`;
+
+    const response = await fetch("https://api.paystack.co/transaction/initialize", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${secretKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        amount: rental.amount_cents,
+        currency: rental.currency ?? "KES",
+        reference,
+        callback_url: callbackUrl,
+        metadata: {
+          rental_id: rental.id,
+          institution_id: rental.institution_id,
+          source: "klassruum_rental",
+        },
+      }),
+    });
+
+    let body: any = {};
+    try {
+      body = await response.json();
+    } catch {
+      body = {};
+    }
+    if (!response.ok) {
+      throw new Error(body?.message || "Unable to start Paystack checkout.");
+    }
+    const authorizationUrl = body?.data?.authorization_url as string | undefined;
+    if (!authorizationUrl) throw new Error("Paystack did not return an authorization URL.");
+
+    await db
+      .from("classroom_rentals")
+      .update({ paystack_reference: reference, paystack_status: "initialized" })
+      .eq("id", rental.id);
+
+    return { reference, authorizationUrl };
+  });
+
+/**
+ * verifyRentalPayment — verifies a Paystack transaction for a rental after
+ * the gateway redirects back, then marks the rental confirmed.
+ */
+export const verifyRentalPayment = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: unknown) =>
+    z
+      .object({
+        rental_id: z.string().regex(UUID_RE),
+        reference: z.string().min(1).max(200),
+      })
+      .parse(data),
+  )
+  .handler(async ({ data, context }: any) => {
+    const { supabase } = context;
+    if (!supabase) throw new Error("Payments are unavailable in demo mode.");
+    const db = supabase as any;
+
+    const { data: rental, error } = await db
+      .from("classroom_rentals")
+      .select("id, amount_cents, currency, status, paystack_reference")
+      .eq("id", data.rental_id)
+      .single();
+    if (error) throw new Error(error.message);
+    if (!rental) throw new Error("Rental not found.");
+    if (rental.status === "confirmed" || rental.status === "active") {
+      return { ok: true, status: rental.status, rental };
+    }
+    if (rental.paystack_reference !== data.reference) {
+      throw new Error("Payment reference does not match this rental.");
+    }
+
+    const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (!secretKey) throw new Error("Payments are not configured yet. Set PAYSTACK_SECRET_KEY.");
+
+    const response = await fetch(
+      `https://api.paystack.co/transaction/verify/${encodeURIComponent(data.reference)}`,
+      { headers: { Authorization: `Bearer ${secretKey}` } },
+    );
+    let body: any = {};
+    try {
+      body = await response.json();
+    } catch {
+      body = {};
+    }
+    if (!response.ok) {
+      throw new Error(body?.message || "Unable to verify Paystack payment.");
+    }
+
+    const tx = body?.data ?? {};
+    const gatewayStatus = String(tx.status ?? "").toLowerCase();
+    const paidAmount = Number(tx.amount ?? 0);
+
+    if (gatewayStatus !== "success") {
+      await db
+        .from("classroom_rentals")
+        .update({ paystack_status: gatewayStatus || "failed" })
+        .eq("id", rental.id);
+      return { ok: false, status: gatewayStatus || "failed", rental };
+    }
+    if (paidAmount !== rental.amount_cents) {
+      throw new Error("Paid amount does not match the rental price.");
+    }
+
+    const { data: updated, error: updateError } = await db
+      .from("classroom_rentals")
+      .update({ status: "confirmed", paystack_status: "success" })
+      .eq("id", rental.id)
+      .select("*")
+      .single();
+    if (updateError) throw new Error(updateError.message);
+    return { ok: true, status: "confirmed", rental: updated };
+  });
+
 export { fmtMoney, RENTAL_RATES };

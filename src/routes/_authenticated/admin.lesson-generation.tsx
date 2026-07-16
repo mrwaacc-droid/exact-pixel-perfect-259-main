@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 
 export const Route = createFileRoute("/_authenticated/admin/lesson-generation")({
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       title="Lesson Generation Jobs"
       description="Monitor all AI lesson generation jobs"
       role="Platform Admin"

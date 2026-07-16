@@ -120,8 +120,8 @@ const STATUS_CONFIG: Record<
     dotColor: string;
   }
 > = {
-  live: { label: "Live Now", variant: "info", dotColor: "#1F7C80" },
-  upcoming: { label: "Upcoming", variant: "neutral", dotColor: "#94A3B8" },
+  live: { label: "Live Now", variant: "info", dotColor: "var(--crimson)" },
+  upcoming: { label: "Upcoming", variant: "neutral", dotColor: "#A89890" },
   completed: { label: "Completed", variant: "success", dotColor: "#22C55E" },
   cancelled: { label: "Cancelled", variant: "error", dotColor: "#EF4444" },
 };
@@ -143,19 +143,19 @@ function TeacherSessions() {
 
       {/* Live Now banner — teal brand color (not blue) */}
       {liveSessions.length > 0 && (
-        <div className="mb-6 overflow-hidden rounded-2xl border-2 border-[#1F7C80] bg-gradient-to-r from-[#e8f5f5] to-white p-5 relative">
-          {/* Subtle top teal glow */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#1F7C80]/5 to-transparent" />
+        <div className="mb-6 overflow-hidden rounded-2xl border-2 border-[#7D2233] bg-gradient-to-r from-[#F7E7EA] to-white p-5 relative">
+          {/* Subtle top crimson glow */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#7D2233]/5 to-transparent" />
           <div className="relative flex items-center gap-3 mb-4">
             <span className="relative flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1F7C80] opacity-75" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-[#1F7C80]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--crimson)] opacity-75" />
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-[var(--crimson)]" />
             </span>
             <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-[#1F7C80]" />
-              <h2 className="text-base font-bold text-[#0F172A]">Live Right Now</h2>
+              <Zap className="h-4 w-4 text-[var(--crimson)]" />
+              <h2 className="text-base font-bold text-[#191314]">Live Right Now</h2>
             </div>
-            <span className="ml-auto rounded-full bg-[#1F7C80]/10 px-2.5 py-1 text-xs font-bold text-[#1F7C80]">
+            <span className="ml-auto rounded-full bg-[var(--crimson)]/10 px-2.5 py-1 text-xs font-bold text-[var(--crimson)]">
               {liveSessions.length} session{liveSessions.length > 1 ? "s" : ""}
             </span>
           </div>
@@ -171,10 +171,10 @@ function TeacherSessions() {
       <section className="mb-8">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-[#1F7C80]" />
-            <h2 className="text-lg font-bold text-[#0F172A]">Upcoming Sessions</h2>
+            <Calendar className="h-5 w-5 text-[var(--crimson)]" />
+            <h2 className="text-lg font-bold text-[#191314]">Upcoming Sessions</h2>
           </div>
-          <span className="rounded-full border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-semibold text-[#64748B]">
+          <span className="rounded-full border border-[var(--border)] bg-white px-2.5 py-1 text-xs font-semibold text-[#8A7478]">
             {upcomingSessions.length} scheduled
           </span>
         </div>
@@ -190,9 +190,9 @@ function TeacherSessions() {
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="h-5 w-5 text-green-500" />
-            <h2 className="text-lg font-bold text-[#0F172A]">Completed Sessions</h2>
+            <h2 className="text-lg font-bold text-[#191314]">Completed Sessions</h2>
           </div>
-          <span className="rounded-full border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-semibold text-[#64748B]">
+          <span className="rounded-full border border-[var(--border)] bg-white px-2.5 py-1 text-xs font-semibold text-[#8A7478]">
             {completedSessions.length} sessions
           </span>
         </div>
@@ -209,23 +209,23 @@ function TeacherSessions() {
 function SessionRow({ session }: { session: Session }) {
   const sc = STATUS_CONFIG[session.status];
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-[#E2E8F0] bg-white p-4 transition-all hover:border-[#1F7C80]/30 hover:shadow-sm sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-3 rounded-2xl border border-[var(--border)] bg-white p-4 transition-all hover:border-[var(--crimson)]/30 hover:shadow-sm sm:flex-row sm:items-center">
       {/* Video icon with brand-consistent background */}
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#e8f5f5] to-[#d1eceb]">
-        <Video className="h-5 w-5 text-[#1F7C80]" />
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#F7E7EA] to-[#F7E7EA]">
+        <Video className="h-5 w-5 text-[#7D2233]" />
       </div>
 
       {/* Main info */}
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-base font-bold text-[#0F172A]">{session.title}</h3>
+          <h3 className="text-base font-bold text-[#191314]">{session.title}</h3>
           <StatusBadge variant={sc.variant}>{sc.label}</StatusBadge>
-          <span className="rounded-full border border-[#E2E8F0] bg-[#F8FAFC] px-2 py-0.5 text-xs font-semibold text-[#64748B]">
+          <span className="rounded-full border border-[var(--border)] bg-[var(--page-background)] px-2 py-0.5 text-xs font-semibold text-[#8A7478]">
             {session.mode}
           </span>
         </div>
-        <p className="mt-0.5 text-sm text-[#64748B]">{session.course}</p>
-        <div className="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-[#94A3B8]">
+        <p className="mt-0.5 text-sm text-[#8A7478]">{session.course}</p>
+        <div className="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-[#A89890]">
           <span className="flex items-center gap-1">
             <Calendar className="h-3 w-3" /> {session.date} · {session.time}
           </span>
@@ -239,7 +239,7 @@ function SessionRow({ session }: { session: Session }) {
             <span className="font-semibold text-green-600">Avg score: {session.avgScore}%</span>
           )}
           {session.completionRate !== undefined && (
-            <span className="font-semibold text-[#1F7C80]">
+            <span className="font-semibold text-[var(--crimson)]">
               {session.completionRate}% completed
             </span>
           )}
@@ -252,7 +252,7 @@ function SessionRow({ session }: { session: Session }) {
           <Link
             to="/teacher/sessions/$sessionId"
             params={{ sessionId: session.id }}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#1A5256]"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--crimson)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--crimson-dark)]"
           >
             <Play className="h-4 w-4" />
             {session.status === "live" ? "Open studio" : "Prepare"}
@@ -261,14 +261,14 @@ function SessionRow({ session }: { session: Session }) {
           <>
             <Link
               to="/teacher/analytics"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] px-3 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC] hover:border-[#1F7C80]/30 transition-all"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[#8A7478] hover:bg-[var(--page-background)] hover:border-[var(--crimson)]/30 transition-all"
             >
               <BarChart2 className="h-4 w-4" />
               Results
             </Link>
             <Link
               to="/demo/ai-video"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] px-3 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC] hover:border-[#1F7C80]/30 transition-all"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[#8A7478] hover:bg-[var(--page-background)] hover:border-[var(--crimson)]/30 transition-all"
             >
               <Eye className="h-4 w-4" />
               Replay

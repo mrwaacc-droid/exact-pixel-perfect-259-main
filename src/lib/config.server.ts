@@ -18,6 +18,5 @@ export function getServerConfig() {
   return {
     nodeEnv: process.env.NODE_ENV,
     appUrl: process.env.APP_URL ?? process.env.VITE_APP_URL ?? process.env.PUBLIC_APP_URL ?? null,
-    emailProvider: process.env.EMAIL_PROVIDER ?? "internal_queue",
   };
 }

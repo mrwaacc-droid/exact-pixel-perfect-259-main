@@ -144,27 +144,27 @@ function CompleteProfilePage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--gray-50)]">
         <div className="text-center space-y-4">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[#1F7C80] border-t-transparent" />
-          <p className="text-sm text-[#A3ADAD]">Loading your account…</p>
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-crimson border-t-transparent" />
+          <p className="text-sm text-[var(--muted)]">Loading your account…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--gray-50)] px-6">
-      <div className="w-full max-w-md space-y-8">
+    <div className="auth-tech-page flex min-h-screen items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+      <div className="w-full max-w-md space-y-6 sm:space-y-8">
         <div className="flex justify-center">
           <Link to="/" className="flex items-center">
-            <Logo size={40} />
+            <Logo size={34} />
           </Link>
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1A3233]">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--ink)]">
             Complete your profile
           </h1>
-          <p className="mt-2 text-sm text-[#A3ADAD]">
+          <p className="mt-2 text-sm text-[var(--muted)]">
             Tell us a bit about yourself to personalise your experience.
           </p>
         </div>
@@ -192,24 +192,24 @@ function CompleteProfilePage() {
                   type="button"
                   onClick={() => setSelectedRole(role)}
                   className={`flex items-center gap-3 rounded-xl border p-3 text-left transition-all ${selectedRole === role
-                      ? "border-[#1F7C80] bg-[#F0FDFA] ring-1 ring-[#1F7C80]/20"
-                      : "border-[#E2E8F0] bg-white hover:border-[#A3D9D8] hover:bg-[#F0FDFA]"
+                      ? "border-crimson bg-[#F0FDFA] ring-1 ring-crimson/20"
+                      : "border-[var(--border)] bg-white hover:border-crimson-soft hover:bg-[#F0FDFA]"
                     }`}
                 >
                   <div
                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${selectedRole === role
-                        ? "bg-[#1F7C80] text-white"
-                        : "bg-[#F1F5F9] text-[#64748B]"
+                        ? "bg-crimson text-white"
+                        : "bg-[var(--beige-soft)] text-[var(--muted)]"
                       }`}
                   >
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-[#0F172A]">{label}</p>
-                    <p className="truncate text-xs text-[#64748B]">{description}</p>
+                    <p className="text-sm font-bold text-[var(--ink)]">{label}</p>
+                    <p className="truncate text-xs text-[var(--muted)]">{description}</p>
                   </div>
                   <div
-                    className={`h-4 w-4 rounded-full border-2 ${selectedRole === role ? "border-[#1F7C80] bg-[#1F7C80]" : "border-[#CBD5E1]"
+                    className={`h-4 w-4 rounded-full border-2 ${selectedRole === role ? "border-crimson bg-crimson" : "border-[var(--border)]"
                       }`}
                   >
                     {selectedRole === role && (

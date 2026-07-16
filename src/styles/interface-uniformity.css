@@ -1,25 +1,26 @@
-/* Sharp, institutional UI pass for landing, pricing, and dashboards only. */
+/* Sharp, warm institutional UI pass for landing, pricing, and dashboards.
+   Uses the Klassruum warm editorial palette from tokens.css. */
 
 .landing-page-shell,
 .pricing-page-shell,
 .demo-classroom-shell,
 .kr-dashboard-shell,
 .dashboard-layout {
-  --ui-ink: #07111f;
-  --ui-ink-2: #10233f;
-  --ui-border: #dce4ee;
-  --ui-border-strong: #bdcad8;
-  --ui-surface: #ffffff;
-  --ui-soft: #f7f9fc;
-  --ui-radius: 8px;
-  --ui-radius-sm: 6px;
-  --ui-card-bg: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  --ui-ink: var(--ink);
+  --ui-ink-2: var(--heading);
+  --ui-border: var(--border);
+  --ui-border-strong: var(--border-strong);
+  --ui-surface: var(--white);
+  --ui-soft: var(--beige-soft);
+  --ui-radius: 10px;
+  --ui-radius-sm: 8px;
+  --ui-card-bg: linear-gradient(180deg, #ffffff 0%, #faf8f6 100%);
   --ui-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.035),
-    0 12px 30px rgba(15, 23, 42, 0.055);
+    0 1px 2px rgba(34, 27, 28, 0.04),
+    0 12px 30px rgba(34, 27, 28, 0.06);
   --ui-shadow-hover:
-    0 2px 5px rgba(15, 23, 42, 0.045),
-    0 16px 36px rgba(15, 23, 42, 0.075);
+    0 2px 5px rgba(34, 27, 28, 0.05),
+    0 16px 36px rgba(34, 27, 28, 0.08);
 }
 
 .landing-page-shell .rounded-3xl,
@@ -115,14 +116,14 @@
 .landing-page-shell .bg-learning-blue,
 .pricing-page-shell .bg-learning-blue,
 .pricing-page-shell .bg-academic-blue,
-.demo-classroom-shell [class*="bg-[#1F7C80]"],
+.demo-classroom-shell [class*="bg-[var(--crimson)]"],
 .kr-dashboard-shell .bg-academic-blue,
 .kr-dashboard-shell .bg-learning-blue,
 .dashboard-layout .bg-academic-blue,
 .dashboard-layout .bg-learning-blue,
-.kr-dashboard-shell [class*="bg-[#1F7C80]"],
-.dashboard-layout [class*="bg-[#1F7C80]"] {
-  background: var(--ui-ink) !important;
+.kr-dashboard-shell [class*="bg-[var(--crimson)]"],
+.dashboard-layout [class*="bg-[var(--crimson)]"] {
+  background: var(--crimson) !important;
 }
 
 .landing-page-shell a.bg-learning-blue,
@@ -159,20 +160,20 @@
 .landing-page-shell .text-learning-blue,
 .pricing-page-shell .text-learning-blue,
 .pricing-page-shell .text-academic-blue,
-.demo-classroom-shell [class*="text-[#1F7C80]"],
+.demo-classroom-shell [class*="text-[var(--crimson)]"],
 .kr-dashboard-shell .text-academic-blue,
 .kr-dashboard-shell .text-learning-blue,
 .dashboard-layout .text-academic-blue,
 .dashboard-layout .text-learning-blue,
-.kr-dashboard-shell [class*="text-[#1F7C80]"],
-.dashboard-layout [class*="text-[#1F7C80]"] {
-  color: var(--ui-ink-2) !important;
+.kr-dashboard-shell [class*="text-[var(--crimson)]"],
+.dashboard-layout [class*="text-[var(--crimson)]"] {
+  color: var(--crimson) !important;
 }
 
 .kr-dashboard-shell [class*="shadow-academic-blue"],
-.kr-dashboard-shell [class*="shadow-[#1F7C80]"],
+.kr-dashboard-shell [class*="shadow-[var(--crimson)]"],
 .dashboard-layout [class*="shadow-academic-blue"],
-.dashboard-layout [class*="shadow-[#1F7C80]"],
+.dashboard-layout [class*="shadow-[var(--crimson)]"],
 .landing-page-shell [class*="shadow-learning-blue"],
 .pricing-page-shell [class*="shadow-learning-blue"] {
   box-shadow: var(--ui-shadow) !important;
@@ -220,8 +221,8 @@
   background: linear-gradient(180deg, #ffffff 0%, #fffaf0 100%) !important;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.88) inset,
-    0 1px 2px rgba(15, 23, 42, 0.035),
-    0 10px 22px rgba(146, 64, 14, 0.045) !important;
+    0 1px 2px rgba(34, 27, 28, 0.04),
+    0 10px 22px rgba(201, 121, 34, 0.05) !important;
 }
 
 .kr-dashboard-shell .btn-primary,
@@ -230,62 +231,72 @@
 .dashboard-layout .kr-primary-button,
 .landing-page-shell .btn-primary-academic,
 .pricing-page-shell .btn-primary-academic {
-  border: 1px solid var(--ui-ink) !important;
+  border: 1px solid var(--crimson) !important;
   border-radius: var(--ui-radius-sm) !important;
-  background: var(--ui-ink) !important;
+  background: var(--crimson) !important;
   color: #ffffff !important;
   box-shadow: var(--ui-shadow) !important;
 }
 
+.kr-dashboard-shell .btn-primary:hover,
+.kr-dashboard-shell .kr-primary-button:hover,
+.dashboard-layout .btn-primary:hover,
+.dashboard-layout .kr-primary-button:hover,
+.landing-page-shell .btn-primary-academic:hover,
+.pricing-page-shell .btn-primary-academic:hover {
+  background: var(--crimson-hover) !important;
+  border-color: var(--crimson-hover) !important;
+}
+
 .kr-dashboard-shell .btn-primary *,
 .kr-dashboard-shell .kr-primary-button *,
-.kr-dashboard-shell [class*="bg-[#1F7C80]"] *,
+.kr-dashboard-shell [class*="bg-[var(--crimson)]"] *,
 .kr-dashboard-shell [class*="bg-[#07111f]"] *,
 .dashboard-layout .btn-primary *,
 .dashboard-layout .kr-primary-button *,
-.dashboard-layout [class*="bg-[#1F7C80]"] *,
+.dashboard-layout [class*="bg-[var(--crimson)]"] *,
 .dashboard-layout [class*="bg-[#07111f]"] *,
 .pricing-page-shell [class*="bg-[#07111f]"] *,
-.pricing-page-shell [class*="bg-[#0f172a]"] * {
+.pricing-page-shell [class*="bg-[var(--ink)]"] * {
   color: #ffffff !important;
   stroke: currentColor !important;
 }
 
-.kr-dashboard-shell a[class*="bg-[#1F7C80]"],
+.kr-dashboard-shell a[class*="bg-[var(--crimson)]"],
 .kr-dashboard-shell a[class*="bg-[#07111f]"],
 .kr-dashboard-shell a[class*="bg-[#07111F]"],
-.kr-dashboard-shell button[class*="bg-[#1F7C80]"],
+.kr-dashboard-shell button[class*="bg-[var(--crimson)]"],
 .kr-dashboard-shell button[class*="bg-[#07111f]"],
 .kr-dashboard-shell button[class*="bg-[#07111F]"],
-.kr-dashboard-shell a[class*="from-[#1F7C80]"],
-.kr-dashboard-shell button[class*="from-[#1F7C80]"],
+.kr-dashboard-shell a[class*="from-[var(--crimson)]"],
+.kr-dashboard-shell button[class*="from-[var(--crimson)]"],
 .kr-dashboard-shell a[class*="from-[#07111f]"],
 .kr-dashboard-shell button[class*="from-[#07111f]"],
-.dashboard-layout a[class*="bg-[#1F7C80]"],
+.dashboard-layout a[class*="bg-[var(--crimson)]"],
 .dashboard-layout a[class*="bg-[#07111f]"],
 .dashboard-layout a[class*="bg-[#07111F]"],
-.dashboard-layout button[class*="bg-[#1F7C80]"],
+.dashboard-layout button[class*="bg-[var(--crimson)]"],
 .dashboard-layout button[class*="bg-[#07111f]"],
 .dashboard-layout button[class*="bg-[#07111F]"],
-.dashboard-layout a[class*="from-[#1F7C80]"],
-.dashboard-layout button[class*="from-[#1F7C80]"],
+.dashboard-layout a[class*="from-[var(--crimson)]"],
+.dashboard-layout button[class*="from-[var(--crimson)]"],
 .dashboard-layout a[class*="from-[#07111f]"],
 .dashboard-layout button[class*="from-[#07111f]"],
 .pricing-page-shell a[class*="bg-[#07111f]"],
-.pricing-page-shell a[class*="bg-[#0f172a]"] {
+.pricing-page-shell a[class*="bg-[var(--ink)]"] {
   color: #ffffff !important;
 }
 
 .kr-dashboard-shell :is(a, button)[class*="bg-white"][class*="text-white"],
 .dashboard-layout :is(a, button)[class*="bg-white"][class*="text-white"] {
-  color: var(--ui-ink) !important;
+  color: var(--ink) !important;
 }
 
 .kr-dashboard-shell a[class*="bg-[var(--primary)]"],
 .kr-dashboard-shell button[class*="bg-[var(--primary)]"],
 .dashboard-layout a[class*="bg-[var(--primary)]"],
 .dashboard-layout button[class*="bg-[var(--primary)]"] {
-  background: var(--ui-ink) !important;
+  background: var(--crimson) !important;
   color: #ffffff !important;
 }
 
@@ -303,11 +314,21 @@
 .dashboard-layout .kr-secondary-button,
 .landing-page-shell .btn-secondary-academic,
 .pricing-page-shell .btn-secondary-academic {
-  border: 1px solid var(--ui-border) !important;
+  border: 1px solid var(--border) !important;
   border-radius: var(--ui-radius-sm) !important;
   background: #ffffff !important;
-  color: var(--ui-ink) !important;
+  color: var(--ink) !important;
   box-shadow: none !important;
+}
+
+.kr-dashboard-shell .btn-secondary:hover,
+.kr-dashboard-shell .kr-secondary-button:hover,
+.dashboard-layout .btn-secondary:hover,
+.dashboard-layout .kr-secondary-button:hover,
+.landing-page-shell .btn-secondary-academic:hover,
+.pricing-page-shell .btn-secondary-academic:hover {
+  background: var(--beige-soft) !important;
+  border-color: var(--border-strong) !important;
 }
 
 .kr-dashboard-shell input,
@@ -317,7 +338,7 @@
 .dashboard-layout textarea,
 .dashboard-layout select {
   border-radius: var(--ui-radius-sm) !important;
-  border-color: var(--ui-border) !important;
+  border-color: var(--border) !important;
   background: #ffffff !important;
   box-shadow: none !important;
 }
@@ -334,7 +355,7 @@
 
 .kr-dashboard-shell .kr-nav-item.active,
 .dashboard-layout .nav-item.active {
-  background: var(--ui-ink) !important;
+  background: var(--crimson) !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
@@ -352,23 +373,23 @@
 .dashboard-layout .class-icon,
 .dashboard-layout .session-thumb {
   border-radius: var(--ui-radius-sm) !important;
-  background: #eef3f8 !important;
-  color: var(--ui-ink-2) !important;
-  box-shadow: inset 0 0 0 1px rgba(184, 199, 217, 0.58);
+  background: var(--crimson-soft) !important;
+  color: var(--crimson) !important;
+  box-shadow: inset 0 0 0 1px rgba(125, 34, 51, 0.15);
 }
 
 .kr-dashboard-shell .kr-progress-track,
 .kr-dashboard-shell .kr-mini-progress,
 .dashboard-layout .progress-bar {
   border-radius: var(--ui-radius-sm) !important;
-  background: #e8eef5 !important;
+  background: var(--beige-soft) !important;
 }
 
 .kr-dashboard-shell .kr-progress-track div,
 .kr-dashboard-shell .kr-mini-progress div,
 .dashboard-layout .progress-fill {
   border-radius: var(--ui-radius-sm) !important;
-  background: var(--ui-ink) !important;
+  background: var(--crimson) !important;
 }
 
 .kr-dashboard-shell main,
@@ -390,7 +411,7 @@
 
 .kr-dashboard-shell {
   display: block !important;
-  background: #f6f8fb !important;
+  background: var(--page-background) !important;
   background-image: none !important;
 }
 
@@ -536,7 +557,7 @@
   background: #ffffff !important;
 }
 
-.kr-dashboard-shell .absolute[class*="bg-[#d1eceb]"],
+.kr-dashboard-shell .absolute[class*="bg-[var(--crimson-soft)]"],
 .kr-dashboard-shell [class*="bg-gradient-to-br"] {
   background: #ffffff !important;
 }

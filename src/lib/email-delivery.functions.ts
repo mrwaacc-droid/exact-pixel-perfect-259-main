@@ -2,14 +2,29 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { createAuditLog, requireInstitutionAdminAccess } from "@/lib/institution-admin.foundation";
-import { renderEmailTemplate, sendTransactionalEmail } from "@/lib/email-service.server";
+import {
+  renderEmailTemplate,
+  sendTransactionalEmail,
+  type EmailTemplateKey,
+} from "@/lib/email-service.server";
 
 const ProcessOutboundEmailJobSchema = z.object({
   job_id: z.string().uuid(),
 });
 
+const SUPPORTED_EMAIL_TEMPLATE_KEYS = [
+  "institution_member_invite",
+  "institution_invite_accepted",
+  "institution_owner_verify_email",
+  "institution_owner_welcome",
+  "admission_status_update",
+  "admission_enrollment_invite",
+  "session_reminder",
+  "certificate_issued",
+] as const;
+
 const PreviewEmailTemplateSchema = z.object({
-  templateKey: z.enum(["institution_member_invite", "institution_invite_accepted"]),
+  templateKey: z.enum(SUPPORTED_EMAIL_TEMPLATE_KEYS),
   subject: z.string().min(1).max(300),
   recipientName: z.string().max(200).optional(),
   payload: z.record(z.string(), z.unknown()).optional(),
@@ -76,15 +91,13 @@ export const processOutboundEmailJob = createServerFn({ method: "POST" })
         throw new Error("Email job has no template_key.");
       }
 
-      if (
-        job.template_key !== "institution_member_invite" &&
-        job.template_key !== "institution_invite_accepted"
-      ) {
+      if (!(SUPPORTED_EMAIL_TEMPLATE_KEYS as readonly string[]).includes(job.template_key)) {
         throw new Error(`Unsupported email template: ${job.template_key}`);
       }
+      const templateKey = job.template_key as EmailTemplateKey;
 
       const rendered = renderEmailTemplate({
-        templateKey: job.template_key,
+        templateKey,
         subject: job.subject,
         recipientName: job.to_name,
         payload:

@@ -29,7 +29,7 @@ export function ContinueLearningHero({
   sessionId,
 }: ContinueLearningHeroProps) {
   return (
-    <section className="dashboard-card overflow-hidden bg-gradient-to-br from-[#e8f5f5] to-white border-[#a3d9d8]">
+    <section className="dashboard-card overflow-hidden bg-gradient-to-br from-[#F7E7EA] to-white border-[#F7E7EA]">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         {/* Left side: Course info */}
         <div className="flex-1">

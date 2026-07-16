@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/enrollments")({
-  component: () => (
-    <RouteStubPage
-      title="Enrollments"
-      description="Manage course enrollments"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+// Enrollment management lives in the Enrollments tab of the course page.
+export const Route = createFileRoute(
+  "/_authenticated/institution/courses/$courseId/enrollments",
+)({
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/institution/courses/$courseId",
+      params: { courseId: params.courseId },
+    } as any);
+  },
 });

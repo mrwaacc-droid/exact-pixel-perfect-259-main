@@ -25,7 +25,7 @@ function NotificationRow({
     <div className="flex min-w-0 gap-4">
       <div
         className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
-          item.readAt ? "bg-slate-100 text-slate-500" : "bg-[#e8f5f5] text-[#1F7C80]"
+          item.readAt ? "bg-gray-100 text-gray-500" : "bg-crimson-soft text-crimson"
         }`}
       >
         <Bell className="h-4 w-4" />
@@ -33,15 +33,15 @@ function NotificationRow({
       <div className="min-w-0 flex-1">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
-            <p className="text-base font-bold leading-snug text-[#0F172A]">{item.title}</p>
-            <p className="mt-1 text-sm leading-6 text-[#475569]">{item.body}</p>
+            <p className="text-base font-bold leading-snug text-heading">{item.title}</p>
+            <p className="mt-1 text-sm leading-6 text-muted">{item.body}</p>
           </div>
-          <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-[#64748B]">
+          <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-muted">
             {formatDate(item.createdAt)}
           </span>
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="rounded-lg border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-bold capitalize text-[#334155]">
+          <span className="rounded-lg border border-[var(--border)] bg-white px-2.5 py-1 text-xs font-bold capitalize text-[#3D3233]">
             {item.type.replace(/_/g, " ")}
           </span>
           {!item.readAt && (
@@ -51,7 +51,7 @@ function NotificationRow({
                 event.preventDefault();
                 onRead(item.id);
               }}
-              className="rounded-lg border border-[#a3d9d8] bg-white px-2.5 py-1 text-xs font-bold text-[#1A5256] transition hover:bg-[#e8f5f5]"
+              className="rounded-lg border border-[var(--crimson-soft)] bg-white px-2.5 py-1 text-xs font-bold text-[var(--crimson-dark)] transition hover:bg-[var(--crimson-soft)]"
             >
               Mark read
             </button>
@@ -63,8 +63,8 @@ function NotificationRow({
 
   const className = `block rounded-xl border p-4 text-left transition ${
     item.readAt
-      ? "border-[#E2E8F0] bg-white hover:border-[#CBD5E1]"
-      : "border-[#a3d9d8] bg-[#F8FFFF] hover:border-[#1F7C80]"
+      ? "border-[var(--border)] bg-white hover:border-[#D8CCC6]"
+      : "border-[var(--crimson-soft)] bg-[#F8FFFF] hover:border-[var(--crimson)]"
   }`;
 
   if (item.targetUrl) {
@@ -98,16 +98,16 @@ export function NotificationCenterPage() {
   return (
     <DashboardShell config={config} activePath={location.pathname} title="Notifications">
       <div className="mx-auto max-w-5xl">
-        <section className="mb-6 rounded-xl border border-[#E2E8F0] bg-white p-5">
+        <section className="mb-6 rounded-xl border border-[var(--border)] bg-white p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-[#1F7C80]">
+              <p className="text-xs font-bold uppercase tracking-widest text-[var(--crimson)]">
                 Notification Center
               </p>
-              <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[#0F172A]">
+              <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[#191314]">
                 Updates for your workspace
               </h1>
-              <p className="mt-1 text-sm text-[#64748B]">
+              <p className="mt-1 text-sm text-[#8A7478]">
                 Lesson alerts, quiz feedback, session updates, and system notices.
               </p>
             </div>
@@ -115,7 +115,7 @@ export function NotificationCenterPage() {
               type="button"
               onClick={markAllRead}
               disabled={unreadCount === 0 || isMarkingRead}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#a3d9d8] bg-white px-4 py-2 text-sm font-bold text-[#1A5256] transition hover:bg-[#e8f5f5] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--crimson-soft)] bg-white px-4 py-2 text-sm font-bold text-[var(--crimson-dark)] transition hover:bg-[var(--crimson-soft)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <CheckCheck className="h-4 w-4" />
               Mark all read
@@ -124,7 +124,7 @@ export function NotificationCenterPage() {
         </section>
 
         {isLoading ? (
-          <div className="flex min-h-64 items-center justify-center gap-3 rounded-xl border border-[#E2E8F0] bg-white p-8 text-[#64748B]">
+          <div className="flex min-h-64 items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-white p-8 text-[#8A7478]">
             <Loader2 className="h-5 w-5 animate-spin" />
             Loading notifications
           </div>
@@ -133,13 +133,13 @@ export function NotificationCenterPage() {
             Notifications could not be loaded. Please try again.
           </div>
         ) : notifications.length === 0 ? (
-          <div className="grid min-h-64 place-items-center rounded-xl border border-[#E2E8F0] bg-white p-8 text-center">
+          <div className="grid min-h-64 place-items-center rounded-xl border border-[var(--border)] bg-white p-8 text-center">
             <div>
-              <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-[#F1F5F9] text-[#64748B]">
+              <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-[var(--beige-soft)] text-[#8A7478]">
                 <Inbox className="h-6 w-6" />
               </div>
-              <h2 className="mt-4 text-lg font-bold text-[#0F172A]">No notifications yet</h2>
-              <p className="mt-1 max-w-md text-sm leading-6 text-[#64748B]">
+              <h2 className="mt-4 text-lg font-bold text-[#191314]">No notifications yet</h2>
+              <p className="mt-1 max-w-md text-sm leading-6 text-[#8A7478]">
                 Automated updates will appear here when lessons are published, sessions finish,
                 quizzes are graded, or your account needs attention.
               </p>

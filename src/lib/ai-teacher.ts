@@ -3,41 +3,41 @@ import type { LessonState, TeacherResponse, LessonStepKey, ChatTurn, QuizQuestio
 const QUICK_ACTION_RESPONSES: Record<string, Partial<TeacherResponse>> = {
   "I don't understand. Can you explain it differently?": {
     speak:
-      "Of course! Let me break this down in a different way. Think of factoring like un-multiplying - we're working backwards to find what was multiplied together. If you multiply (x - 2) and (x - 3), you get x² - 5x + 6. So factoring is finding those original pieces!",
+      "Of course. Let me explain it another way. Think of factoring as working backwards from multiplication. We already have the finished expression, and we're trying to recover the two brackets that made it.",
     simpleExplanation:
       "Factoring is working backwards from multiplication to find what numbers were multiplied together.",
     encouragementLevel: "medium",
   },
   "Can you repeat that please?": {
     speak:
-      "Sure! Let me say that again. We're looking for two numbers that multiply to give us the constant term and add to give us the coefficient of x. Once we find those numbers, we can write the equation as factors and solve.",
+      "Sure. I'll say it again more clearly. We need two numbers that multiply to the constant term and add to the coefficient of x. Once we have them, we write the brackets and solve from there.",
     simpleExplanation:
       "We need two special numbers - when multiplied they give one result, when added they give another.",
     encouragementLevel: "low",
   },
   "Give me a real-world example.": {
     speak:
-      "Great question! Imagine you're designing a rectangular garden. If the area is 24 square meters and the perimeter is 20 meters, you could use quadratic equations to find the length and width. The equation would be x² - 10x + 24 = 0, which factors to (x - 4)(x - 6) = 0, giving us sides of 4 and 6 meters!",
+      "Good question. Imagine you're designing a rectangular garden. If the area is 24 square metres and the perimeter is fixed, a quadratic can help you work out the side lengths. That's one of the reasons this topic matters outside the classroom.",
     simpleExplanation:
       "Garden designers use quadratic equations to find the right dimensions when they know the area and perimeter.",
     encouragementLevel: "medium",
   },
   "Please slow down and break it into smaller steps.": {
     speak:
-      "No problem! Let's take this one step at a time. First step: identify what numbers we need. We need two numbers. Second step: figure out what they should do. They should multiply to one number and add to another. Third step: test number pairs until we find the right ones. Fourth step: write them as factors. Fifth step: solve each factor.",
+      "No problem. We'll shrink it right down. First, decide what two numbers you're hunting for. Next, check what those numbers must do: multiply to one value and add to another. Then test possible pairs. Once the pair works, write the factors and solve each bracket.",
     simpleExplanation:
       "Let's break it down: find the right numbers, test them, write as factors, then solve.",
     encouragementLevel: "high",
   },
   "I understand this, can we move a bit faster?": {
     speak:
-      "Awesome! Since you're comfortable, let's pick up the pace. We can skip some of the detailed explanations and focus on the key patterns. Ready for a more challenging problem?",
+      "Good. Since you've got the idea, I'll stop overexplaining and move a bit faster. Let's focus on the pattern and try something a little harder.",
     simpleExplanation: "Great! We'll focus on the main ideas and try harder problems.",
     encouragementLevel: "high",
   },
   "I'm ready — test me with a question.": {
     speak:
-      "Let's see how you do! Here's your question: What are the solutions to x² - 7x + 10 = 0? Remember, find two numbers that multiply to 10 and add to -7. Tell me your answer!",
+      "Alright, let's test it. What are the solutions to x² - 7x + 10 = 0? Keep your eye on the two numbers that multiply to 10 and add to negative 7.",
     quiz: {
       question: "What are the solutions to x² - 7x + 10 = 0?",
       options: ["x = 1 and x = 10", "x = 2 and x = 5", "x = -2 and x = -5", "x = -1 and x = -10"],
@@ -48,14 +48,14 @@ const QUICK_ACTION_RESPONSES: Record<string, Partial<TeacherResponse>> = {
   },
   "Can you give me a hint without telling me the answer?": {
     speak:
-      "Here's a hint: Think about all the pairs of numbers that multiply to give you the constant term. Then check which of those pairs adds to give you the coefficient of x. Pay attention to whether the numbers should be positive or negative!",
+      "Here's your hint: list the number pairs that multiply to the constant term, then test which pair adds to the coefficient. And don't forget to check the signs.",
     simpleExplanation:
       "List all number pairs that multiply correctly, then check which pair also adds correctly.",
     encouragementLevel: "low",
   },
   "Why is this important? How will I use this in real life?": {
     speak:
-      "This is such an important question! Quadratic equations are everywhere: engineers use them to design bridges and buildings, economists use them to find maximum profit, scientists use them to model projectile motion, and even video game developers use them for realistic physics. Whenever something involves curved paths, optimization, or maximum/minimum values, quadratics are involved!",
+      "That's a fair question. Quadratic equations turn up whenever people need to model curves, distances, heights, areas, or best possible values. Engineers, scientists, economists, and even game developers use them because real problems rarely move in straight lines.",
     simpleExplanation:
       "Quadratic equations help engineers, scientists, and economists solve real problems about curves and finding the best solutions.",
     encouragementLevel: "medium",
@@ -74,25 +74,25 @@ const STEP_TRANSITIONS: Record<LessonStepKey, LessonStepKey> = {
 };
 
 const CORRECT_RESPONSES = [
-  "Excellent! That's absolutely correct!",
-  "Perfect! You've got it!",
-  "Great job! Your solution is spot on!",
-  "Well done! You're mastering this!",
-  "Fantastic! That's the right answer!",
+  "Yes, that's correct.",
+  "Good. You've got it.",
+  "That's right.",
+  "Well done. That answer works.",
+  "Correct. Nice work.",
 ];
 
 const INCORRECT_RESPONSES = [
-  "Not quite, but you're on the right track. Let's look at this together.",
-  "Almost there! Let me help you see where to adjust.",
-  "Good try! Let's work through this step by step.",
-  "That's not quite right, but I can see you're thinking about it. Let's fix this together.",
-  "Close, but not exactly. Let me guide you to the correct approach.",
+  "Not quite. Let's check the step that went wrong.",
+  "Close. You were heading in the right direction, but one part needs fixing.",
+  "Good try. Let's work it through carefully.",
+  "That isn't the answer yet, but the mistake is fixable.",
+  "Almost. Let's go back and check the signs and the factor pair.",
 ];
 
 const PARTIAL_RESPONSES = [
-  "You're partially correct! Let's refine your answer.",
-  "Good start! There's one more thing to consider.",
-  "You're on the right path! Let's complete the solution.",
+  "You're partly there. Let's tighten it up.",
+  "Good start. One more detail to fix.",
+  "You're on the right path. Let's finish it properly.",
 ];
 
 export function generateTeacherResponse(
@@ -136,14 +136,14 @@ export function generateTeacherResponse(
       return {
         speak:
           CORRECT_RESPONSES[Math.floor(Math.random() * CORRECT_RESPONSES.length)] +
-          " Ready to move to the next topic?",
+          " Ready for the next one?",
         board: {
           title: "Correct Answer!",
           lines: [
             "✓ " + answer,
             "",
-            "Great job! You've mastered this step.",
-            "Let's move on to the next concept.",
+            "That step is correct.",
+            "Let's build on it.",
           ],
           highlight: answer,
         },
@@ -160,10 +160,10 @@ export function generateTeacherResponse(
           lines: [
             "Your answer: " + answer,
             "",
-            "Let's think through this again:",
-            "1. What numbers multiply to the constant?",
-            "2. What numbers add to the coefficient?",
-            "3. Check your signs (+ or -)",
+            "Check these three things:",
+            "1. Which numbers multiply to the constant?",
+            "2. Which numbers add to the coefficient?",
+            "3. Did you keep the signs correct?",
           ],
         },
         nextStep: currentState.step,
@@ -178,16 +178,16 @@ export function generateTeacherResponse(
   if (lowerMessage.includes("wrong") || lowerMessage.includes("mistake")) {
     return {
       speak:
-        "That's okay! Making mistakes is how we learn. Let me help you understand where things went wrong and get back on track.",
+        "That's alright. Mistakes are useful if we can see exactly where they happened. Let's find the step that slipped.",
       board: {
         title: "Learning from Mistakes",
         lines: [
           "It's okay to make mistakes!",
           "",
           "Let's identify the issue:",
-          "• Review the steps we took",
-          "• Find where things diverged",
-          "• Correct and learn from it",
+          "• Recheck the steps",
+          "• Find the exact slip",
+          "• Fix it and move on",
         ],
       },
       nextStep: "correction",
@@ -205,14 +205,14 @@ export function generateTeacherResponse(
   ) {
     return {
       speak:
-        "I'm so glad that makes sense! You're doing great. Let's continue building on this understanding.",
+        "Good. If it makes sense now, let's build on it before the idea goes cold.",
       board: {
         title: "Progress Made!",
         lines: [
           "✓ Understanding confirmed",
           "",
-          "You're ready for the next step!",
-          "Let's continue our journey.",
+          "You're ready for the next step.",
+          "Let's keep going.",
         ],
       },
       nextStep: STEP_TRANSITIONS[currentState.step],
@@ -230,16 +230,16 @@ export function generateTeacherResponse(
   ) {
     return {
       speak:
-        "No worries at all! Let me approach this from a different angle. Sometimes hearing it explained another way helps everything click.",
+        "No problem. I'll come at it from a different angle. Sometimes one small reframe is all it takes.",
       board: {
         title: "Alternative Approach",
         lines: [
           "Let's try a different way to understand this.",
           "",
           "Think of it like a puzzle:",
-          "• We have some pieces (numbers)",
-          "• We know how they fit together",
-          "• We need to find the right combination",
+          "• We know the finished result",
+          "• We need the pieces that made it",
+          "• Then we check that they really fit",
         ],
       },
       nextStep: currentState.step,
@@ -255,7 +255,7 @@ export function generateTeacherResponse(
     lowerMessage.includes("next")
   ) {
     return {
-      speak: "Perfect! Let's move on to the next step. I'm excited to see you tackle this!",
+      speak: "Good. Let's move to the next step while it's still fresh.",
       board: {
         title: "Moving Forward",
         lines: [
@@ -274,16 +274,16 @@ export function generateTeacherResponse(
   // Default response
   return {
     speak:
-      "I appreciate your input! Let me help you with that. Remember, we're working together to master this concept.",
+      "Alright. Let's stay with the method and sort out the next step together.",
     board: {
-      title: "Working Together",
+      title: "Next Step",
       lines: [
-        "Let's continue our learning journey.",
+        "Let's keep working through it.",
         "",
-        "Focus on understanding the:",
-        "• Key concepts",
-        "• Step-by-step process",
-        "• Patterns and relationships",
+        "Focus on three things:",
+        "• What the step is doing",
+        "• Why it works",
+        "• Where people usually slip",
       ],
     },
     nextStep: currentState.step,
@@ -301,9 +301,9 @@ function evaluateQuizAnswer(answer: string, state: LessonState): boolean {
 
 export function generateConfusedResponse(currentState: LessonState): TeacherResponse {
   const explanations = [
-    "I notice you might be feeling a bit confused. That's completely normal! Let's take a step back and look at the foundation of this concept.",
-    "Let's slow down and make sure we understand each piece before moving forward. Confusion is just your brain working hard to learn!",
-    "It seems like this part is tricky. Let me explain it using a different approach that might click better for you.",
+    "I can see this part isn't settled yet. Let's go back to the foundation and make it clear.",
+    "Let's slow it down and make sure each piece makes sense before we move on.",
+    "This part is tricky. I'll explain it in a different way and we'll pin down the confusing bit.",
   ];
 
   return {
@@ -313,10 +313,10 @@ export function generateConfusedResponse(currentState: LessonState): TeacherResp
       lines: [
         "Breaking it down:",
         "",
-        "Step 1: Understand what we're solving for",
-        "Step 2: Identify the given information",
-        "Step 3: Choose the right method",
-        "Step 4: Apply it carefully",
+        "Step 1: What are we solving for?",
+        "Step 2: What information do we already have?",
+        "Step 3: Which method fits this?",
+        "Step 4: Work it through carefully",
       ],
     },
     nextStep: currentState.step,
@@ -327,24 +327,24 @@ export function generateConfusedResponse(currentState: LessonState): TeacherResp
 
 export function generateEncouragement(state: LessonState): string {
   if (state.correct > state.mistakes) {
-    return "You're doing fantastic! Your accuracy shows you really understand this material.";
+    return "You're doing well. Your answers show that the method is starting to stick.";
   } else if (state.confusionScore > 0.5) {
-    return "I can see you're working hard. Don't get discouraged - every mistake is a learning opportunity!";
+    return "I can see you're working at it. Don't panic — we just need to steady the shaky part.";
   } else {
-    return "You're making great progress! Keep up the good work and don't hesitate to ask questions.";
+    return "You're making progress. Keep asking when something doesn't sit right.";
   }
 }
 
 export function generateNextStepPrompt(currentStep: LessonStepKey): string {
   const prompts: Record<LessonStepKey, string> = {
-    hook: "Ready to learn about the concept behind this?",
-    concept: "Want to see how this works in practice?",
-    worked_example: "Ready to try solving one together with my guidance?",
-    guided_practice: "Ready to try one on your own?",
-    independent_question: "Let me check your work and give you feedback!",
-    correction: "Perfect! Ready to test your knowledge?",
-    quiz: "Great job on the quiz! Let's summarize what we learned.",
-    summary: "Excellent work! You've completed this lesson!",
+    hook: "Ready to get into the idea behind it?",
+    concept: "Want to see what this looks like in practice?",
+    worked_example: "Ready to try one with me?",
+    guided_practice: "Now try one on your own.",
+    independent_question: "Let me check what you did.",
+    correction: "Ready for a quick check?",
+    quiz: "Good. Let's wrap up what we've learned.",
+    summary: "That's the lesson. Nicely done.",
   };
   return prompts[currentStep] || "Ready to continue?";
 }

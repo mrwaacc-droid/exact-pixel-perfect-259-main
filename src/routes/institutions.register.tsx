@@ -8,16 +8,15 @@ import {
   BadgeCheck,
   BookOpenCheck,
   Building2,
-  CheckCircle2,
   ClipboardCheck,
   Globe2,
   Layers3,
   LockKeyhole,
   MapPinned,
   ShieldCheck,
-  Sparkles,
   UsersRound,
 } from "lucide-react";
+import { AuthBrandRail } from "@/components/auth/AuthBrandRail";
 import { Logo } from "@/components/brand/Logo";
 import { registerInstitution } from "@/lib/institutions-register.functions";
 import { rememberPendingVerification } from "@/lib/auth-verification";
@@ -149,9 +148,9 @@ const TRUST_POINTS = [
 ];
 
 const FIELD_CLASS =
-  "h-11 w-full border border-[#cbd8e6] bg-white px-3.5 text-sm font-medium text-[#07111f] outline-none transition-colors placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-4 focus:ring-[#2563eb]/10";
+  "h-11 w-full border border-gray-200 bg-white px-3.5 text-sm font-medium text-[#221B1C] outline-none transition-colors placeholder:text-gray-400 focus:border-[var(--crimson)] focus:ring-4 focus:ring-[#8B2E3D]/10";
 
-const LABEL_CLASS = "block text-xs font-bold uppercase tracking-[0.12em] text-slate-500";
+const LABEL_CLASS = "block text-xs font-bold uppercase tracking-[0.12em] text-gray-500";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -238,124 +237,52 @@ function RegisterPage() {
   });
 
   return (
-    <div className="institution-register-page auth-tech-page grid min-h-screen text-[#07111f] lg:grid-cols-[minmax(420px,0.82fr)_minmax(0,1.18fr)]">
-      <aside className="auth-tech-brand institution-register-rail relative hidden flex-col justify-between overflow-hidden p-12 text-white lg:flex">
-        <img
-          src="/images/auth-side.png"
-          alt="Students learning together with Klassruum"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = "none";
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(3,7,18,0.95) 0%, rgba(7,17,31,0.92) 54%, rgba(16,35,63,0.84) 100%)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3"
-          style={{ background: "linear-gradient(to top, rgba(10,24,38,0.9), transparent)" }}
-        />
-
-        <Link to="/" className="relative z-10 flex items-center" aria-label="Klassruum home">
-          <Logo size={40} variant="light" />
-        </Link>
-
-        <div className="relative z-10">
-          <span className="inline-flex items-center gap-2 border border-white/12 bg-white/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-sky-100 backdrop-blur-sm">
-            <Sparkles size={13} />
-            Institution deployment
-          </span>
-          <h1 className="ir-brand-title mt-5 max-w-md text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
-            Register the workspace that will run your AI classrooms.
-          </h1>
-          <p className="ir-brand-copy mt-5 max-w-md text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
-            Set up an institution environment for reviewed materials, teacher-led sessions, learner
-            access, accessibility preferences, and reporting.
-          </p>
-
-          <div className="mt-9 grid gap-3">
-            {BENEFITS.map((item) => (
-              <div
-                key={item.title}
-                className="border border-white/10 bg-white/[0.055] p-4 backdrop-blur-sm"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center bg-sky-300 text-[#07111f]">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h2 className="ir-benefit-title text-white">{item.title}</h2>
-                    <p className="ir-benefit-copy mt-1 text-slate-200">{item.body}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative z-10">
-          <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 xl:grid-cols-3">
-            {[
-              ["Setup", "30 min"],
-              ["Roles", "Admin first"],
-              ["Launch", "Guided"],
-            ].map(([label, value]) => (
-              <div key={label} className="bg-[#0b1626]/95 p-4">
-                <p className="ir-stat-label font-bold uppercase text-slate-400">{label}</p>
-                <p className="ir-stat-value mt-1 font-extrabold text-white">{value}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-5 flex flex-wrap gap-2">
-            {TRUST_POINTS.map((point) => (
-              <span
-                key={point}
-                className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.055] px-3 py-1.5 text-xs font-semibold text-slate-100"
-              >
-                <CheckCircle2 size={13} className="text-sky-300" />
-                {point}
-              </span>
-            ))}
-          </div>
-        </div>
-      </aside>
+    <div className="institution-register-page auth-tech-page grid min-h-screen text-[#221B1C] lg:grid-cols-[minmax(420px,0.82fr)_minmax(0,1.18fr)]">
+      <AuthBrandRail
+        variant="institution"
+        eyebrow="Institution deployment"
+        title="Register the workspace that will run your AI classrooms."
+        body="Set up an institution environment for reviewed materials, teacher-led sessions, learner access, accessibility preferences, and reporting."
+        benefits={BENEFITS}
+        stats={[
+          { label: "Setup", value: "30 min" },
+          { label: "Roles", value: "Admin first" },
+          { label: "Launch", value: "Guided" },
+        ]}
+        proofPoints={TRUST_POINTS}
+      />
 
       <main className="flex min-h-screen items-start justify-center overflow-y-auto p-5 sm:p-8 lg:p-10">
         <section className="institution-register-form auth-tech-panel w-full max-w-[820px] p-5 sm:p-8">
           <Link to="/" className="mb-8 flex items-center lg:hidden" aria-label="Klassruum home">
-            <Logo size={38} />
+            <Logo size={34} />
           </Link>
 
           <div>
-            <div className="grid gap-6 border-b border-slate-200 pb-7 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-end">
+            <div className="grid gap-6 border-b border-gray-200 pb-7 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-end">
               <div>
-                <p className="inline-flex items-center gap-2 border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
-                  <Building2 size={13} className="text-[#2563eb]" />
+                <p className="inline-flex items-center gap-2 border border-gray-200 bg-gray-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500">
+                  <Building2 size={13} className="text-[var(--crimson)]" />
                   Workspace details
                 </p>
-                <h2 className="ir-form-title mt-4 font-headings text-[#07111f]">
+                <h2 className="ir-form-title mt-4 font-headings text-[#221B1C]">
                   Tell us how your institution will use Klassruum.
                 </h2>
-                <p className="ir-form-copy mt-3 max-w-2xl text-slate-600">
+                <p className="ir-form-copy mt-3 max-w-2xl text-gray-600">
                   This creates the first admin account and gives your team a governed place to add
                   courses, learners, teachers, materials, and classroom defaults.
                 </p>
               </div>
 
-              <div className="border border-slate-200 bg-[#f8fbff] p-4">
-                <p className="ir-stat-label font-bold uppercase text-slate-500">Rollout path</p>
+              <div className="border border-gray-200 bg-[#FBF8F5] p-4">
+                <p className="ir-stat-label font-bold uppercase text-gray-500">Rollout path</p>
                 <ol className="mt-3 grid gap-2">
                   {PROCESS.map((item, index) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-xs font-semibold text-slate-700"
+                      className="flex items-start gap-2 text-xs font-semibold text-gray-700"
                     >
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center bg-[#07111f] text-[10px] font-bold text-white">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center bg-[#221B1C] text-[10px] font-bold text-white">
                         {index + 1}
                       </span>
                       {item}
@@ -372,14 +299,14 @@ function RegisterPage() {
                 mut.mutate();
               }}
             >
-              <section className="border border-slate-200 bg-white">
-                <div className="flex items-center gap-3 border-b border-slate-200 bg-[#f8fbff] px-5 py-4">
-                  <div className="flex h-9 w-9 items-center justify-center bg-[#eaf5ff] text-[#2563eb]">
+              <section className="border border-gray-200 bg-white">
+                <div className="flex items-center gap-3 border-b border-gray-200 bg-[#FBF8F5] px-5 py-4">
+                  <div className="flex h-9 w-9 items-center justify-center bg-[var(--beige-soft)] text-[var(--crimson)]">
                     <Layers3 size={17} />
                   </div>
                   <div>
-                    <h3 className="ir-section-title text-[#07111f]">Institution profile</h3>
-                    <p className="ir-section-copy text-slate-500">
+                    <h3 className="ir-section-title text-[#221B1C]">Institution profile</h3>
+                    <p className="ir-section-copy text-gray-500">
                       The workspace, scale, and location.
                     </p>
                   </div>
@@ -453,7 +380,7 @@ function RegisterPage() {
                     <div className="relative">
                       <MapPinned
                         size={16}
-                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
                       />
                       <input
                         id="icountry"
@@ -505,14 +432,14 @@ function RegisterPage() {
                 </div>
               </section>
 
-              <section className="border border-slate-200 bg-white">
-                <div className="flex items-center gap-3 border-b border-slate-200 bg-[#f8fbff] px-5 py-4">
-                  <div className="flex h-9 w-9 items-center justify-center bg-[#eaf5ff] text-[#2563eb]">
+              <section className="border border-gray-200 bg-white">
+                <div className="flex items-center gap-3 border-b border-gray-200 bg-[#FBF8F5] px-5 py-4">
+                  <div className="flex h-9 w-9 items-center justify-center bg-[var(--beige-soft)] text-[var(--crimson)]">
                     <UsersRound size={17} />
                   </div>
                   <div>
-                    <h3 className="ir-section-title text-[#07111f]">First admin</h3>
-                    <p className="ir-section-copy text-slate-500">
+                    <h3 className="ir-section-title text-[#221B1C]">First admin</h3>
+                    <p className="ir-section-copy text-gray-500">
                       The person who will own setup and invite the team.
                     </p>
                   </div>
@@ -569,7 +496,7 @@ function RegisterPage() {
                     <div className="relative">
                       <LockKeyhole
                         size={16}
-                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
                       />
                       <input
                         id="apass"
@@ -586,9 +513,9 @@ function RegisterPage() {
                 </div>
               </section>
 
-              <div className="grid gap-4 border border-slate-200 bg-[#f8fbff] p-5 sm:grid-cols-[1fr_auto] sm:items-center">
-                <div className="flex items-start gap-3 text-sm leading-6 text-slate-600">
-                  <ClipboardCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#2563eb]" />
+              <div className="grid gap-4 border border-gray-200 bg-[#FBF8F5] p-5 sm:grid-cols-[1fr_auto] sm:items-center">
+                <div className="flex items-start gap-3 text-sm leading-6 text-gray-600">
+                  <ClipboardCheck className="mt-0.5 h-5 w-5 shrink-0 text-[var(--crimson)]" />
                   <p className="ir-note-copy">
                     After registration, verify your email before configuring courses, resources,
                     accessibility defaults, and team invitations from the institution dashboard.
@@ -602,14 +529,14 @@ function RegisterPage() {
                   )}
                   <Link
                     to="/"
-                    className="inline-flex h-11 items-center justify-center border border-slate-300 bg-white px-5 text-sm font-bold text-slate-700 transition-colors hover:border-slate-400 hover:text-[#07111f]"
+                    className="inline-flex h-11 items-center justify-center border border-gray-300 bg-white px-5 text-sm font-bold text-gray-700 transition-colors hover:border-gray-400 hover:text-[#221B1C]"
                   >
                     Cancel
                   </Link>
                   <button
                     type="submit"
                     disabled={mut.isPending || Boolean(TURNSTILE_SITE_KEY && !captchaToken)}
-                    className="inline-flex h-11 items-center justify-center gap-2 border border-[#07111f] bg-[#07111f] px-5 text-sm font-bold text-white shadow-[0_16px_34px_rgba(7,17,31,0.18)] transition-colors hover:bg-[#10233f] focus:outline-none focus:ring-4 focus:ring-[#2563eb]/20 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex h-11 items-center justify-center gap-2 border border-[#221B1C] bg-[#221B1C] px-5 text-sm font-bold text-white shadow-[0_16px_34px_rgba(34,27,28,0.18)] transition-colors hover:bg-[#1A1415] focus:outline-none focus:ring-4 focus:ring-[#8B2E3D]/20 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {mut.isPending ? "Creating..." : "Create and verify"}
                     <ArrowRight size={15} />
@@ -618,14 +545,14 @@ function RegisterPage() {
               </div>
             </form>
 
-            <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-5 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-6 flex flex-col gap-3 border-t border-gray-200 pt-5 text-sm text-gray-500 sm:flex-row sm:items-center sm:justify-between">
               <span className="inline-flex items-center gap-2">
-                <BadgeCheck size={15} className="text-[#2563eb]" />
+                <BadgeCheck size={15} className="text-[var(--crimson)]" />
                 Institution setup can be refined after account creation.
               </span>
               <span>
                 Already registered?{" "}
-                <Link to="/auth" className="font-bold text-[#07111f] hover:text-[#2563eb]">
+                <Link to="/auth" className="font-bold text-[#221B1C] hover:text-[var(--crimson)]">
                   Sign in
                 </Link>
               </span>

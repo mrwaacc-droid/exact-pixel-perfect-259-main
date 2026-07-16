@@ -37,7 +37,7 @@ function StudentLearningPlan() {
             </p>
             <Link
               to="/student/courses"
-              className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1A5256]"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-dark"
             >
               Browse Courses
             </Link>
@@ -45,7 +45,7 @@ function StudentLearningPlan() {
         ) : (
           items.map((item: any, i: number) => (
             <div key={item.id} className="kr-pcard flex items-center gap-4 p-4">
-              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#e8f5f5] text-sm font-bold text-[#1F7C80]">
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-crimson-soft text-sm font-bold text-crimson">
                 {i + 1}
               </div>
               <div className="min-w-0 flex-1">
@@ -57,7 +57,7 @@ function StudentLearningPlan() {
               {item.targetUrl && (
                 <Link
                   to={item.targetUrl as any}
-                  className="inline-flex items-center gap-1 rounded-lg bg-[#1F7C80] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1A5256]"
+                  className="inline-flex items-center gap-1 rounded-lg bg-crimson px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-dark"
                 >
                   Open <ArrowRight className="h-3.5 w-3.5" />
                 </Link>

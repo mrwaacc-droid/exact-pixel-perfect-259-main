@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 
 export const Route = createFileRoute("/_authenticated/student/courses/$courseId/progress")({
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       title="Course Progress"
       description="Track your progress in this course"
       role="Learner"

@@ -461,7 +461,7 @@ export const initializePaystackCheckout = createServerFn({ method: "POST" })
       process.env.APP_URL ||
       process.env.VITE_APP_URL ||
       process.env.PUBLIC_APP_URL ||
-      "https://klassruum.com";
+      "https://klassruum.co.ke";
     const callbackUrl = `${appUrl}/institution/billing?reference=${encodeURIComponent(reference)}`;
 
     const payload = {

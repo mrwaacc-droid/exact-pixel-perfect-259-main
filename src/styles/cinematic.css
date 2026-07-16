@@ -1,0 +1,1585 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Klassruum — Cinematic Premium Landing Redesign
+   Clean, editorial, high pixel density, reactive scroll UI
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Cinematic Foundation ─────────────────────────────────────────────── */
+.cinematic-page {
+    background: #FBF8F5;
+    color: var(--ink);
+    overflow-x: clip;
+}
+
+/* Premium grain texture overlay */
+.cinematic-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+}
+
+/* ── Cinematic Navigation ─────────────────────────────────────────────── */
+.cine-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    z-index: 100;
+    background: rgba(251, 248, 245, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: background 0.4s var(--ease-out), backdrop-filter 0.4s var(--ease-out),
+        box-shadow 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+    border-bottom: 1px solid transparent;
+}
+
+.cine-nav--scrolled {
+    background: rgba(251, 248, 245, 0.82);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom-color: rgba(231, 218, 209, 0.6);
+    box-shadow: 0 1px 30px rgba(34, 27, 28, 0.04);
+}
+
+.cine-nav-link {
+    position: relative;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: color 0.25s ease;
+    padding: 6px 2px;
+}
+
+.cine-nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1.5px;
+    background: var(--crimson-dark);
+    transition: width 0.3s var(--ease-out);
+}
+
+.cine-nav-link:hover {
+    color: var(--ink);
+}
+
+.cine-nav-link:hover::after {
+    width: 100%;
+}
+
+.cine-nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 20px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.2s var(--ease-out), box-shadow 0.4s ease;
+}
+
+.cine-nav-cta:hover {
+    background: var(--crimson-dark);
+    transform: translateY(-1px);
+}
+
+/* ── Cinematic Hero ───────────────────────────────────────────────────── */
+.cine-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #FBF8F5;
+    padding-top: 72px;
+}
+
+.cine-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.cine-hero-bg::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60%;
+    height: 80%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(217, 198, 178, 0.35), transparent 65%);
+    border-radius: 50%;
+    filter: blur(40px);
+}
+
+.cine-hero-bg::after {
+    content: "";
+    position: absolute;
+    bottom: -30%;
+    left: -15%;
+    width: 55%;
+    height: 70%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(125, 34, 51, 0.06), transparent 60%);
+    border-radius: 50%;
+    filter: blur(50px);
+}
+
+.cine-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cine-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(231, 218, 209, 0.5);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--crimson-dark);
+}
+
+.cine-hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--crimson-dark);
+    animation: cine-pulse 2s ease-in-out infinite;
+}
+
+.cine-hero-title {
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+}
+
+.cine-hero-title-accent {
+    color: var(--crimson-dark);
+    position: relative;
+    display: inline-block;
+}
+
+.cine-hero-title-accent::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.08em;
+    width: 100%;
+    height: 0.12em;
+    background: rgba(125, 34, 51, 0.12);
+    z-index: -1;
+}
+
+.cine-hero-sub {
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 520px;
+    letter-spacing: 0.005em;
+}
+
+.cine-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.2s var(--ease-out), box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cine-btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.cine-btn-primary:hover {
+    background: var(--crimson-dark);
+    transform: translateY(-2px);
+}
+
+.cine-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    background: transparent;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid var(--border-strong);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s var(--ease-out), box-shadow 0.3s ease;
+}
+
+.cine-btn-ghost:hover {
+    border-color: var(--ink);
+    background: rgba(34, 27, 28, 0.03);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(34, 27, 28, 0.06);
+}
+
+/* Hero image — no card, no background, clean blend */
+.cine-hero-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cine-hero-image {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 40px 60px rgba(34, 27, 28, 0.12));
+    animation: cine-float 7s ease-in-out infinite;
+}
+
+.cine-hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    padding-right: 2rem;
+}
+
+.cine-hero-stat:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 2px;
+    bottom: 2px;
+    width: 1px;
+    background: var(--border);
+}
+
+.cine-hero-stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.cine-hero-stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+}
+
+/* ── Cinematic Section Foundations ────────────────────────────────────── */
+.cine-section {
+    position: relative;
+    padding: clamp(5.5rem, 11vw, 10rem) 0;
+    overflow: hidden;
+}
+
+.cine-section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--crimson-dark);
+    margin-bottom: 18px;
+}
+
+.cine-section-eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1.5px;
+    background: var(--crimson-dark);
+}
+
+.cine-section-title {
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    position: relative;
+    display: inline-block;
+}
+
+.cine-section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--crimson-dark), transparent);
+    border-radius: 1px;
+}
+
+.cine-section-sub {
+    font-size: clamp(1.05rem, 1.4vw, 1.18rem);
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 580px;
+}
+
+/* ── Cinematic Image Display (no card, no background) ─────────────────── */
+.cine-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    filter: drop-shadow(0 30px 50px rgba(34, 27, 28, 0.1));
+    transition: transform 0.6s var(--ease-out), filter 0.6s ease;
+}
+
+.cine-image-wrap {
+    position: relative;
+    overflow: visible;
+}
+
+.cine-image-wrap:hover .cine-image {
+    transform: scale(1.02);
+    filter: drop-shadow(0 40px 70px rgba(34, 27, 28, 0.14));
+}
+
+/* Full-bleed cinematic image section */
+.cine-bleed-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cine-bleed-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.cine-bleed-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(34, 27, 28, 0) 0%, rgba(34, 27, 28, 0.4) 100%);
+    pointer-events: none;
+}
+
+/* ── Cinematic Marquee / Institution Strip ────────────────────────────── */
+.cine-marquee {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+    overflow: hidden;
+}
+
+.cine-marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    animation: cine-marquee 30s linear infinite;
+    white-space: nowrap;
+}
+
+.cine-marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+
+.cine-marquee-item svg {
+    color: var(--crimson-dark);
+}
+
+/* ── Cinematic Learning Journey ───────────────────────────────────────── */
+.cine-journey {
+    display: grid;
+    gap: 0;
+}
+
+.cine-journey-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.cine-journey-item:last-child {
+    border-bottom: none;
+}
+
+.cine-journey-item--reverse .cine-journey-media {
+    order: 2;
+}
+
+.cine-journey-num {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: var(--crimson-dark);
+    margin-bottom: 12px;
+}
+
+.cine-journey-title {
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 14px;
+}
+
+.cine-journey-desc {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 480px;
+}
+
+.cine-journey-media {
+    position: relative;
+}
+
+/* ── Cinematic Classroom Experience ───────────────────────────────────── */
+.cine-classroom {
+    background: var(--ink);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.cine-classroom .cine-section-title {
+    color: #fff;
+}
+
+.cine-classroom .cine-section-sub {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.cine-classroom .cine-section-eyebrow {
+    color: #fff;
+}
+
+.cine-classroom .cine-section-eyebrow::before {
+    background: #fff;
+}
+
+/* Ensure all text in dark sections is clearly visible */
+.cine-classroom p,
+.cine-classroom span,
+.cine-classroom li,
+.cine-classroom a {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.cine-classroom h1,
+.cine-classroom h2,
+.cine-classroom h3,
+.cine-classroom h4 {
+    color: #fff;
+}
+
+.cine-final p,
+.cine-final span,
+.cine-final li {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.cine-final h1,
+.cine-final h2,
+.cine-final h3,
+.cine-final h4 {
+    color: #fff;
+}
+
+.cine-footer p,
+.cine-footer span,
+.cine-footer li {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.cine-footer h1,
+.cine-footer h2,
+.cine-footer h3,
+.cine-footer h4 {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cine-classroom-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0;
+    filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.4));
+}
+
+.cine-moment {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(10px);
+}
+
+.cine-moment-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--crimson);
+    animation: cine-pulse 2s ease-in-out infinite;
+}
+
+/* ── Cinematic Live Hybrid ────────────────────────────────────────────── */
+.cine-hybrid {
+    background: #fff;
+}
+
+.cine-mode-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+}
+
+.cine-mode-tab:hover {
+    border-color: var(--border-strong);
+    color: var(--ink);
+}
+
+.cine-mode-tab--active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+}
+
+.cine-feature-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.cine-feature-row:last-child {
+    border-bottom: none;
+}
+
+.cine-feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(125, 34, 51, 0.08);
+    color: var(--crimson-dark);
+    flex-shrink: 0;
+}
+
+.cine-feature-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+/* ── Cinematic Role Selector (no cards, clean grid) ───────────────────── */
+.cine-role-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+}
+
+.cine-role-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 36px 28px;
+    text-decoration: none;
+    color: inherit;
+    border-right: 1px solid var(--border);
+    transition: background 0.3s ease;
+}
+
+.cine-role-item:last-child {
+    border-right: none;
+}
+
+.cine-role-item:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.cine-role-image {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(0 20px 30px rgba(34, 27, 28, 0.08));
+    transition: transform 0.4s var(--ease-out);
+}
+
+.cine-role-item:hover .cine-role-image {
+    transform: translateY(-6px) scale(1.03);
+}
+
+.cine-role-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+
+.cine-role-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+}
+
+.cine-role-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    margin-top: auto;
+}
+
+.cine-role-cta-arrow {
+    transition: transform 0.3s var(--ease-out);
+}
+
+.cine-role-item:hover .cine-role-cta-arrow {
+    transform: translateX(4px);
+}
+
+/* ── Cinematic Solutions (clean list, no cards) ───────────────────────── */
+.cine-solution-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: padding 0.3s var(--ease-out), background 0.3s ease;
+}
+
+.cine-solution-row:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.cine-solution-row:hover {
+    padding-left: 12px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.cine-solution-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    filter: drop-shadow(0 8px 16px rgba(34, 27, 28, 0.08));
+}
+
+.cine-solution-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--crimson-dark);
+    margin-bottom: 4px;
+}
+
+.cine-solution-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+}
+
+.cine-solution-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.cine-solution-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--ink);
+    color: #fff;
+    transition: transform 0.3s var(--ease-out), background 0.3s ease, box-shadow 0.4s ease;
+}
+
+.cine-solution-row:hover .cine-solution-arrow {
+    background: var(--crimson-dark);
+    transform: rotate(-45deg);
+}
+
+/* ── Cinematic Institution Control ────────────────────────────────────── */
+.cine-control-list {
+    display: grid;
+    gap: 14px;
+}
+
+.cine-control-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.cine-control-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--crimson-dark);
+    color: #fff;
+    flex-shrink: 0;
+}
+
+/* ── Cinematic Accessibility ──────────────────────────────────────────── */
+.cine-a11y-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+}
+
+.cine-a11y-tab:hover {
+    border-color: var(--border-strong);
+    color: var(--ink);
+}
+
+.cine-a11y-tab--active {
+    background: var(--crimson-dark);
+    color: #fff;
+    border-color: var(--crimson-dark);
+}
+
+/* ── Cinematic Pricing (minimal, clean) ───────────────────────────────── */
+.cine-pricing-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.cine-pricing-cell {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+}
+
+.cine-pricing-cell:last-child {
+    border-right: none;
+}
+
+.cine-pricing-cell--header {
+    background: var(--page-background);
+}
+
+.cine-pricing-plan {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+
+.cine-pricing-price {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+}
+
+.cine-pricing-period {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.cine-pricing-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    font-size: 14px;
+    color: var(--body);
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.cine-pricing-feature:last-child {
+    border-bottom: none;
+}
+
+.cine-pricing-check {
+    color: var(--crimson-dark);
+    flex-shrink: 0;
+}
+
+.cine-pricing-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    height: 44px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    margin-top: 16px;
+}
+
+.cine-pricing-cta--primary {
+    background: var(--ink);
+    color: #fff;
+}
+
+.cine-pricing-cta--primary:hover {
+    background: var(--crimson-dark);
+}
+
+.cine-pricing-cta--secondary {
+    background: #fff;
+    color: var(--ink);
+    border: 1.5px solid var(--border-strong);
+}
+
+.cine-pricing-cta--secondary:hover {
+    border-color: var(--ink);
+}
+
+/* ── Cinematic Final CTA ──────────────────────────────────────────────── */
+.cine-final {
+    background: var(--ink);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.cine-final::before {
+    content: "";
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 50%;
+    height: 80%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(125, 34, 51, 0.15), transparent 60%);
+    filter: blur(40px);
+}
+
+.cine-final-title {
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+.cine-final-sub {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 500px;
+}
+
+.cine-final-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 30px;
+    background: #fff;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.cine-final-btn:hover {
+    background: var(--crimson);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.cine-final-btn--ghost {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.cine-final-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+}
+
+.cine-role-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.cine-role-pill:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Cinematic Footer ─────────────────────────────────────────────────── */
+.cine-footer {
+    background: #1A1415;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 4rem 0 2rem;
+}
+
+.cine-footer-link {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s var(--ease-out), transform 0.2s var(--ease-out);
+    display: inline-block;
+}
+
+.cine-footer-link:hover {
+    color: #fff;
+    transform: translateX(2px);
+}
+
+.cine-footer-heading {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 16px;
+}
+
+/* ── Cinematic Scroll Animations ──────────────────────────────────────── */
+@keyframes cine-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+@keyframes cine-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.3);
+    }
+}
+
+@keyframes cine-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Parallax scroll effect */
+.cine-parallax {
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+/* Cinematic reveal — more dramatic */
+.cine-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.cine-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cine-reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.cine-reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cine-reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.cine-reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.cine-reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.cine-reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.cine-delay-1 {
+    transition-delay: 100ms;
+}
+
+.cine-delay-2 {
+    transition-delay: 200ms;
+}
+
+.cine-delay-3 {
+    transition-delay: 300ms;
+}
+
+.cine-delay-4 {
+    transition-delay: 400ms;
+}
+
+.cine-delay-5 {
+    transition-delay: 500ms;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .cine-role-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cine-role-item {
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .cine-role-item:nth-child(2n) {
+        border-right: none;
+    }
+
+    .cine-role-item:nth-last-child(-n+2) {
+        border-bottom: none;
+    }
+
+    .cine-pricing-row {
+        grid-template-columns: 1fr;
+    }
+
+    .cine-pricing-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .cine-pricing-cell:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .cine-journey-item,
+    .cine-journey-item--reverse {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .cine-journey-item--reverse .cine-journey-media {
+        order: 0;
+    }
+
+    .cine-role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cine-role-item {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .cine-role-item:last-child {
+        border-bottom: none;
+    }
+
+    .cine-solution-row {
+        grid-template-columns: 64px 1fr;
+        gap: 16px;
+    }
+
+    .cine-solution-arrow {
+        display: none;
+    }
+
+    .cine-solution-image {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cine-hero-image,
+    .cine-hero-eyebrow-dot,
+    .cine-moment-dot,
+    .cine-marquee-track {
+        animation: none !important;
+    }
+
+    .cine-reveal,
+    .cine-reveal-scale,
+    .cine-reveal-left,
+    .cine-reveal-right {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Cinematic Dashboard Enhancements
+   Applies premium cinematic styling to all role dashboards
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Dashboard shell — warm cinematic background */
+.kr-dashboard-shell {
+    background: #FBF8F5;
+    position: relative;
+}
+
+.kr-dashboard-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+}
+
+/* Sidebar — clean white with warm border */
+.kr-sidebar {
+    background: #ffffff;
+    border-right: 1px solid var(--border);
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.9), 14px 0 34px rgba(34, 27, 28, 0.04);
+    z-index: 101;
+}
+
+.kr-brand-mark {
+    background: var(--ink);
+}
+
+.kr-nav-item {
+    color: var(--muted);
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.2s var(--ease-out);
+}
+
+.kr-nav-item:hover {
+    background: var(--page-background);
+    color: var(--ink);
+    transform: translateX(2px);
+}
+
+.kr-nav-item.active {
+    background: var(--ink);
+    color: #fff;
+}
+
+/* Dashboard main — warm background */
+.kr-dashboard-main {
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+/* Dashboard header — cinematic gradient */
+.kr-dashboard-header {
+    background: linear-gradient(135deg, #ffffff 0%, #FBF8F5 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(34, 27, 28, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.kr-dashboard-header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 40%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(217, 198, 178, 0.2), transparent 60%);
+    pointer-events: none;
+}
+
+.kr-dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    position: relative;
+    z-index: 1;
+}
+
+.kr-dashboard-header p {
+    color: var(--muted);
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+/* KPI cards — clean cinematic */
+.kr-kpi-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(34, 27, 28, 0.04);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.kr-kpi-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--crimson-dark);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.kr-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(34, 27, 28, 0.08);
+    border-color: var(--border-strong);
+}
+
+.kr-kpi-card:hover::before {
+    opacity: 1;
+}
+
+.kr-kpi-icon {
+    background: rgba(125, 34, 51, 0.08);
+    color: var(--crimson-dark);
+    border-radius: 10px;
+}
+
+.kr-kpi-value {
+    color: var(--ink);
+    font-weight: 800;
+}
+
+.kr-kpi-title {
+    color: var(--muted);
+}
+
+/* Cards — clean cinematic */
+.kr-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(34, 27, 28, 0.04);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.kr-card:hover {
+    box-shadow: 0 4px 16px rgba(34, 27, 28, 0.06);
+    border-color: var(--border-strong);
+}
+
+.kr-card h2 {
+    color: var(--ink);
+    font-weight: 800;
+}
+
+.kr-card p {
+    color: var(--muted);
+}
+
+/* Continue hero — cinematic gradient */
+.kr-continue-hero {
+    background: linear-gradient(135deg, #ffffff 0%, #FBF8F5 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(34, 27, 28, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.kr-continue-hero::before {
+    content: "";
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 50%;
+    height: 160%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(125, 34, 51, 0.06), transparent 60%);
+    pointer-events: none;
+}
+
+/* Buttons — cinematic pill style */
+.kr-primary-button {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    transition: background 0.2s ease, transform 0.15s var(--ease-out), box-shadow 0.4s ease;
+}
+
+.kr-primary-button:hover {
+    background: var(--crimson-dark);
+    transform: translateY(-1px);
+}
+
+.kr-secondary-button {
+    background: #fff;
+    color: var(--ink);
+    border: 1.5px solid var(--border-strong);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s var(--ease-out);
+}
+
+.kr-secondary-button:hover {
+    border-color: var(--ink);
+    background: var(--page-background);
+    transform: translateY(-1px);
+}
+
+/* Search — cinematic */
+.kr-search input {
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--ink);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kr-search input:focus {
+    outline: none;
+    border-color: var(--crimson-dark);
+    box-shadow: 0 0 0 3px rgba(125, 34, 51, 0.1);
+}
+
+/* Topbar actions — cinematic */
+.kr-topbar-actions button {
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.kr-topbar-actions button:hover {
+    background: var(--page-background);
+    border-color: var(--border-strong);
+}
+
+/* Status pills — cinematic */
+.kr-status-pill {
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+/* Classroom rows — cinematic */
+.kr-classroom-row {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kr-classroom-row:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 4px 16px rgba(34, 27, 28, 0.06);
+}
+
+.kr-classroom-icon {
+    background: linear-gradient(135deg, var(--ink), var(--crimson-dark));
+    border-radius: 10px;
+}
+
+/* Activity items — cinematic */
+.kr-activity-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.kr-activity-item:hover {
+    border-color: var(--border-strong);
+    background: var(--page-background);
+}
+
+/* Institution header — cinematic */
+.kr-institution-header {
+    background: linear-gradient(135deg, #ffffff 0%, #FBF8F5 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(34, 27, 28, 0.04);
+}
+
+.kr-institution-logo {
+    background: linear-gradient(135deg, var(--ink), var(--crimson-dark));
+    border-radius: 16px;
+}
+
+/* User mini card — cinematic */
+.kr-user-mini-card,
+.kr-access-mini-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.kr-access-mini-card {
+    background: linear-gradient(135deg, #ffffff, var(--page-background));
+}
+
+/* Eyebrow — cinematic */
+.kr-eyebrow {
+    color: var(--crimson-dark) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+}
+
+/* Chart placeholder — cinematic */
+.kr-chart-placeholder {
+    background: linear-gradient(to bottom, var(--page-background), #ffffff);
+    border: 1px dashed var(--border-strong);
+    border-radius: 12px;
+    color: var(--muted);
+}
+
+/* Meta grid — cinematic */
+.kr-meta-grid span {
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+}
+
+/* Progress track — cinematic */
+.kr-progress-track,
+.kr-mini-progress {
+    background: var(--page-background-alt);
+    border-radius: 999px;
+}
+
+.kr-progress-track div,
+.kr-mini-progress div {
+    background: var(--crimson-dark);
+    border-radius: inherit;
+}

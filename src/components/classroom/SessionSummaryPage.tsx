@@ -81,7 +81,7 @@ export function SessionSummaryPage({
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             to={`/classroom/session/${sessionId}` as any}
-            className="flex items-center gap-2 text-[#1F7C80] hover:text-[#1A5256] font-medium"
+            className="flex items-center gap-2 text-[#7D2233] hover:text-[var(--crimson-dark)] font-medium"
           >
             <ArrowLeft size={18} />
             Back to Dashboard
@@ -114,7 +114,7 @@ export function SessionSummaryPage({
           <Card>
             <CardContent className="pt-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#1F7C80] mb-2">{quizScore}%</div>
+                <div className="text-3xl font-bold text-[#7D2233] mb-2">{quizScore}%</div>
                 <div className="text-sm text-gray-600">Quiz Score</div>
                 <div className="text-xs text-gray-500 mt-1">
                   {data.correctAnswers}/{data.totalQuestions} correct
@@ -185,7 +185,7 @@ export function SessionSummaryPage({
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-4">
-                <TrendingUp className="text-[#1F7C80]" size={20} />
+                <TrendingUp className="text-[#7D2233]" size={20} />
                 <h2 className="text-lg font-semibold text-gray-900">Insights</h2>
               </div>
               <div className="space-y-2">
@@ -206,7 +206,7 @@ export function SessionSummaryPage({
               <h2 className="text-lg font-semibold text-gray-900">Lesson Board</h2>
               <button
                 onClick={() => setShowDetails(!showDetails)}
-                className="text-[#1F7C80] hover:text-[#1A5256] text-sm font-medium flex items-center gap-1"
+                className="text-[#7D2233] hover:text-[var(--crimson-dark)] text-sm font-medium flex items-center gap-1"
               >
                 {showDetails ? "Hide" : "Show"} Details
                 <ChevronRight size={16} />
@@ -228,16 +228,16 @@ export function SessionSummaryPage({
 
         {/* Next Steps */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <Card className="bg-gradient-to-br from-[#e8f5f5] to-[#d1eceb] border-[#a3d9d8]">
+          <Card className="bg-gradient-to-br from-[#F7E7EA] to-[#F7E7EA] border-[#F7E7EA]">
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
-                <Target className="text-[#1F7C80] flex-shrink-0" size={24} />
+                <Target className="text-[#7D2233] flex-shrink-0" size={24} />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Recommended Next Lesson</h3>
                   <p className="text-sm text-gray-700 mb-4">{data.nextLessonRecommendation}</p>
                   <Link
                     to={`/classroom/${lessonId}` as any}
-                    className="inline-flex items-center gap-2 text-[#1F7C80] hover:text-[#1A5256] font-medium text-sm"
+                    className="inline-flex items-center gap-2 text-[#7D2233] hover:text-[var(--crimson-dark)] font-medium text-sm"
                   >
                     Start Lesson
                     <ChevronRight size={16} />
@@ -258,7 +258,7 @@ export function SessionSummaryPage({
                   </p>
                   <Link
                     to="/student/notes"
-                    className="inline-flex items-center gap-2 text-[#1F7C80] hover:text-[#1A5256] font-medium text-sm"
+                    className="inline-flex items-center gap-2 text-[#7D2233] hover:text-[var(--crimson-dark)] font-medium text-sm"
                   >
                     View Notes
                     <ChevronRight size={16} />
@@ -274,7 +274,7 @@ export function SessionSummaryPage({
           <Link to="/student/dashboard">
             <Button variant="outline">Back to Dashboard</Button>
           </Link>
-          <Button className="bg-[#1F7C80] hover:bg-[#1A5256]">
+          <Button className="bg-[#7D2233] hover:bg-[var(--crimson-dark)]">
             <RotateCcw size={16} />
             Retake This Lesson
           </Button>

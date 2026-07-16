@@ -15,8 +15,8 @@ type LessonStatus = "completed" | "current" | "locked";
 
 const STATUS: Record<LessonStatus, { label: string; color: string; bg: string }> = {
   completed: { label: "Completed", color: "#15803d", bg: "#dcfce7" },
-  current: { label: "In progress", color: "#1d4ed8", bg: "#dbeafe" },
-  locked: { label: "Up next", color: "#1F7C80", bg: "#e8f5f5" },
+  current: { label: "In progress", color: "#7D2233", bg: "#F7E7EA" },
+  locked: { label: "Up next", color: "var(--crimson)", bg: "var(--crimson-soft)" },
 };
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -66,7 +66,7 @@ function CourseLessons() {
           <div className="mt-4 flex items-center gap-4">
             <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-[var(--gray-100)]">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-[#1F7C80] to-[#1A5256]"
+                className="h-full rounded-full bg-gradient-to-r from-[#7D2233] to-[#521326]"
                 style={{ width: `${pct}%` }}
               />
             </div>

@@ -145,10 +145,10 @@ export function AnimatedWhiteboard({
       bullet: "text-xl ml-6 relative before:content-['•'] before:absolute before:left-0",
       equation: "text-2xl font-bold font-mono",
       calculation: "text-xl font-mono",
-      question: "text-lg italic text-[#1A5256]",
+      question: "text-lg italic text-[var(--crimson-dark)]",
       answer: "text-lg font-semibold text-green-700",
-      diagram_label: "text-lg text-slate-700",
-      step_number: "text-lg font-semibold text-slate-600",
+      diagram_label: "text-lg text-gray-700",
+      step_number: "text-lg font-semibold text-gray-600",
     };
     return `${baseClass} ${typeClasses[item.type] || ""}`;
   };
@@ -174,7 +174,7 @@ export function AnimatedWhiteboard({
       {/* Whiteboard Container */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto bg-gradient-to-br from-white via-[#e8f5f5]/30 to-white relative"
+        className="flex-1 overflow-y-auto bg-gradient-to-br from-white via-[var(--crimson-soft)]/30 to-white relative"
       >
         {/* Whiteboard Content */}
         <div

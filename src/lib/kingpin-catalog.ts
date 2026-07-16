@@ -1,4 +1,10 @@
 import type { CourseSourceType } from "@/lib/types";
+import {
+  KINGPIN_CBC_GRADE9_MATHEMATICS_FULL_YEAR,
+  KINGPIN_CBC_GRADE9_MATHEMATICS_TERM_1,
+  KINGPIN_CBC_GRADE9_MATHEMATICS_TERM_2,
+  KINGPIN_CBC_GRADE9_MATHEMATICS_TERM_3,
+} from "./kingpin-grade9-mathematics-catalog";
 
 export type KingpinLessonSection = {
   title: string;
@@ -635,8 +641,8 @@ const kingpinCertificateTheme: KingpinCertificateTheme = {
   logoUrl: "https://kingpin.co.ke/images/kingpin-logo-512x512.png",
   website: "https://kingpin.co.ke",
   primaryColor: "#000000",
-  accentColor: "#1F7C80",
-  backgroundColor: "#F8FAFC",
+  accentColor: "#7D2233",
+  backgroundColor: "#FBF8F5",
   sealText: "KingPin Professional Certificate",
   signatureLabel: "KingPin Academic & Strategy Office",
 };
@@ -747,6 +753,10 @@ export function getKingpinCourseCatalog() {
     KINGPIN_AI_RESEARCH_ANALYSIS,
     KINGPIN_AI_MARKETING_CONTENT,
     KINGPIN_AI_AUTOMATION_OPERATIONS,
+    KINGPIN_CBC_GRADE9_MATHEMATICS_FULL_YEAR,
+    KINGPIN_CBC_GRADE9_MATHEMATICS_TERM_1,
+    KINGPIN_CBC_GRADE9_MATHEMATICS_TERM_2,
+    KINGPIN_CBC_GRADE9_MATHEMATICS_TERM_3,
   ];
 }
 

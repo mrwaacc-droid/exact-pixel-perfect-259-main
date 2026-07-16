@@ -36,7 +36,7 @@ function CookiePreferenceRow({
   disabled?: boolean;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-xl border border-border bg-[#f8fafc] p-3.5 sm:p-4">
+    <div className="flex items-start justify-between gap-4 rounded-xl border border-border bg-[#FBF8F5] p-3.5 sm:p-4">
       <div className="pr-2">
         <p className="text-sm font-semibold text-heading">{title}</p>
         <p className="mt-1 text-sm leading-6 text-muted">{description}</p>
@@ -146,64 +146,56 @@ export function CookieConsentManager() {
       )}
 
       {isBannerVisible && (
-        <div className="fixed inset-x-0 bottom-0 z-[90] px-4 pb-4 pt-6 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-border bg-white p-5 shadow-lg sm:p-6">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-border bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted">
+        <div className="fixed inset-x-0 bottom-0 z-[90] border-t border-border bg-white/95 px-3 py-3 shadow-lg backdrop-blur sm:px-4">
+          <div className="mx-auto flex max-w-7xl flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-border bg-accent px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   Cookie preferences
                 </div>
-                <h2 className="mt-3 text-xl font-bold tracking-tight text-heading sm:text-2xl">
-                  We use essential cookies to keep Klassruum secure, accessible, and reliable.
+                <h2 className="text-base font-bold tracking-tight text-heading sm:text-lg">
+                  Cookies help keep Klassruum reliable.
                 </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-7 text-body sm:text-[15px]">
-                  Optional preference and analytics storage helps us remember accessibility settings
-                  and improve product quality. You can accept all, keep essentials only, or choose
-                  what to allow.
-                </p>
-                <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
-                  <Link
-                    to="/cookie-policy"
-                    className="font-semibold text-academic-blue hover:text-heading"
-                  >
-                    Cookie policy
-                  </Link>
-                  <Link
-                    to="/privacy"
-                    className="font-semibold text-academic-blue hover:text-heading"
-                  >
-                    Privacy policy
-                  </Link>
-                </div>
               </div>
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-body">
+                Optional storage helps remember preferences and improve quality.
+              </p>
+              <div className="mt-1 flex flex-wrap items-center gap-4 text-sm">
+                <Link to="/cookie-policy" className="font-semibold text-academic-blue hover:text-heading">
+                  Cookie policy
+                </Link>
+                <Link to="/privacy" className="font-semibold text-academic-blue hover:text-heading">
+                  Privacy policy
+                </Link>
+              </div>
+            </div>
 
-              <div className="grid gap-2 sm:min-w-[320px] sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="h-11 rounded-xl px-5"
-                  onClick={() => setIsDialogOpen(true)}
-                >
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Customize
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="h-11 rounded-xl px-5"
-                  onClick={acceptEssentialOnly}
-                >
-                  Essential only
-                </Button>
-                <Button
-                  type="button"
-                  className="h-11 rounded-xl bg-heading px-5 text-white hover:bg-navy-light"
-                  onClick={acceptAll}
-                >
-                  Accept all
-                </Button>
-              </div>
+            <div className="grid grid-cols-3 gap-2 sm:min-w-[320px]">
+              <Button
+                type="button"
+                variant="outline"
+                className="h-9 rounded-lg px-2 text-xs sm:h-10 sm:px-4 sm:text-sm"
+                onClick={() => setIsDialogOpen(true)}
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                Customize
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-9 rounded-lg px-2 text-xs sm:h-10 sm:px-4 sm:text-sm"
+                onClick={acceptEssentialOnly}
+              >
+                Essential only
+              </Button>
+              <Button
+                type="button"
+                className="h-9 rounded-lg bg-heading px-2 text-xs text-white hover:bg-navy-light sm:h-10 sm:px-4 sm:text-sm"
+                onClick={acceptAll}
+              >
+                Accept all
+              </Button>
             </div>
           </div>
         </div>
@@ -229,7 +221,7 @@ export function CookieConsentManager() {
           </div>
 
           <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-5 py-4 sm:space-y-4 sm:px-7 sm:py-5">
-            <div className="rounded-xl border border-border bg-[#f8fafc] px-4 py-3 text-sm text-body">
+            <div className="rounded-xl border border-border bg-[#FBF8F5] px-4 py-3 text-sm text-body">
               <div className="flex flex-wrap items-center gap-2 text-heading">
                 <Check className="h-4 w-4 text-education-green" />
                 <span className="font-semibold">Current selection:</span>

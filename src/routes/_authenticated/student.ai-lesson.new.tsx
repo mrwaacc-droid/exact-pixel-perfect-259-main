@@ -23,7 +23,7 @@ function NewAiLesson() {
     <StudentShell title="Start a New AI Lesson">
       <div className="mx-auto max-w-2xl space-y-6">
         <div className="kr-pcard p-6">
-          <div className="mb-3 flex items-center gap-2 text-[#1F7C80]">
+          <div className="mb-3 flex items-center gap-2 text-crimson">
             <Sparkles className="h-5 w-5" />
             <h2 className="text-lg font-bold text-[var(--gray-900)]">What do you want to learn?</h2>
           </div>
@@ -39,7 +39,7 @@ function NewAiLesson() {
           />
           <Link
             to="/student/courses"
-            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#1F7C80] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#1A5256]"
+            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-dark"
           >
             Pick a course to start <ArrowRight className="h-4 w-4" />
           </Link>

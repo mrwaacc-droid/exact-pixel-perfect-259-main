@@ -280,7 +280,7 @@ export function AIBroadcastClassroom({
 
           <div className="flex items-center gap-3">
             {mode === "host" && (
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF8F7] px-3 py-1.5 text-xs font-semibold text-[#1F7C80]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF8F7] px-3 py-1.5 text-xs font-semibold text-[#7D2233]">
                 <Radio className="h-3.5 w-3.5" />
                 Broadcasting to {activeLearners.length} learner{activeLearners.length !== 1 ? "s" : ""}
               </div>
@@ -302,9 +302,9 @@ export function AIBroadcastClassroom({
         <section className="space-y-6">
           {/* Play controls */}
           {!isPlaying && (
-            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 text-center shadow-[0_16px_60px_rgba(15,23,42,0.08)]">
+            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 text-center shadow-[0_16px_60px_rgba(25, 19, 20,0.08)]">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#EAF8F7]">
-                <WandSparkles className="h-7 w-7 text-[#1F7C80]" />
+                <WandSparkles className="h-7 w-7 text-[#7D2233]" />
               </div>
               <h2 className="text-xl font-black text-[#132033]">
                 {mode === "host" ? "Ready to teach" : "Waiting for the lesson to begin"}
@@ -316,7 +316,7 @@ export function AIBroadcastClassroom({
               </p>
               {mode === "host" && (
                 <Button
-                  className="mt-5 bg-[#1F7C80] hover:bg-[#1A5256]"
+                  className="mt-5 bg-[#7D2233] hover:bg-[var(--crimson-dark)]"
                   onClick={() => setIsPlaying(true)}
                 >
                   <PlayCircle className="mr-2 h-4 w-4" /> Start AI Broadcast
@@ -326,7 +326,7 @@ export function AIBroadcastClassroom({
           )}
 
           {/* Whiteboard area */}
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_16px_60px_rgba(15,23,42,0.08)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_16px_60px_rgba(25, 19, 20,0.08)]">
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -350,7 +350,7 @@ export function AIBroadcastClassroom({
               {boardState.board_items.length === 0 ? (
                 <div className="flex min-h-[250px] items-center justify-center text-center">
                   <div>
-                    <Monitor className="mx-auto h-10 w-10 text-[#94A3B8]" />
+                    <Monitor className="mx-auto h-10 w-10 text-[#A89890]" />
                     <p className="mt-3 text-sm text-[#61758A]">
                       {isPlaying
                         ? "Board content will appear here as the lesson progresses."
@@ -365,10 +365,10 @@ export function AIBroadcastClassroom({
                       key={item.id}
                       className={`rounded-xl border p-4 text-sm leading-7 transition-all duration-500 ${
                         index === boardState.current_index
-                          ? "border-[#1F7C80]/30 bg-[#EAF8F7] text-[#132033]"
+                          ? "border-[#7D2233]/30 bg-[#EAF8F7] text-[#132033]"
                           : index < boardState.current_index
                             ? "border-[#E2EBF2] bg-white text-[#52687C]"
-                            : "border-transparent bg-transparent text-[#94A3B8]"
+                            : "border-transparent bg-transparent text-[#A89890]"
                       }`}
                     >
                       <span className="mr-2 text-[10px] font-bold uppercase text-[#7B8EA2]">
@@ -383,8 +383,8 @@ export function AIBroadcastClassroom({
 
             {/* Teacher note */}
             {boardState.teacher_note && (
-              <div className="mt-4 rounded-xl border border-[#1F7C80]/20 bg-[#EAF8F7] p-4 text-sm text-[#132033]">
-                <span className="text-xs font-bold uppercase text-[#1F7C80]">Teacher note: </span>
+              <div className="mt-4 rounded-xl border border-[#7D2233]/20 bg-[#EAF8F7] p-4 text-sm text-[#132033]">
+                <span className="text-xs font-bold uppercase text-[#7D2233]">Teacher note: </span>
                 {boardState.teacher_note}
               </div>
             )}
@@ -392,7 +392,7 @@ export function AIBroadcastClassroom({
 
           {/* Confidence check (learner) */}
           {mode === "learner" && isPlaying && (
-            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
                 How are you feeling?
               </p>
@@ -408,7 +408,7 @@ export function AIBroadcastClassroom({
                     className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
                       confidence === opt.level
                         ? opt.color
-                        : "border-[#DCE7EE] bg-[#F8FBFD] text-[#35546F] hover:border-[#1F7C80]/35"
+                        : "border-[#DCE7EE] bg-[#F8FBFD] text-[#35546F] hover:border-[#7D2233]/35"
                     }`}
                   >
                     {opt.label}
@@ -422,9 +422,9 @@ export function AIBroadcastClassroom({
         {/* Right sidebar */}
         <aside className="space-y-6">
           {/* Live captions */}
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
-              <Eye className="h-4 w-4 text-[#1F7C80]" /> Live Captions
+              <Eye className="h-4 w-4 text-[#7D2233]" /> Live Captions
             </div>
             <p className="mt-4 rounded-[22px] border border-[#E2EBF2] bg-[#F8FBFD] p-4 text-sm leading-7 text-[#29455D]">
               {boardState.board_items[boardState.current_index]?.text ??
@@ -436,7 +436,7 @@ export function AIBroadcastClassroom({
 
           {/* Participant roster (host) / Question panel (learner) */}
           {mode === "host" ? (
-            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -446,7 +446,7 @@ export function AIBroadcastClassroom({
                     {activeLearners.length} Connected
                   </h2>
                 </div>
-                <Users className="h-5 w-5 text-[#1F7C80]" />
+                <Users className="h-5 w-5 text-[#7D2233]" />
               </div>
               <div className="mt-4 max-h-[300px] space-y-2 overflow-y-auto">
                 {activeLearners.length === 0 ? (
@@ -469,7 +469,7 @@ export function AIBroadcastClassroom({
               </div>
             </div>
           ) : (
-            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -477,14 +477,14 @@ export function AIBroadcastClassroom({
                   </p>
                   <h2 className="mt-2 text-lg font-black text-[#132033]">Question Panel</h2>
                 </div>
-                <MessageSquare className="h-5 w-5 text-[#1F7C80]" />
+                <MessageSquare className="h-5 w-5 text-[#7D2233]" />
               </div>
               <div className="mt-4 flex gap-2">
                 <input
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder="Type a question..."
-                  className="h-11 flex-1 rounded-xl border border-[#D9E7EE] bg-white px-4 text-sm outline-none focus:border-[#1F7C80]"
+                  className="h-11 flex-1 rounded-xl border border-[#D9E7EE] bg-white px-4 text-sm outline-none focus:border-[#7D2233]"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && question.trim()) {
                       onAskQuestion?.(question);
@@ -493,7 +493,7 @@ export function AIBroadcastClassroom({
                   }}
                 />
                 <Button
-                  className="h-11 bg-[#1F7C80] hover:bg-[#1A5256]"
+                  className="h-11 bg-[#7D2233] hover:bg-[var(--crimson-dark)]"
                   onClick={() => {
                     if (question.trim()) {
                       onAskQuestion?.(question);
@@ -512,8 +512,8 @@ export function AIBroadcastClassroom({
                 }}
                 className={`mt-3 w-full rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
                   handRaised
-                    ? "border-[#1F7C80] bg-[#1F7C80] text-white"
-                    : "border-[#DCE7EE] bg-[#F8FBFD] text-[#35546F] hover:border-[#1F7C80]/35"
+                    ? "border-[#7D2233] bg-[#7D2233] text-white"
+                    : "border-[#DCE7EE] bg-[#F8FBFD] text-[#35546F] hover:border-[#7D2233]/35"
                 }`}
               >
                 <Hand className="mr-2 inline h-4 w-4" />
@@ -524,7 +524,7 @@ export function AIBroadcastClassroom({
 
           {/* Quick signals (learner) */}
           {mode === "learner" && (
-            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+            <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-5 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
                 Quick Signals
               </p>
@@ -539,7 +539,7 @@ export function AIBroadcastClassroom({
                     key={signal}
                     type="button"
                     onClick={() => onAskQuestion?.(signal)}
-                    className="rounded-full border border-[#DCE7EE] bg-[#F8FBFD] px-3 py-1.5 text-xs font-semibold text-[#35546F] transition hover:border-[#1F7C80]/35 hover:bg-[#F3FBFA]"
+                    className="rounded-full border border-[#DCE7EE] bg-[#F8FBFD] px-3 py-1.5 text-xs font-semibold text-[#35546F] transition hover:border-[#7D2233]/35 hover:bg-[#F3FBFA]"
                   >
                     {signal}
                   </button>

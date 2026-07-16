@@ -41,7 +41,7 @@ export function createSeoHead({
         name: "robots",
         content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
       },
-      { name: "theme-color", content: "#1F7C80" },
+      { name: "theme-color", content: "#7D2233" },
       { property: "og:type", content: type },
       { property: "og:site_name", content: "Klassruum" },
       { property: "og:title", content: title },
@@ -104,6 +104,37 @@ export function faqSchema(items: Array<{ question: string; answer: string }>): J
       "@type": "Question",
       name: item.question,
       acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  };
+}
+
+export function breadcrumbSchema(items: Array<{ name: string; url: string }>): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
+export function itemListSchema(
+  name: string,
+  items: Array<{ name: string; url: string; description?: string }>,
+): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+      ...(item.description ? { description: item.description } : {}),
     })),
   };
 }

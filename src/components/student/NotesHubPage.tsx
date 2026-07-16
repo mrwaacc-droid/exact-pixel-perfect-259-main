@@ -84,7 +84,7 @@ export function NotesHubPage() {
               </p>
             </div>
             <Link to="/classroom">
-              <Button className="bg-[#1F7C80] hover:bg-[#1A5256]">
+              <Button className="bg-[#7D2233] hover:bg-[#521326]">
                 <Plus size={16} />
                 New Note
               </Button>
@@ -103,7 +103,7 @@ export function NotesHubPage() {
                 placeholder="Search notes by title or content..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#1F7C80]"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7D2233]"
               />
             </div>
 
@@ -114,7 +114,7 @@ export function NotesHubPage() {
                   onClick={() => setSelectedFilter(filter)}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                     selectedFilter === filter
-                      ? "bg-[#1F7C80] text-white"
+                      ? "bg-[#7D2233] text-white"
                       : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400"
                   }`}
                 >
@@ -138,7 +138,7 @@ export function NotesHubPage() {
                 Start taking notes during your lessons or export your board
               </p>
               <Link to="/classroom">
-                <Button className="bg-[#1F7C80] hover:bg-[#1A5256]">Start a Lesson</Button>
+                <Button className="bg-[#7D2233] hover:bg-[#521326]">Start a Lesson</Button>
               </Link>
             </CardContent>
           </Card>
@@ -152,7 +152,7 @@ export function NotesHubPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 hover:text-[#1F7C80] transition-colors">
+                          <h3 className="text-lg font-semibold text-gray-900 hover:text-[#7D2233] transition-colors">
                             {note.title}
                           </h3>
                           <div className="flex items-center gap-4 text-sm text-gray-600 mt-1">

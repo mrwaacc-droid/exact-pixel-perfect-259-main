@@ -1,66 +1,86 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, CalendarClock, CheckCircle2, MessageSquare } from "lucide-react";
+import { ArrowRight, GraduationCap, BookOpen, Building2, Heart } from "lucide-react";
+import { CineReveal } from "./CineReveal";
 
-const ctaChecks = [
-  "Lesson generation from approved materials",
-  "Accessible classroom delivery",
-  "Institution-level reporting",
+const roleLinks = [
+  { icon: GraduationCap, label: "I'm a learner", href: "/demo/classroom" },
+  { icon: BookOpen, label: "I'm a teacher", href: "/auth" },
+  { icon: Building2, label: "I represent an institution", href: "/institutions/register" },
+  { icon: Heart, label: "I'm a parent", href: "/auth" },
 ];
 
 export function FinalCTA() {
   return (
-    <section
-      className="border-y border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] py-16 lg:py-20"
-      id="final-cta"
-    >
-      <div className="container-editorial">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-          <div className="max-w-3xl text-left">
-            <p className="mb-4 inline-flex items-center gap-2 border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
-              <CalendarClock size={13} className="text-[#1F7C80]" />
-              Implementation-ready
-            </p>
+    <section className="cine-section cine-final" id="final-cta">
+      <div className="relative z-10 mx-auto max-w-[1240px] px-6">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_0.5fr] lg:gap-16">
+          <CineReveal>
+            <div className="max-w-xl">
+              <span
+                className="cine-section-eyebrow"
+                style={{ color: "#fff" }}
+              >
+                <span
+                  style={{
+                    background: "#fff",
+                    height: "1.5px",
+                    width: "24px",
+                    display: "inline-block",
+                  }}
+                />
+                Bring your content to life
+              </span>
+              <h2 className="cine-final-title mt-4">
+                Start with a classroom demo. Then build your own.
+              </h2>
+              <p className="cine-final-sub mt-6">
+                Create structured lessons from your course materials, choose an AI teacher voice, and give every learner a classroom that explains, responds, and remembers. Klassruum is the AI-powered virtual classroom platform built for schools, universities, training organisations, and online academies — GDPR-compliant and WCAG 2.2 accessible.
+              </p>
 
-            <h2 className="font-headings text-[2rem] font-extrabold leading-[1.08] tracking-tight text-slate-950 sm:text-[2.6rem] lg:text-[3.25rem]">
-              Bring structured AI teaching into your institution
-            </h2>
-
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600">
-              Start with a live classroom demo, then map your materials, roles, accessibility
-              requirements, and reporting needs into a deployment plan.
-            </p>
-          </div>
-
-          <div className="border-l border-slate-200 pl-0 lg:pl-8">
-            <div className="mb-6 grid gap-3">
-              {ctaChecks.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-start gap-3 text-sm font-medium text-slate-700"
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link to="/demo/classroom" className="cine-final-btn">
+                  Build a Classroom
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  to="/institutions/register"
+                  className="cine-final-btn cine-final-btn--ghost"
                 >
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#1F7C80]" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
+                  Request a Demonstration
+                </Link>
+              </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Link
-                to="/demo/classroom"
-                className="inline-flex min-h-11 items-center justify-center gap-2 bg-slate-950 px-5 text-sm font-bold text-white transition-colors hover:bg-[#12393c]"
-              >
-                Open live classroom
-                <ArrowRight size={15} />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex min-h-11 items-center justify-center gap-2 border border-slate-300 bg-white px-5 text-sm font-bold text-slate-900 transition-colors hover:border-slate-400 hover:bg-slate-50"
-              >
-                <MessageSquare size={15} />
-                Talk to the team
-              </Link>
+              <div className="mt-12 border-t border-white/10 pt-8">
+                <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.14em] text-white/40">
+                  Or choose your path
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {roleLinks.map((role) => {
+                    const Icon = role.icon;
+                    return (
+                      <Link key={role.label} to={role.href} className="cine-role-pill">
+                        <Icon size={14} />
+                        {role.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
+          </CineReveal>
+
+          <CineReveal variant="right" delay={2} className="hidden lg:block">
+            <img
+              src="/images/scenes/cinematic-01.png"
+              alt="Klassruum classroom experience preview"
+              className="cine-image"
+              style={{
+                filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.5))",
+                opacity: 0.9,
+              }}
+              loading="lazy"
+            />
+          </CineReveal>
         </div>
       </div>
     </section>

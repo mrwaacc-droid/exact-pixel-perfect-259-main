@@ -82,7 +82,6 @@ export const getPurchasableCourses = createServerFn({ method: "GET" }).handler(a
       "id, slug, title, description, subject, level, source_type, price_usd, pricing_label, compare_at_price_usd, cover_image_url, institutions(name)",
     )
     .eq("status", "published")
-    .gt("price_usd", 0)
     .order("source_type", { ascending: false })
     .order("title", { ascending: true })
     .limit(60);
@@ -304,7 +303,7 @@ export const initializeCourseCheckout = createServerFn({ method: "POST" })
       process.env.APP_URL ||
       process.env.VITE_APP_URL ||
       process.env.PUBLIC_APP_URL ||
-      "https://klassruum.com";
+      "https://klassruum.co.ke";
     const callbackUrl = `${appUrl}/courses/${course.slug}/checkout?reference=${encodeURIComponent(reference)}`;
 
     const response = await fetch("https://api.paystack.co/transaction/initialize", {

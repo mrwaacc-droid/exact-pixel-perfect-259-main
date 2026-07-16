@@ -43,7 +43,7 @@ export function AITeacherPanel({
       <div className="ai-avatar-wrap">
         <div className="ai-avatar">
           <div className="ai-avatar-placeholder">
-            <GraduationCap size={48} className="text-[#1F7C80]" />
+            <GraduationCap size={48} className="text-[var(--crimson)]" />
           </div>
         </div>
         <div className="ai-speaking">

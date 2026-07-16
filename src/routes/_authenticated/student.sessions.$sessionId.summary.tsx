@@ -40,7 +40,7 @@ function SessionSummary() {
           </p>
           <Link
             to="/student/sessions"
-            className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1A5256]"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-dark"
           >
             Back to sessions
           </Link>
@@ -100,7 +100,7 @@ function SessionSummary() {
             </Link>
             <Link
               to="/student/notes"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1A5256]"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-dark"
             >
               Review notes <ChevronRight className="h-4 w-4" />
             </Link>

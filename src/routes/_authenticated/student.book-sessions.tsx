@@ -77,7 +77,7 @@ function StudentBookSessionsPage() {
       <div className="mx-auto max-w-6xl space-y-6">
         {/* Search */}
         <div className="relative max-w-md">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A89890]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -89,7 +89,7 @@ function StudentBookSessionsPage() {
         {/* Loading */}
         {query.isLoading && (
           <div className="flex justify-center py-16">
-            <Loader2 className="h-8 w-8 animate-spin text-[#1F7C80]" />
+            <Loader2 className="h-8 w-8 animate-spin text-crimson" />
           </div>
         )}
 
@@ -97,8 +97,8 @@ function StudentBookSessionsPage() {
         {!query.isLoading && sessions.length === 0 && (
           <Card>
             <CardContent className="p-12 text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF8F7]">
-                <Calendar className="h-7 w-7 text-[#1F7C80]" />
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-crimson-soft">
+                <Calendar className="h-7 w-7 text-crimson" />
               </div>
               <h3 className="text-lg font-black text-[#132033]">No sessions available</h3>
               <p className="mx-auto mt-2 max-w-sm text-sm text-[#61758A]">
@@ -135,7 +135,7 @@ function StudentBookSessionsPage() {
                         <Radio className="h-3 w-3" /> LIVE
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EAF8F7] px-2.5 py-1 text-[10px] font-bold text-[#1F7C80]">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-crimson-soft px-2.5 py-1 text-[10px] font-bold text-crimson">
                         <Clock className="h-3 w-3" /> UPCOMING
                       </span>
                     )}
@@ -184,7 +184,7 @@ function StudentBookSessionsPage() {
 
                   {/* Action */}
                   <Button
-                    className="mt-4 w-full bg-[#1F7C80] hover:bg-[#1A5256]"
+                    className="mt-4 w-full bg-crimson hover:bg-crimson-dark"
                     disabled={joiningId === session.id}
                     onClick={() => handleJoin(session.id)}
                   >

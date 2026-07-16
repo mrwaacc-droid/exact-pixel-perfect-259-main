@@ -1,7 +1,33 @@
 # 🚀 Klassruum — Deployment Readiness Report
 
-**Date:** $(Get-Date -Format 'yyyy-MM-dd')
+**Date:** 2026-07-15
 **Status:** ✅ READY FOR DEPLOYMENT
+**Classroom status:** ✅ READY — see [CLASSROOM_DEPLOYMENT_GUIDE.md](./CLASSROOM_DEPLOYMENT_GUIDE.md)
+
+---
+
+## Classroom — End-to-End Status
+
+The classroom is the flagship product surface. As of 2026-07-15:
+
+- ✅ **TypeScript typecheck**: 0 errors
+- ✅ **Production build**: `npm run build` succeeds; Vercel output emitted
+  (`.vercel/output/{config.json, functions/__server.func, nitro.json, static/{assets, favicon.svg, images, media}}`)
+- ✅ **All classroom routes registered** in `src/routeTree.gen.ts`:
+  `/classroom`, `/classroom/$lessonId`, `/classroom/session/$sessionId`,
+  `/classroom/preview/$lessonId`, `/classroom-enhanced/$lessonId`,
+  `/classroom-design/$lessonId`, `/demo/classroom`, `/student/classrooms`,
+  `/institution/classrooms`, and the two dev-only routes
+- ✅ **26 classroom components** compile and ship in the bundle
+- ✅ **Hooks**: `useClassroomEngine`, `useClassroomRealtime`,
+  `useTeacherVoice`, `useTeachingEngine` — all type-clean
+- ✅ **Static assets**: `public/images/teachers/{man,woman}.png` present
+- ✅ **Supabase classroom migrations** all present in `supabase/migrations/`
+  (phase 1 + 2 + 8 + 9 + 10 + 11 + local_teacher_voice + 0625 realtime + 0625 lifecycle)
+
+For the full classroom-specific deployment runbook (env vars, migrations,
+smoke test, rollback plan, operational notes), see
+**[CLASSROOM_DEPLOYMENT_GUIDE.md](./CLASSROOM_DEPLOYMENT_GUIDE.md)**.
 
 ---
 
@@ -53,8 +79,7 @@
 - [x] Dev server starts on `localhost:8080`
 - [x] `npm run verify:deploy` succeeds (current output: warnings only, no blocking errors)
 - [ ] Set environment variables in production:
-  - `OPENAI_API_KEY` or `DEEPSEEK_API_KEY` (for AI teacher)
-  - Optional legacy AI fallback: `LOVABLE_API_KEY`
+  - `OPENAI_API_KEY` (gpt-4o-mini / gpt-5-nano / gpt-4.1-nano only) or `DEEPSEEK_API_KEY` (deepseek-v4-flash) for AI teacher
   - `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`
   - Optional backward-compatible service alias used by some storage helpers: `SUPABASE_SERVICE_KEY`
   - `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (client-side Supabase)
@@ -62,11 +87,10 @@
   - `APP_URL` (recommended canonical origin for invite/auth/billing callback links)
   - Optional URL aliases referenced by some helpers: `PUBLIC_APP_URL`, `VITE_APP_URL`
   - `PAYSTACK_SECRET_KEY` and `PAYSTACK_WEBHOOK_SECRET` (monthly classroom billing)
-  - Email delivery function settings for institution invites / notifications:
-    - `SUPABASE_EMAIL_FUNCTION_URL`
-    - `SUPABASE_EMAIL_FUNCTION_BEARER` (if the function is protected)
-    - `EMAIL_PROVIDER`
-    - `RESEND_API_KEY` or `EMAIL_PROVIDER_API_KEY`
+  - Email delivery via Resend, relayed through the deployed `send-email` Supabase Edge Function:
+    - `SUPABASE_EMAIL_FUNCTION_URL` (`https://<project-ref>.supabase.co/functions/v1/send-email`)
+    - `SUPABASE_EMAIL_FUNCTION_BEARER` (must match the edge function's `EMAIL_FUNCTION_BEARER` secret)
+    - `RESEND_API_KEY` is set only as an Edge Function secret (`supabase secrets set`), not app env
   - Optional voice settings: `ELEVENLABS_API_KEY`, `ELEVENLABS_MODEL_ID`, `LOCAL_TTS_SECRET`, `LOCAL_KOKORO_TTS_URL`, `LOCAL_PIPER_TTS_URL`
   - `NODE_ENV=production` in the server runtime
 - [ ] Apply Supabase migrations in production, including:

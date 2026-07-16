@@ -101,7 +101,7 @@ export function AccessPanel({ classroomContext, onAccessChange }: AccessPanelPro
       {/* Header */}
       <div className="p-4 border-b border-gray-100">
         <div className="flex items-center gap-2">
-          <Accessibility size={18} className="text-[#1F7C80]" />
+          <Accessibility size={18} className="text-[var(--crimson)]" />
           <h3 className="text-sm font-semibold text-gray-900">Learning Access</h3>
         </div>
         <p className="text-xs text-gray-500 mt-1">Customize your learning experience</p>
@@ -123,7 +123,7 @@ export function AccessPanel({ classroomContext, onAccessChange }: AccessPanelPro
                 <button
                   key={item.key}
                   onClick={() => toggleSetting(item.key as any)}
-                  className="w-full text-left p-3 rounded-lg border transition-colors hover:border-[#a3d9d8]"
+                  className="w-full text-left p-3 rounded-lg border transition-colors hover:border-[var(--crimson-soft)]"
                   style={{
                     borderColor: item.enabled ? "var(--primary)" : "var(--gray-200)",
                     backgroundColor: item.enabled ? "var(--primary-light)" : "var(--white)",
@@ -133,7 +133,7 @@ export function AccessPanel({ classroomContext, onAccessChange }: AccessPanelPro
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-gray-900">{item.label}</span>
-                        {item.enabled && <span className="w-2 h-2 rounded-full bg-[#1F7C80]" />}
+                        {item.enabled && <span className="w-2 h-2 rounded-full bg-[var(--crimson)]" />}
                       </div>
                       <p className="text-xs text-gray-600 mt-0.5">{item.description}</p>
                     </div>
@@ -163,8 +163,8 @@ export function AccessPanel({ classroomContext, onAccessChange }: AccessPanelPro
                     onClick={() => toggleSetting("lessonPace" as any, pace)}
                     className={`py-2 px-3 text-xs font-medium rounded-lg border transition-colors ${
                       learnerAccessProfile.lessonPace === pace
-                        ? "bg-[#1F7C80] text-white border-[#1F7C80]"
-                        : "bg-white text-gray-700 border-gray-200 hover:border-[#a3d9d8]"
+                        ? "bg-[var(--crimson)] text-white border-[var(--crimson)]"
+                        : "bg-white text-gray-700 border-gray-200 hover:border-[var(--crimson-soft)]"
                     }`}
                   >
                     {pace.charAt(0).toUpperCase() + pace.slice(1)}
@@ -184,8 +184,8 @@ export function AccessPanel({ classroomContext, onAccessChange }: AccessPanelPro
                     onClick={() => toggleSetting("explanationStyle" as any, style)}
                     className={`py-2 px-3 text-xs font-medium rounded-lg border transition-colors ${
                       learnerAccessProfile.explanationStyle === style
-                        ? "bg-[#1F7C80] text-white border-[#1F7C80]"
-                        : "bg-white text-gray-700 border-gray-200 hover:border-[#a3d9d8]"
+                        ? "bg-[var(--crimson)] text-white border-[var(--crimson)]"
+                        : "bg-white text-gray-700 border-gray-200 hover:border-[var(--crimson-soft)]"
                     }`}
                   >
                     {style.charAt(0).toUpperCase() + style.slice(1)}

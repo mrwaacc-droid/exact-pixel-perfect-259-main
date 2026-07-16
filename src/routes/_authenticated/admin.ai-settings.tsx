@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 
 export const Route = createFileRoute("/_authenticated/admin/ai-settings")({
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       title="AI Settings"
       description="Configure AI providers and generation defaults"
       role="Platform Admin"

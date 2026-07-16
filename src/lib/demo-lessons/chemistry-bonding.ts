@@ -22,7 +22,7 @@ const chemistrySequence: MathTeachingItem[] = [
     boardText: "Chemical Bonding",
     exactSpokenText: "Chemical Bonding.",
     teacherExplanation:
-      "Welcome to today's lesson. We are going to learn about chemical bonding — how atoms join together to form compounds. This is one of the most important ideas in chemistry.",
+      "Today we're looking at chemical bonding — how atoms join to form substances. If this idea is clear, a lot of chemistry starts making much more sense.",
     whyThisStepMatters:
       "Understanding bonding explains why substances have different properties — why salt dissolves in water but oil does not, why diamond is hard but graphite is soft.",
     accessibleDescription: "The board shows the heading: Chemical Bonding.",
@@ -34,7 +34,7 @@ const chemistrySequence: MathTeachingItem[] = [
     boardText: "Goal: Understand ionic and covalent bonds",
     exactSpokenText: "Our goal today is to understand ionic bonds and covalent bonds.",
     teacherExplanation:
-      "By the end of this lesson, you will be able to tell the difference between an ionic bond and a covalent bond, and give examples of each.",
+      "By the end, you should be able to tell the difference between ionic and covalent bonding, and explain each one with an example.",
     whyThisStepMatters:
       "Having a clear goal helps you know what to focus on as we go through each step.",
     accessibleDescription: "The board shows the lesson goal: Understand ionic and covalent bonds.",
@@ -111,7 +111,7 @@ const chemistrySequence: MathTeachingItem[] = [
     type: "concept",
     boardText: "Example: Sodium Chloride (NaCl)",
     exactSpokenText:
-      "Let us look at an example: Sodium Chloride, written as N a C l. This is ordinary table salt.",
+      "Let's look at an example: sodium chloride, written as N a C l. This is ordinary table salt.",
     teacherExplanation:
       "Every time you sprinkle salt on your food, you are using an ionically bonded compound. Let me show you how sodium and chlorine form this bond.",
     whyThisStepMatters:
@@ -164,7 +164,7 @@ const chemistrySequence: MathTeachingItem[] = [
     id: "chem_12",
     type: "concept",
     boardText: "Covalent Bonds",
-    exactSpokenText: "Now let us learn about Covalent Bonds.",
+    exactSpokenText: "Now let's look at covalent bonds.",
     teacherExplanation:
       "Covalent bonds are completely different from ionic bonds. Instead of transferring electrons, atoms share electrons. This happens between two non-metals.",
     whyThisStepMatters:
@@ -193,7 +193,7 @@ const chemistrySequence: MathTeachingItem[] = [
     id: "chem_14",
     type: "concept",
     boardText: "Example: Water (H₂O)",
-    exactSpokenText: "Let us look at water, written as H two O.",
+    exactSpokenText: "Let's look at water, written as H two O.",
     teacherExplanation:
       "Water is the most important covalent compound on Earth. Every drop of water is held together by covalent bonds. Let me show you how hydrogen and oxygen share electrons.",
     whyThisStepMatters:
@@ -234,7 +234,7 @@ const chemistrySequence: MathTeachingItem[] = [
     id: "chem_17",
     type: "concept",
     boardText: "Ionic vs Covalent — Summary",
-    exactSpokenText: "Let us compare ionic and covalent bonds side by side.",
+    exactSpokenText: "Let's compare ionic and covalent bonds side by side.",
     teacherExplanation:
       "Now that you have seen both types, let me put them next to each other so the differences are crystal clear.",
     whyThisStepMatters:

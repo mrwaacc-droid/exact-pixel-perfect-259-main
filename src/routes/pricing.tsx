@@ -82,7 +82,11 @@ export const Route = createFileRoute("/pricing")({
           ))}
           <div className="md:col-span-3 lp-premium-card p-6">
             <p className="text-body text-sm leading-8">
-              Want the visual price teaser? Visit the <Link to="/#pricing" className="text-learning-blue hover:text-academic-blue">landing page pricing section</Link> or contact the team for a rollout-focused discussion.
+              Want the visual price teaser? Visit the{" "}
+              <a href="/#pricing" className="text-learning-blue hover:text-academic-blue">
+                landing page pricing section
+              </a>{" "}
+              or contact the team for a rollout-focused discussion.
             </p>
           </div>
         </div>

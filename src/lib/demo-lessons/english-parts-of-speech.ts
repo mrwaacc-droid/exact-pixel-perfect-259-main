@@ -19,7 +19,7 @@ const englishSequence: MathTeachingItem[] = [
     boardText: "Parts of Speech",
     exactSpokenText: "Parts of Speech.",
     teacherExplanation:
-      "Welcome! Today we are learning about parts of speech — the building blocks of every sentence. Every word in the English language belongs to a category, and knowing these categories makes you a stronger writer and reader.",
+      "Today we're looking at parts of speech — the jobs words do in a sentence. Once you can spot those jobs, reading becomes clearer and your writing becomes much more controlled.",
     whyThisStepMatters:
       "Parts of speech are the foundation of grammar. Master them, and writing becomes much easier.",
     accessibleDescription: "The board shows the heading: Parts of Speech.",
@@ -32,7 +32,7 @@ const englishSequence: MathTeachingItem[] = [
     exactSpokenText:
       "Our goal today is to identify three key parts of speech: nouns, verbs, and adjectives.",
     teacherExplanation:
-      "By the end of this lesson, you will be able to look at any sentence and point out which words are nouns, which are verbs, and which are adjectives.",
+      "By the end, you should be able to look at a sentence and tell which words name something, which words show action or state, and which words describe.",
     whyThisStepMatters: "These three categories cover the majority of words you use every day.",
     accessibleDescription: "Goal: Identify nouns, verbs, and adjectives.",
     writingSpeed: "normal",
@@ -43,7 +43,7 @@ const englishSequence: MathTeachingItem[] = [
     id: "eng_3",
     type: "concept",
     boardText: "1. Nouns",
-    exactSpokenText: "Let us start with nouns.",
+    exactSpokenText: "Let's start with nouns.",
     teacherExplanation:
       "A noun is a word that names a person, place, thing, or idea. If you can point to it, go to it, hold it, or think about it — it is probably a noun.",
     whyThisStepMatters:
@@ -101,7 +101,7 @@ const englishSequence: MathTeachingItem[] = [
     id: "eng_8",
     type: "concept",
     boardText: "2. Verbs",
-    exactSpokenText: "Now let us learn about verbs.",
+    exactSpokenText: "Now let's look at verbs.",
     teacherExplanation:
       "A verb is a word that shows an action or a state of being. Every sentence must have a verb — without a verb, you do not have a sentence.",
     whyThisStepMatters: "Verbs are the engine of a sentence. They tell you what is happening.",
@@ -140,7 +140,7 @@ const englishSequence: MathTeachingItem[] = [
     id: "eng_11",
     type: "concept",
     boardText: "3. Adjectives",
-    exactSpokenText: "Finally, let us learn about adjectives.",
+    exactSpokenText: "Finally, let's look at adjectives.",
     teacherExplanation:
       "An adjective is a word that describes a noun. It tells you more about the noun — what it looks like, how many there are, or what kind it is.",
     whyThisStepMatters:
@@ -180,9 +180,9 @@ const englishSequence: MathTeachingItem[] = [
     id: "eng_14",
     type: "concept",
     boardText: "Example: Identify each word",
-    exactSpokenText: "Let us practice identifying parts of speech in a sentence.",
+    exactSpokenText: "Let's practise identifying the parts of speech in a sentence.",
     teacherExplanation:
-      "I will write a sentence on the board, and we will classify every single word together.",
+      "I'll put a sentence on the board, and we'll sort out each word together.",
     whyThisStepMatters:
       "Seeing the method applied to a real sentence makes the skill practical and transferable.",
     accessibleDescription: "Heading: Example — Identify each word.",
@@ -194,7 +194,7 @@ const englishSequence: MathTeachingItem[] = [
     boardText: '"The tall teacher reads a book."',
     exactSpokenText: "Here is our sentence: The tall teacher reads a book.",
     teacherExplanation:
-      "Let us go through this word by word and decide what part of speech each one is.",
+      "Let's go through it one word at a time and decide what job each word is doing.",
     whyThisStepMatters: "This is the core skill — breaking a sentence into its parts.",
     accessibleDescription: "Sentence on the board: The tall teacher reads a book.",
     writingSpeed: "slow",

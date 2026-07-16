@@ -38,7 +38,7 @@ function TeacherCourseStudentsPage() {
           <Link
             to="/teacher/courses/$courseId"
             params={{ courseId }}
-            className="inline-flex items-center rounded-xl border border-[#E2E8F0] px-4 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC]"
+            className="inline-flex items-center rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[#8A7478] hover:bg-[var(--page-background)]"
           >
             Course overview
           </Link>
@@ -46,15 +46,15 @@ function TeacherCourseStudentsPage() {
       />
 
       {!course ? (
-        <Card className="border-[#E2E8F0] bg-white">
-          <CardContent className="p-6 text-sm text-[#64748B]">Course not found.</CardContent>
+        <Card className="border-[var(--border)] bg-white">
+          <CardContent className="p-6 text-sm text-[#8A7478]">Course not found.</CardContent>
         </Card>
       ) : (
         <div className="space-y-4">
           <div className="kr-stat-strip kr-stat-strip--3">
             <div className="kr-stat-card-item">
-              <Users className="mx-auto mb-2 h-4 w-4 text-[#64748B]" />
-              <p className="kr-stat-value text-[#0F172A]">{course.students}</p>
+              <Users className="mx-auto mb-2 h-4 w-4 text-[#8A7478]" />
+              <p className="kr-stat-value text-[#191314]">{course.students}</p>
               <p className="kr-stat-label">Enrolled</p>
             </div>
             <div className="kr-stat-card-item kr-stat-card-item--success">
@@ -70,11 +70,11 @@ function TeacherCourseStudentsPage() {
           </div>
 
           {STUDENTS.map((student) => (
-            <Card key={student.name} className="border-[#E2E8F0] bg-white">
+            <Card key={student.name} className="border-[var(--border)] bg-white">
               <CardContent className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 className="font-bold text-[#0F172A]">{student.name}</h2>
-                  <p className="text-sm text-[#64748B]">{student.progress}% course progress</p>
+                  <h2 className="font-bold text-[#191314]">{student.name}</h2>
+                  <p className="text-sm text-[#8A7478]">{student.progress}% course progress</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant={student.status === "on track" ? "default" : "secondary"}>
@@ -82,7 +82,7 @@ function TeacherCourseStudentsPage() {
                   </Badge>
                   <a
                     href={`mailto:${student.name.toLowerCase().replace(/\s+/g, ".")}@example.com`}
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] px-3 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC]"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[#8A7478] hover:bg-[var(--page-background)]"
                   >
                     <Mail className="h-4 w-4" />
                     Message

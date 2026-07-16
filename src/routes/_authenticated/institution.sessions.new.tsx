@@ -96,7 +96,7 @@ function NewSessionPage() {
                 onChange={(e) => update("description", e.target.value)}
                 placeholder="What will this session cover?"
                 rows={3}
-                className="w-full rounded-xl border border-[#D9E7EE] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#1F7C80]"
+                className="w-full rounded-xl border border-[#D9E7EE] bg-white px-4 py-3 text-sm outline-none transition focus:border-crimson"
               />
             </div>
 
@@ -164,8 +164,8 @@ function NewSessionPage() {
                     onClick={() => update("mode", m.value)}
                     className={`rounded-2xl border-2 p-4 text-left transition ${
                       form.mode === m.value
-                        ? "border-[#1F7C80] bg-[#EAF8F7]"
-                        : "border-[#E2E8F0] bg-white hover:border-[#CBD5E1]"
+                        ? "border-crimson bg-crimson-soft"
+                        : "border-[var(--border)] bg-white hover:border-[#D8CCC6]"
                     }`}
                   >
                     <div className="flex items-center gap-2 font-bold text-[#132033]">
@@ -183,7 +183,7 @@ function NewSessionPage() {
           <Button type="button" variant="outline" onClick={() => void router.navigate({ to: "/institution/sessions" })}>
             Cancel
           </Button>
-          <Button type="submit" disabled={mutation.isPending} className="bg-[#1F7C80] hover:bg-[#1A5256]">
+          <Button type="submit" disabled={mutation.isPending} className="bg-crimson hover:bg-crimson-dark">
             {mutation.isPending ? "Scheduling…" : "Schedule Session"}
           </Button>
         </div>

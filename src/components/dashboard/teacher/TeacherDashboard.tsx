@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/dashboard/shared/StatusBadge";
 import { type DashboardConfig } from "@/lib/dashboard-config";
 import { useDashboardConfig } from "@/hooks/useDashboardConfig";
 import { getTeacherDashboardOverview } from "@/lib/reporting.functions";
+import { TeacherDeliverySkillPanel } from "./TeacherDeliverySkillPanel";
 
 function getTeacherDashboardCopy(role: DashboardConfig["role"]) {
   switch (role) {
@@ -267,6 +268,16 @@ export default function TeacherDashboard() {
           </Link>
         </section>
 
+        <TeacherDeliverySkillPanel
+          input={{
+            lessonsReady: data.metrics.lessonsReady,
+            pendingReview: data.metrics.pendingReview,
+            sessionsToday: data.metrics.sessionsToday,
+            onlineStudents: data.live.onlineStudents,
+            upcomingSessionTitle: nextSession?.title ?? null,
+          }}
+        />
+
         <section className="kr-metric-strip kr-reveal" aria-label="Teaching metrics">
           {teacherMetrics.map((metric) => (
             <Link key={metric.label} to={metric.href} className="kr-metric-item">
@@ -279,182 +290,192 @@ export default function TeacherDashboard() {
         </section>
 
         <section className="kr-open-grid">
-          <div className="kr-open-column kr-open-column--wide">
-            <div className="kr-section-heading kr-reveal">
-              <div>
-                <p className="kr-section-kicker">Courses</p>
-                <h2>{copy.courseSectionTitle}</h2>
-                <span>{copy.courseSectionSubtitle}</span>
-              </div>
-              <Link to="/teacher/courses">View all</Link>
-            </div>
-
-            <div className="kr-course-ledger kr-reveal">
-              {data.courses.length === 0 ? (
-                <div className="kr-ledger-row">
-                  <div className="kr-ledger-title">
-                    <BookOpen className="h-4 w-4" />
-                    <div>
-                      <strong>No courses assigned</strong>
-                      <span>Your courses will appear here once assigned.</span>
-                    </div>
-                  </div>
+          <div className="kr-open-column kr-open-column--wide gap-6">
+            {/* Courses Card */}
+            <div className="kr-card kr-reveal">
+              <div className="kr-card-header flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                <div>
+                  <span className="text-xs uppercase tracking-wider font-extrabold text-red-700">Courses</span>
+                  <h2 className="text-lg font-bold text-gray-900 mt-1">{copy.courseSectionTitle}</h2>
+                  <p className="text-xs text-gray-500 mt-1">{copy.courseSectionSubtitle}</p>
                 </div>
-              ) : (
-                data.courses.map((course: TeacherDashboardCourse) => (
-                  <Link
-                    key={course.id}
-                    to="/teacher/courses/$courseId"
-                    params={{ courseId: course.id }}
-                    className="kr-ledger-row"
-                  >
+                <Link to="/teacher/courses" className="text-sm font-semibold text-red-700 hover:text-red-900">View all</Link>
+              </div>
+
+              <div className="kr-course-ledger">
+                {data.courses.length === 0 ? (
+                  <div className="kr-ledger-row">
                     <div className="kr-ledger-title">
                       <BookOpen className="h-4 w-4" />
                       <div>
-                        <strong>{course.title}</strong>
-                        <span>{course.institution}</span>
+                        <strong>No courses assigned</strong>
+                        <span>Your courses will appear here once assigned.</span>
                       </div>
                     </div>
-                    <div className="kr-ledger-stats">
-                      {course.stats.map((stat) => (
-                        <span key={stat.label}>
-                          <small>{stat.label}</small>
-                          {stat.value}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="kr-progress-line" aria-label={`${course.progress}% complete`}>
-                      <span style={{ width: `${course.progress}%` }} />
-                    </div>
-                    <ArrowRight className="kr-row-arrow h-4 w-4" />
-                  </Link>
-                ))
-              )}
-            </div>
-
-            <div className="kr-section-heading kr-reveal">
-              <div>
-                <p className="kr-section-kicker">Quality</p>
-                <h2>Lesson review queue</h2>
-                <span>Lessons awaiting your approval</span>
-              </div>
-              <Link to="/teacher/lessons">View all</Link>
-            </div>
-
-            <div className="kr-review-list kr-reveal">
-              {data.lessonReview.length === 0 ? (
-                <div className="kr-review-row">
-                  <div>
-                    <strong>No lessons waiting</strong>
-                    <span>Your lesson review queue is clear.</span>
                   </div>
-                  <StatusBadge variant="success">Clear</StatusBadge>
-                  <small>Live data</small>
-                  <Eye className="h-4 w-4" />
+                ) : (
+                  data.courses.map((course: TeacherDashboardCourse) => (
+                    <Link
+                      key={course.id}
+                      to="/teacher/courses/$courseId"
+                      params={{ courseId: course.id }}
+                      className="kr-ledger-row"
+                    >
+                      <div className="kr-ledger-title">
+                        <BookOpen className="h-4 w-4" />
+                        <div>
+                          <strong>{course.title}</strong>
+                          <span>{course.institution}</span>
+                        </div>
+                      </div>
+                      <div className="kr-ledger-stats">
+                        {course.stats.map((stat) => (
+                          <span key={stat.label}>
+                            <small>{stat.label}</small>
+                            {stat.value}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="kr-progress-line" aria-label={`${course.progress}% complete`}>
+                        <span style={{ width: `${course.progress}%` }} />
+                      </div>
+                      <ArrowRight className="kr-row-arrow h-4 w-4" />
+                    </Link>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Quality / Review Queue Card */}
+            <div className="kr-card kr-reveal">
+              <div className="kr-card-header flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                <div>
+                  <span className="text-xs uppercase tracking-wider font-extrabold text-red-700">Quality</span>
+                  <h2 className="text-lg font-bold text-gray-900 mt-1">Lesson review queue</h2>
+                  <p className="text-xs text-gray-500 mt-1">Lessons awaiting your approval</p>
                 </div>
-              ) : (
-                data.lessonReview.map((lesson: TeacherDashboardLesson) => (
-                  <Link
-                    key={lesson.id}
-                    to="/teacher/lessons/$lessonId"
-                    params={{ lessonId: lesson.id }}
-                    className="kr-review-row"
-                  >
+                <Link to="/teacher/lessons" className="text-sm font-semibold text-red-700 hover:text-red-900">View all</Link>
+              </div>
+
+              <div className="kr-review-list">
+                {data.lessonReview.length === 0 ? (
+                  <div className="kr-review-row">
                     <div>
-                      <strong>{lesson.title}</strong>
-                      <span>{lesson.course}</span>
+                      <strong>No lessons waiting</strong>
+                      <span>Your lesson review queue is clear.</span>
                     </div>
-                    <StatusBadge variant={lessonBadgeVariant(lesson.status)}>
-                      {lesson.description}
-                    </StatusBadge>
-                    <small>{lesson.description}</small>
+                    <StatusBadge variant="success">Clear</StatusBadge>
+                    <small>Live data</small>
                     <Eye className="h-4 w-4" />
-                  </Link>
-                ))
-              )}
+                  </div>
+                ) : (
+                  data.lessonReview.map((lesson: TeacherDashboardLesson) => (
+                    <Link
+                      key={lesson.id}
+                      to="/teacher/lessons/$lessonId"
+                      params={{ lessonId: lesson.id }}
+                      className="kr-review-row"
+                    >
+                      <div>
+                        <strong>{lesson.title}</strong>
+                        <span>{lesson.course}</span>
+                      </div>
+                      <StatusBadge variant={lessonBadgeVariant(lesson.status)}>
+                        {lesson.description}
+                      </StatusBadge>
+                      <small>{lesson.description}</small>
+                      <Eye className="h-4 w-4" />
+                    </Link>
+                  ))
+                )}
+              </div>
             </div>
           </div>
 
-          <aside className="kr-open-column">
-            <div className="kr-section-heading kr-reveal">
-              <div>
-                <p className="kr-section-kicker">Schedule</p>
-                <h2>{copy.scheduleTitle}</h2>
-              </div>
-              <Link to="/teacher/sessions">View all</Link>
-            </div>
-
-            <div className="kr-timeline kr-reveal">
-              {data.upcomingSessions.length === 0 ? (
-                <div className="kr-timeline-row">
-                  <span className="kr-timeline-pin" />
-                  <div>
-                    <small>Nothing scheduled</small>
-                    <strong>No upcoming sessions</strong>
-                    <span>Start one from your lessons or sessions page.</span>
-                  </div>
-                  <em>0</em>
-                </div>
-              ) : (
-                data.upcomingSessions.map((session: TeacherDashboardSession) => (
-                  <Link
-                    key={session.id}
-                    to="/teacher/sessions/$sessionId"
-                    params={{ sessionId: session.id }}
-                    className="kr-timeline-row"
-                  >
-                    <span className="kr-timeline-pin" />
-                    <div>
-                      <small>{formatScheduleTime(session.time)}</small>
-                      <strong>{session.title}</strong>
-                      <span>{session.course}</span>
-                    </div>
-                    <em>{session.participantCount}</em>
-                  </Link>
-                ))
-              )}
-            </div>
-
-            <div className="kr-live-panel kr-reveal">
-              <div>
-                <span className="kr-section-kicker">Live now</span>
-                <strong>{data.live.onlineStudents}</strong>
-                <p>Students online in your courses</p>
-              </div>
-              <div className="kr-live-gauge">
-                <Gauge className="h-5 w-5" />
-                <span>+{data.live.activeThisHour} this hour</span>
-              </div>
-            </div>
-
-            <div className="kr-activity-stream kr-reveal">
-              <div className="kr-section-heading">
+          <aside className="kr-open-column gap-6">
+            {/* Schedule Card */}
+            <div className="kr-card kr-reveal">
+              <div className="kr-card-header flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
                 <div>
-                  <p className="kr-section-kicker">Activity</p>
-                  <h2>Recent movement</h2>
+                  <span className="text-xs uppercase tracking-wider font-extrabold text-red-700">Schedule</span>
+                  <h2 className="text-lg font-bold text-gray-900 mt-1">{copy.scheduleTitle}</h2>
+                </div>
+                <Link to="/teacher/sessions" className="text-sm font-semibold text-red-700 hover:text-red-900">View all</Link>
+              </div>
+
+              <div className="kr-timeline">
+                {data.upcomingSessions.length === 0 ? (
+                  <div className="py-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                    <p className="text-sm font-bold text-gray-600">Nothing scheduled</p>
+                    <p className="text-xs text-gray-500 mt-1">No upcoming sessions. Start one from your lessons or sessions page.</p>
+                  </div>
+                ) : (
+                  data.upcomingSessions.map((session: TeacherDashboardSession) => (
+                    <Link
+                      key={session.id}
+                      to="/teacher/sessions/$sessionId"
+                      params={{ sessionId: session.id }}
+                      className="kr-timeline-row flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 px-2 rounded-lg transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="kr-timeline-pin shrink-0" />
+                        <div>
+                          <small className="text-xs text-red-700 font-extrabold">{formatScheduleTime(session.time)}</small>
+                          <strong className="block text-sm font-bold text-gray-900">{session.title}</strong>
+                          <span className="text-xs text-gray-500">{session.course}</span>
+                        </div>
+                      </div>
+                      <em className="text-xs font-black bg-gray-100 px-2 py-1 rounded text-gray-700">{session.participantCount}</em>
+                    </Link>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Live Card */}
+            <div className="kr-card kr-reveal">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs uppercase tracking-wider font-extrabold text-red-700">Live now</span>
+                  <strong className="block text-4xl font-extrabold text-gray-900 mt-2">{data.live.onlineStudents}</strong>
+                  <p className="text-xs text-gray-600 mt-1">Students online in your courses</p>
+                </div>
+                <div className="kr-live-gauge bg-red-50 p-3 rounded-xl border border-red-100 flex flex-col items-center justify-center">
+                  <Gauge className="h-6 w-6 text-red-700" />
+                  <span className="text-[10px] font-black text-red-700 mt-1">+{data.live.activeThisHour} this hour</span>
                 </div>
               </div>
-              {data.activity.length === 0 ? (
-                <div className="kr-activity-row">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <div>
-                    <strong>No recent activity</strong>
-                    <span>Learner questions and classroom events will appear here.</span>
-                    <small>Live data</small>
-                  </div>
+            </div>
+
+            {/* Activity Card */}
+            <div className="kr-card kr-reveal">
+              <div className="kr-card-header flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                <div>
+                  <span className="text-xs uppercase tracking-wider font-extrabold text-red-700">Activity</span>
+                  <h2 className="text-lg font-bold text-gray-900 mt-1">Recent movement</h2>
                 </div>
-              ) : (
-                data.activity.map((item) => (
-                  <div key={item.id} className="kr-activity-row">
-                    <CheckCircle2 className="h-4 w-4" />
-                    <div>
-                      <strong>{item.action}</strong>
-                      <span>{item.description}</span>
-                      <small>{timeAgo(item.timestamp)}</small>
-                    </div>
+              </div>
+
+              <div className="kr-activity-stream">
+                {data.activity.length === 0 ? (
+                  <div className="py-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                    <p className="text-sm font-bold text-gray-600">No recent activity</p>
+                    <p className="text-xs text-gray-500 mt-1">Learner questions and classroom events will appear here.</p>
+                    <small className="block text-[10px] text-gray-400 mt-3 uppercase tracking-wider font-extrabold">Live data</small>
                   </div>
-                ))
-              )}
+                ) : (
+                  data.activity.map((item) => (
+                    <div key={item.id} className="flex items-start gap-3 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 px-2 rounded-lg transition-colors">
+                      <CheckCircle2 className="h-5 w-5 text-red-700 mt-0.5 shrink-0" />
+                      <div>
+                        <strong className="block text-sm font-bold text-gray-900">{item.action}</strong>
+                        <span className="text-xs text-gray-600">{item.description}</span>
+                        <small className="block text-[10px] text-gray-400 mt-1">{timeAgo(item.timestamp)}</small>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </aside>
         </section>

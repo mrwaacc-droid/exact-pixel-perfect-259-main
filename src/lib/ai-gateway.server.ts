@@ -3,18 +3,6 @@ import { generateObject } from "ai";
 import type { z } from "zod";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Legacy provider (backward-compatible — autonomous-teaching-engine uses this)
-// ─────────────────────────────────────────────────────────────────────────────
-
-export function createLovableAiGatewayProvider(apiKey: string) {
-  return createOpenAICompatible({
-    name: "lovable",
-    baseURL: "https://ai.gateway.lovable.dev/v1",
-    headers: { "Lovable-API-Key": apiKey },
-  });
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Resilient provider registry — ordered failover across multiple AI providers
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -37,6 +25,9 @@ const PER_PROVIDER_TIMEOUT_MS = 12_000;
 function buildProviderChain(): ProviderEntry[] {
   const providers: ProviderEntry[] = [];
 
+  // Allowed OpenAI models only: gpt-4o-mini, gpt-5-nano, gpt-4.1-nano.
+  // gpt-4o-mini handles the heavier/quality-sensitive purposes; gpt-5-nano
+  // covers fast interactive turns; gpt-4.1-nano handles cheap classification.
   const openaiKey = process.env.OPENAI_API_KEY;
   if (openaiKey) {
     providers.push({
@@ -44,34 +35,35 @@ function buildProviderChain(): ProviderEntry[] {
       caller: createOpenAICompatible({
         name: "openai",
         baseURL: "https://api.openai.com/v1",
-        headers: { Authorization: `Bearer ${openaiKey}` },
+        apiKey: openaiKey,
       }),
       modelMap: {
         teacher_answer: "gpt-4o-mini",
-        teacher_turn: "gpt-4o-mini",
+        teacher_turn: "gpt-5-nano",
         lesson_gen: "gpt-4o-mini",
-        sentiment: "gpt-4o-mini",
-        adaptive_intervention: "gpt-4o-mini",
+        sentiment: "gpt-4.1-nano",
+        adaptive_intervention: "gpt-5-nano",
       },
       priority: 0,
     });
   }
 
+  // DeepSeek always uses deepseek-v4-flash — the only model in use for now.
   const deepseekKey = process.env.DEEPSEEK_API_KEY;
   if (deepseekKey) {
     providers.push({
       name: "deepseek",
       caller: createOpenAICompatible({
         name: "deepseek",
-        baseURL: "https://api.deepseek.ai/v1",
-        headers: { "Deepseek-API-Key": deepseekKey },
+        baseURL: "https://api.deepseek.com/v1",
+        apiKey: deepseekKey,
       }),
       modelMap: {
-        teacher_answer: "deepseek/teacher-1",
-        teacher_turn: "deepseek/teacher-1",
-        lesson_gen: "deepseek/lesson-gen-1",
-        sentiment: "deepseek/teacher-1",
-        adaptive_intervention: "deepseek/teacher-1",
+        teacher_answer: "deepseek-v4-flash",
+        teacher_turn: "deepseek-v4-flash",
+        lesson_gen: "deepseek-v4-flash",
+        sentiment: "deepseek-v4-flash",
+        adaptive_intervention: "deepseek-v4-flash",
       },
       // DeepSeek is secondary to OpenAI if both keys are present, primary
       // otherwise (mirrors the original ternary logic).

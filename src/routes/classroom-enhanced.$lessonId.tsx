@@ -219,7 +219,7 @@ function ClassroomLesson() {
             <button
               onClick={() => setShowCaptions(!showCaptions)}
               className={`p-2 rounded-lg ${
-                showCaptions ? "bg-[#d1eceb] text-[#1F7C80]" : "hover:bg-gray-100 text-gray-600"
+                showCaptions ? "bg-crimson-soft text-crimson" : "hover:bg-gray-100 text-gray-600"
               }`}
               title="Toggle captions"
             >
@@ -236,7 +236,7 @@ function ClassroomLesson() {
               <h1 className="text-2xl font-bold text-gray-900 mb-2">Meet Mr. Klass</h1>
               <p className="text-gray-600">
                 Your AI teacher is ready to help you master{" "}
-                <span className="font-semibold text-[#1F7C80]">
+                <span className="font-semibold text-crimson">
                   {classroomContext.lesson.title}
                 </span>
               </p>
@@ -247,7 +247,7 @@ function ClassroomLesson() {
               <div className="space-y-2 text-sm text-gray-600">
                 {classroomContext.lesson.steps.slice(0, 4).map((step, index) => (
                   <div key={step.key} className="flex items-start gap-2">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#d1eceb] text-[#1F7C80] flex items-center justify-center text-xs font-semibold">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-crimson-soft text-crimson flex items-center justify-center text-xs font-semibold">
                       {index + 1}
                     </span>
                     <span>{step.title}</span>
@@ -260,7 +260,7 @@ function ClassroomLesson() {
               <button
                 onClick={startLesson}
                 disabled={isLoading}
-                className="flex-1 flex items-center justify-center gap-2 bg-[#1F7C80] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#1A5256] transition-colors disabled:opacity-50"
+                className="flex-1 flex items-center justify-center gap-2 bg-crimson text-white py-3 px-6 rounded-lg font-semibold hover:bg-crimson-dark transition-colors disabled:opacity-50"
               >
                 {isLoading ? (
                   <>
@@ -319,7 +319,7 @@ function ClassroomLesson() {
           <button
             onClick={() => setShowCaptions(!showCaptions)}
             className={`p-2 rounded-lg ${
-              showCaptions ? "bg-[#d1eceb] text-[#1F7C80]" : "hover:bg-gray-100 text-gray-600"
+              showCaptions ? "bg-crimson-soft text-crimson" : "hover:bg-gray-100 text-gray-600"
             }`}
             title="Toggle captions"
           >

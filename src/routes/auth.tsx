@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
+import { AuthBrandRail } from "@/components/auth/AuthBrandRail";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,35 +64,35 @@ const DEMO_ROLES: Array<{
     label: "Student",
     description: "Enter classrooms, take lessons, track progress",
     icon: GraduationCap,
-    color: "bg-[#10233f]",
+    color: "bg-[var(--ink)]",
   },
   {
     role: "teacher",
     label: "Teacher",
     description: "Manage courses, create lessons, monitor students",
     icon: School,
-    color: "bg-[#10233f]",
+    color: "bg-[var(--ink)]",
   },
   {
     role: "institution_admin",
     label: "Institution Admin",
     description: "Manage programmes, teachers, students, billing",
     icon: Building2,
-    color: "bg-[#7C3AED]",
+    color: "bg-[var(--crimson-dark)]",
   },
   {
     role: "platform_admin",
     label: "Platform Admin",
     description: "Full platform control, institutions, AI settings",
     icon: Shield,
-    color: "bg-[#DC2626]",
+    color: "bg-[var(--crimson)]",
   },
   {
     role: "parent",
     label: "Parent",
     description: "Monitor learner progress, sessions, reports",
     icon: Users,
-    color: "bg-[#F59E0B]",
+    color: "bg-[var(--ink)]",
   },
 ];
 
@@ -185,73 +186,23 @@ function AuthPage() {
 
   return (
     <div className="auth-tech-page grid min-h-screen lg:grid-cols-2">
-      {/* Left panel — branding */}
-      <div className="auth-tech-brand relative hidden flex-col justify-between overflow-hidden p-12 text-white lg:flex">
-        <img
-          src="/images/auth-side.png"
-          alt="Students learning together with Klassruum"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = "none";
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(3,7,18,0.94) 0%, rgba(7,17,31,0.9) 55%, rgba(16,35,63,0.82) 100%)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3"
-          style={{ background: "linear-gradient(to top, rgba(10,24,38,0.88), transparent)" }}
-        />
-
-        <Link to="/" className="relative z-10 flex items-center">
-          <Logo size={40} variant="light" />
-        </Link>
-        <div className="relative z-10">
-          <h2 className="max-w-md text-4xl font-extrabold leading-[1.08] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
-            Virtual classrooms for every learner.
-          </h2>
-          <p className="mt-5 max-w-md text-base leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
-            AI-powered lessons that speak, write, explain, and adapt to each student's needs. Sign
-            in to manage your institution, classrooms, and resources.
-          </p>
-          <div className="mt-10 flex items-center gap-8">
-            <div>
-              <p className="text-3xl font-extrabold">10k+</p>
-              <p className="mt-0.5 text-xs font-semibold text-white/85">Active Learners</p>
-            </div>
-            <div className="h-10 w-px bg-white/25" />
-            <div>
-              <p className="text-3xl font-extrabold">500+</p>
-              <p className="mt-0.5 text-xs font-semibold text-white/85">Institutions</p>
-            </div>
-            <div className="h-10 w-px bg-white/25" />
-            <div>
-              <p className="text-3xl font-extrabold">98%</p>
-              <p className="mt-0.5 text-xs font-semibold text-white/85">Satisfaction</p>
-            </div>
-          </div>
-        </div>
-        <p className="relative z-10 text-xs text-white/60">
-          © {new Date().getFullYear()} Klassruum. Built for every learner.
-        </p>
-      </div>
-
+      <AuthBrandRail
+        eyebrow="AI classroom"
+        title="A classroom that explains, checks, and adapts."
+        body="Sign in to run lessons with teacher voice, live board work, captions, learner support, and institution controls in one focused space."
+      />
       {/* Right panel — auth form */}
-      <div className="flex items-center justify-center p-6 sm:p-8">
-        <div className="auth-tech-panel w-full max-w-md p-6 sm:p-8">
+      <div className="flex items-center justify-center px-4 sm:px-6 py-8 sm:p-8">
+        <div className="auth-tech-panel w-full max-w-md p-5 sm:p-8">
           <Link to="/" className="mb-8 flex items-center">
-            <Logo size={38} />
+            <Logo size={34} />
           </Link>
 
           {/* ── Demo mode banner ──────────────────────────────────────── */}
           {!supabaseReady && demoModeAllowed && (
             <div className="mb-6 rounded-xl border border-border bg-soft-blue p-4">
               <p className="text-sm font-semibold text-heading">Demo Mode</p>
-              <p className="mt-1 text-xs text-[#475569]">
+              <p className="mt-1 text-xs text-[var(--muted)]">
                 Supabase is not configured. Pick a role below to explore the full app with demo
                 data.
               </p>
@@ -369,7 +320,7 @@ function AuthPage() {
                       return result.redirectTo;
                     })
                   }
-                  className="mt-3 flex w-full items-center justify-center gap-2.5 rounded-xl border border-[#E2E8F0] bg-white px-4 py-3 text-sm font-medium text-[#1A3233] transition-all hover:bg-[#f8fafb] hover:border-[#A3ADAD]"
+                  className="mt-3 flex w-full items-center justify-center gap-2.5 border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-[var(--ink)] transition-all hover:bg-[var(--page-background-alt)] hover:border-[var(--border-strong)]"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path

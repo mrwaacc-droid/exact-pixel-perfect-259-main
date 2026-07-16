@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { AIVideoClassroom } from "@/components/classroom/AIVideoClassroom";
 import { loadClassroomLesson } from "@/lib/classroom-lesson.functions";
 import { DEMO_LESSON_LIST, getDemoLessonContent } from "@/lib/demo-lessons/demo-lesson-registry";
+import { buildKingpinGrade9MathematicsClassroomContent } from "@/lib/kingpin-grade9-mathematics-classroom";
 import { startLearnerSession, endSession } from "@/lib/live-sessions.functions";
 import type { ClassroomLessonContent } from "@/lib/classroom-content";
 import { requireClientAuthRoute } from "@/lib/route-guards";
@@ -62,7 +63,9 @@ function Classroom() {
   // render. This avoids direct demo URLs showing only "Preparing your classroom"
   // during SSR and gives the page indexable, useful content immediately.
   const initialDemoContent = !UUID_RE.test(lessonId)
-    ? (getDemoLessonContent(lessonId) ?? getDemoLessonContent("demo"))
+    ? (buildKingpinGrade9MathematicsClassroomContent(lessonId) ??
+      getDemoLessonContent(lessonId) ??
+      getDemoLessonContent("demo"))
     : null;
 
   const [content, setContent] = useState<ClassroomLessonContent | null>(() => initialDemoContent);
@@ -76,7 +79,8 @@ function Classroom() {
 
     // ── Demo lesson (non-UUID ID) ─────────────────────────────────────
     if (!UUID_RE.test(lessonId)) {
-      const demoContent = getDemoLessonContent(lessonId);
+      const codeContent = buildKingpinGrade9MathematicsClassroomContent(lessonId);
+      const demoContent = codeContent ?? getDemoLessonContent(lessonId);
       if (demoContent) {
         setContent(demoContent);
         setStatus("ready");
@@ -123,7 +127,7 @@ function Classroom() {
 
   function leaveClassroom() {
     if (sessionId) {
-      endSession({ data: { session_id: sessionId } }).catch(() => {});
+      endSession({ data: { session_id: sessionId } }).catch(() => { });
     }
     navigate({ to: UUID_RE.test(lessonId) ? "/student/dashboard" : "/demo/classroom" });
   }

@@ -72,8 +72,8 @@ function ProgressDashboard({ data }: { data: Awaited<ReturnType<typeof getMyProg
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard icon={TrendingUp} label="Avg. Progress" value={`${avgProgress}%`} color="text-primary" />
-        <StatCard icon={Trophy} label="Quiz Score" value={`${avgQuizScore}%`} color="text-emerald-600" />
-        <StatCard icon={CheckCircle2} label="Lessons Done" value={totalLessonsCompleted} color="text-[#1F7C80]" />
+        <StatCard icon={Trophy} label="Quiz Score" value={`${avgQuizScore}%`} color="text-success" />
+        <StatCard icon={CheckCircle2} label="Lessons Done" value={totalLessonsCompleted} color="text-[var(--crimson)]" />
         <StatCard
           icon={Clock}
           label="Time Spent"
@@ -151,11 +151,11 @@ function ProgressDashboard({ data }: { data: Awaited<ReturnType<typeof getMyProg
                     </div>
                     <div className="grid grid-cols-3 gap-2 text-center">
                       <div>
-                        <div className="text-lg font-bold text-[#1F7C80]">{inProgress}</div>
+                        <div className="text-lg font-bold text-[var(--crimson)]">{inProgress}</div>
                         <div className="text-[10px] uppercase text-muted-foreground">In Progress</div>
                       </div>
                       <div>
-                        <div className="text-lg font-bold text-emerald-600">{completed}</div>
+                        <div className="text-lg font-bold text-success">{completed}</div>
                         <div className="text-[10px] uppercase text-muted-foreground">Completed</div>
                       </div>
                       <div>
@@ -177,7 +177,7 @@ function ProgressDashboard({ data }: { data: Awaited<ReturnType<typeof getMyProg
                               {new Date(qr.completed_at).toLocaleDateString()}
                             </span>
                             <span
-                              className={`font-medium ${qr.percentage >= 70 ? "text-emerald-600" : qr.percentage >= 40 ? "text-yellow-600" : "text-destructive"}`}
+                              className={`font-medium ${qr.percentage >= 70 ? "text-success" : qr.percentage >= 40 ? "text-yellow-600" : "text-destructive"}`}
                             >
                               {qr.percentage}% ({qr.score} pts)
                             </span>

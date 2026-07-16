@@ -37,7 +37,7 @@ export const DEMO_DASHBOARD_DATA: DashboardData = {
       description: "Master algebraic equations, inequalities, and functions",
       totalLessons: 15,
       completedLessons: 11,
-      color: "#2563eb",
+      color: "#7D2233",
       thumbnail: "📐",
     },
     {
@@ -585,7 +585,7 @@ export const DEMO_CALENDAR_EVENTS: CalendarEvent[] = [
 ];
 
 export const DEMO_PROGRESS_CHART: ProgressChartData[] = [
-  { subject: "Mathematics", percentage: 72, color: "#2563eb" },
+  { subject: "Mathematics", percentage: 72, color: "#7D2233" },
   { subject: "Science", percentage: 60, color: "#16a34a" },
   { subject: "History", percentage: 45, color: "#7c3aed" },
   { subject: "English", percentage: 30, color: "#ea580c" },

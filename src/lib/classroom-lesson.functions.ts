@@ -108,7 +108,7 @@ export const loadClassroomLesson = createServerFn({ method: "GET" })
       .from("lessons")
       .select(
         "id, title, objective, course_id, institution_id, duration_minutes, estimated_duration_minutes, minimum_duration_minutes, lesson_data_json, " +
-          "courses(title, subject, level, institutions(name))",
+        "courses(title, subject, level, institutions(name))",
       )
       .eq("id", data.lesson_id)
       .single();
@@ -118,11 +118,11 @@ export const loadClassroomLesson = createServerFn({ method: "GET" })
     const courseRel = lesson.courses;
     const course = (Array.isArray(courseRel) ? courseRel[0] : courseRel) as
       | {
-          title?: string;
-          subject?: string;
-          level?: string;
-          institutions?: { name?: string } | { name?: string }[];
-        }
+        title?: string;
+        subject?: string;
+        level?: string;
+        institutions?: { name?: string } | { name?: string }[];
+      }
       | undefined;
     const instRel = course?.institutions;
     const institution = Array.isArray(instRel) ? instRel[0] : instRel;
@@ -154,8 +154,8 @@ export const loadClassroomLesson = createServerFn({ method: "GET" })
       .from("teaching_items")
       .select(
         "id, section_id, order_index, type, board_text, exact_spoken_text, " +
-          "teacher_explanation, learner_notes, accessible_description, " +
-          "why_this_matters, common_mistake, writing_speed, image_url, image_alt, source_material_id",
+        "teacher_explanation, learner_notes, accessible_description, " +
+        "why_this_matters, common_mistake, writing_speed, image_url, image_alt, source_material_id",
       )
       .eq("lesson_id", data.lesson_id)
       .order("order_index", { ascending: true });
@@ -199,18 +199,18 @@ export const loadClassroomLesson = createServerFn({ method: "GET" })
           visualCue:
             it.image_url || it.image_alt
               ? {
-                  kind: disciplineType === "business_software" ? "screenshot" : "illustration",
-                  title: it.image_alt || board,
-                  description:
-                    it.accessible_description ||
-                    it.teacher_explanation ||
-                    `Visual support for ${board}`,
-                  imageUrl: it.image_url || undefined,
-                  imageAlt: it.image_alt || it.accessible_description || board,
-                  teacherCue:
-                    it.image_alt ||
-                    "Pause on this visual and connect it to the current board item before continuing.",
-                }
+                kind: disciplineType === "business_software" ? "screenshot" : "illustration",
+                title: it.image_alt || board,
+                description:
+                  it.accessible_description ||
+                  it.teacher_explanation ||
+                  `Visual support for ${board}`,
+                imageUrl: it.image_url || undefined,
+                imageAlt: it.image_alt || it.accessible_description || board,
+                teacherCue:
+                  it.image_alt ||
+                  "Pause on this visual and connect it to the current board item before continuing.",
+              }
               : undefined,
           writingSpeed: (it.writing_speed as MathTeachingItem["writingSpeed"]) || "normal",
         });
@@ -293,10 +293,10 @@ export const loadClassroomLesson = createServerFn({ method: "GET" })
       teacher: { name: "Ms. Ada", image: "/images/teachers/woman.png", voice: "female" },
       openingNarrative:
         lesson.objective ||
-        `Welcome. Today's lesson is "${title}". Let's work through it together, step by step.`,
+        `Welcome. Today's lesson is "${title}". I'll show you the idea clearly, then we'll work through it together step by step.`,
       lessonGoal: lesson.objective || `Understand and apply the key ideas in "${title}".`,
       whyItMatters:
-        "Each step builds on the last — follow along and ask whenever something is unclear.",
+        "Each step builds on the last, so don't worry about speed. Pay attention to why each move works, and stop me when something feels off.",
       prerequisiteReview: undefined,
       sequence,
       sectionGoals: { ...DEFAULT_SECTION_GOALS, ...sectionGoals },
@@ -321,14 +321,14 @@ export const loadClassroomLesson = createServerFn({ method: "GET" })
 
 /** Fallback per-section goal banners when a lesson section has no title. */
 const DEFAULT_SECTION_GOALS: Record<string, string> = {
-  welcome: "Understand what today's lesson will achieve.",
-  concept: "Learn the core idea of this lesson.",
-  worked_example: "Follow each step of the worked example.",
-  guided_practice: "Solve a problem together with the teacher.",
-  independent_practice: "Solve a problem on your own.",
-  summary: "Review the full method from start to finish.",
-  exit_ticket: "Show what you learned with one final check.",
-  complete: "Lesson complete — review your notes and progress.",
+  welcome: "Get clear on what we're learning and what to watch for.",
+  concept: "Understand the main idea before trying to use it.",
+  worked_example: "Follow the method carefully and notice why each step works.",
+  guided_practice: "Try the method with support while the idea is still fresh.",
+  independent_practice: "Carry the method on your own without rushing.",
+  summary: "Pull the lesson together and keep the main pattern in mind.",
+  exit_ticket: "Show what you've understood with one final check.",
+  complete: "Lesson complete — review the parts that still need practice.",
 };
 
 const DEFAULT_CONFIDENCE_OPTIONS: ClassroomLessonContent["confidenceOptions"] = [

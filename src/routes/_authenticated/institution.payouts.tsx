@@ -34,7 +34,7 @@ const STATUS_STYLES: Record<string, string> = {
   processing: "bg-blue-50 text-blue-700",
   paid: "bg-emerald-50 text-emerald-700",
   failed: "bg-red-50 text-red-700",
-  cancelled: "bg-slate-100 text-slate-500",
+  cancelled: "bg-gray-100 text-gray-500",
 };
 
 function InstitutionPayoutsPage() {
@@ -97,8 +97,8 @@ function InstitutionPayoutsPage() {
                 <Clock className="h-6 w-6 text-amber-600" />
               </div>
               <div>
-                <p className="text-xs font-semibold text-[#61758A]">Pending Payouts</p>
-                <p className="text-xl font-black text-[#132033]">
+                <p className="text-xs font-semibold text-[#6B7280]">Pending Payouts</p>
+                <p className="text-xl font-black text-[#221C1D]">
                   {fmtMoney(totalPending)}
                 </p>
               </div>
@@ -110,8 +110,8 @@ function InstitutionPayoutsPage() {
                 <BadgeCheck className="h-6 w-6 text-emerald-600" />
               </div>
               <div>
-                <p className="text-xs font-semibold text-[#61758A]">Total Paid</p>
-                <p className="text-xl font-black text-[#132033]">
+                <p className="text-xs font-semibold text-[#6B7280]">Total Paid</p>
+                <p className="text-xl font-black text-[#221C1D]">
                   {fmtMoney(totalPaid)}
                 </p>
               </div>
@@ -128,8 +128,8 @@ function InstitutionPayoutsPage() {
                 onClick={() => setStatusFilter(s)}
                 className={`rounded-full px-3 py-1.5 text-xs font-bold capitalize transition ${
                   statusFilter === s
-                    ? "bg-[#1F7C80] text-white"
-                    : "bg-white text-[#61758A] hover:bg-[#EAF8F7]"
+                    ? "bg-[var(--crimson)] text-white"
+                    : "bg-white text-[#6B7280] hover:bg-[#EAF8F7]"
                 }`}
               >
                 {s}
@@ -137,7 +137,7 @@ function InstitutionPayoutsPage() {
             ))}
           </div>
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9CA3AF]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -159,7 +159,7 @@ function InstitutionPayoutsPage() {
         {/* Loading */}
         {query.isLoading && (
           <div className="flex justify-center py-16">
-            <Loader2 className="h-8 w-8 animate-spin text-[#1F7C80]" />
+            <Loader2 className="h-8 w-8 animate-spin text-[var(--crimson)]" />
           </div>
         )}
 
@@ -168,10 +168,10 @@ function InstitutionPayoutsPage() {
           <Card>
             <CardContent className="p-12 text-center">
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF8F7]">
-                <Wallet className="h-7 w-7 text-[#1F7C80]" />
+                <Wallet className="h-7 w-7 text-[var(--crimson)]" />
               </div>
-              <h3 className="text-lg font-black text-[#132033]">No {statusFilter} payouts</h3>
-              <p className="mx-auto mt-2 max-w-sm text-sm text-[#61758A]">
+              <h3 className="text-lg font-black text-[#221C1D]">No {statusFilter} payouts</h3>
+              <p className="mx-auto mt-2 max-w-sm text-sm text-[#6B7280]">
                 When teachers complete sessions, their payouts will appear here.
               </p>
             </CardContent>
@@ -185,7 +185,7 @@ function InstitutionPayoutsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-[#E2E8F0] bg-[#F8FAFC] text-left text-xs font-bold uppercase text-[#61758A]">
+                    <tr className="border-b border-[#E5E7EB] bg-[#FBF8F5] text-left text-xs font-bold uppercase text-[#6B7280]">
                       <th className="px-5 py-3">Teacher</th>
                       <th className="px-5 py-3">Amount</th>
                       <th className="px-5 py-3">Sessions</th>
@@ -196,24 +196,24 @@ function InstitutionPayoutsPage() {
                   </thead>
                   <tbody>
                     {filtered.map((payout: any) => (
-                      <tr key={payout.id} className="border-b border-[#F1F5F9] last:border-0">
-                        <td className="px-5 py-4 font-mono text-xs text-[#476277]">
+                      <tr key={payout.id} className="border-b border-[#F3F0ED] last:border-0">
+                        <td className="px-5 py-4 font-mono text-xs text-[#4B5563]">
                           {payout.teacher_id?.slice(0, 8)}…
                         </td>
-                        <td className="px-5 py-4 font-bold text-[#132033]">
+                        <td className="px-5 py-4 font-bold text-[#221C1D]">
                           {fmtMoney(payout.amount_cents, payout.currency)}
                         </td>
-                        <td className="px-5 py-4 text-[#61758A]">{payout.session_count}</td>
+                        <td className="px-5 py-4 text-[#6B7280]">{payout.session_count}</td>
                         <td className="px-5 py-4">
                           <span
                             className={`inline-block rounded-full px-2.5 py-1 text-[10px] font-bold uppercase ${
-                              STATUS_STYLES[payout.status] ?? "bg-slate-100 text-slate-500"
+                              STATUS_STYLES[payout.status] ?? "bg-gray-100 text-gray-500"
                             }`}
                           >
                             {payout.status}
                           </span>
                         </td>
-                        <td className="px-5 py-4 text-xs text-[#61758A]">
+                        <td className="px-5 py-4 text-xs text-[#6B7280]">
                           {payout.paid_at
                             ? new Date(payout.paid_at).toLocaleDateString()
                             : new Date(payout.created_at).toLocaleDateString()}
@@ -222,7 +222,7 @@ function InstitutionPayoutsPage() {
                           {payout.status === "pending" || payout.status === "processing" ? (
                             <Button
                               size="sm"
-                              className="bg-[#1F7C80] hover:bg-[#1A5256]"
+                              className="bg-[var(--crimson)] hover:bg-[var(--crimson-dark)]"
                               disabled={markingId === payout.id}
                               onClick={() => markPaid.mutate(payout.id)}
                             >
@@ -234,7 +234,7 @@ function InstitutionPayoutsPage() {
                               Mark Paid
                             </Button>
                           ) : (
-                            <span className="text-xs text-[#94A3B8]">—</span>
+                            <span className="text-xs text-[#9CA3AF]">—</span>
                           )}
                         </td>
                       </tr>

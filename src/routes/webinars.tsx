@@ -37,9 +37,9 @@ export const Route = createFileRoute("/webinars")({
         },
       ]}
     >
-      <div className="rounded-2xl border border-dashed border-[#CBD5E1] bg-[#F8FAFC] p-8 text-center">
-        <p className="text-sm font-medium text-[#475569]">No sessions are scheduled just yet.</p>
-        <p className="mt-1 text-sm text-[#64748B]">
+      <div className="rounded-2xl border border-dashed border-[#D8CCC6] bg-[var(--page-background)] p-8 text-center">
+        <p className="text-sm font-medium text-[var(--muted)]">No sessions are scheduled just yet.</p>
+        <p className="mt-1 text-sm text-[#8A7478]">
           Tell us what you'd like covered and we'll invite you to the next one.
         </p>
       </div>

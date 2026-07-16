@@ -141,16 +141,16 @@ export function MaterialsTabContent({
 
       {/* Generate Lessons CTA */}
       {readyCount > 0 && (
-        <div className="mt-6 p-4 bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg">
+        <div className="mt-6 p-4 bg-[#F7E7EA] border border-[#F7E7EA] rounded-lg">
           <div className="flex items-start justify-between">
             <div>
-              <h4 className="font-semibold text-[#0F172A]">Ready to Generate Lessons</h4>
-              <p className="text-sm text-[#1A5256] mt-1">
+              <h4 className="font-semibold text-[#191314]">Ready to Generate Lessons</h4>
+              <p className="text-sm text-[#521326] mt-1">
                 You have {readyCount} material(s) ready. Generate AI-powered lessons from them.
               </p>
             </div>
             <Button
-              className="ml-3 flex-shrink-0 bg-[#1F7C80] hover:bg-[#1A5256] text-white"
+              className="ml-3 flex-shrink-0 bg-[#7D2233] hover:bg-[#521326] text-white"
               onClick={onGenerateLessons}
             >
               Generate Lessons

@@ -14,18 +14,18 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const TRANSITION_ASIDES: string[] = [
-  "Alright, let's move on to the next part.",
-  "Good. Now watch this next step carefully.",
-  "Now that we've seen that, let's build on it.",
-  "Here's where it gets interesting. Follow along.",
-  "Okay, ready for the next piece? Let's go.",
-  "That's the foundation. Now let's add to it.",
-  "Good progress. Let me show you what comes next.",
-  "Now we're going to put that idea to work.",
-  "Watch closely — this next part connects everything.",
-  "Alright, let's take this a step further.",
-  "Now you'll see how this all fits together.",
-  "Let's keep going — you're doing well.",
+  "Alright, now watch this next step.",
+  "Good. Keep that in mind for this part.",
+  "Now we're ready to build on that.",
+  "Here's the part that ties it together.",
+  "Stay with me here — this next move matters.",
+  "That's the base. Now let's use it.",
+  "Good progress. Here's what comes next.",
+  "Now let's put that idea to work.",
+  "Watch this carefully — this is where the method shows itself.",
+  "Alright, one more step forward.",
+  "Now you can see how the pieces fit.",
+  "Let's keep going. You're with it.",
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -33,18 +33,18 @@ export const TRANSITION_ASIDES: string[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const ENCOURAGEMENT_ASIDES: string[] = [
-  "That's exactly right! You're getting the hang of this.",
-  "Perfect. See how that works?",
-  "Great job. You're thinking like a real mathematician now.",
-  "Exactly! That's the pattern we're looking for.",
-  "Well done. You picked that up quickly.",
-  "That's it! You've got it.",
-  "Nice work. You're building real understanding here.",
-  "Spot on. Let's keep this momentum going.",
-  "Excellent. You're making this look easy.",
-  "That's the right approach. You're learning fast.",
-  "Wonderful. See how practice pays off?",
-  "You nailed it. Let's see if you can do it again.",
+  "Yes — that's right.",
+  "Good. That's the idea.",
+  "Exactly. You saw the pattern there.",
+  "Well done. That step was solid.",
+  "That's it. You've got the right move.",
+  "Nice work. You're not guessing anymore — you're seeing it.",
+  "Spot on. Keep that same thinking.",
+  "Excellent. That was careful and correct.",
+  "That's the right approach. Stay with it.",
+  "Good work. You checked it properly.",
+  "Yes. That's starting to settle in.",
+  "You got it. Try to notice why it worked.",
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -52,12 +52,12 @@ export const ENCOURAGEMENT_ASIDES: string[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const CHECKIN_ASIDES: string[] = [
-  "Are you following so far? Let me know if anything's unclear.",
-  "Take a moment to look at what we've written. Does it make sense?",
-  "How are we doing? Everything clicking so far?",
-  "Pause for a second — can you see the pattern we're building?",
-  "Let me know if you want me to go over anything again.",
-  "Are you with me? We're making good progress.",
+  "Are you still with me?",
+  "Take a second and look at that — does it make sense?",
+  "How are you doing with this part?",
+  "Pause there. Can you see the pattern yet?",
+  "If that last bit felt quick, we can go again.",
+  "Still okay so far?",
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -65,19 +65,19 @@ export const CHECKIN_ASIDES: string[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const REACTION_CONFUSED_ASIDES: string[] = [
-  "I can see this part needs a moment. That's completely normal — let's slow down.",
-  "This is the tricky part. Let me go over it again more carefully.",
-  "No worries at all. This takes time to sink in. Let's look at it once more.",
-  "Take a breath. We'll get through this together.",
-  "This is where most students pause. You're not alone — let's work through it.",
+  "Alright, this is the point where many people get stuck. Let's take it slowly.",
+  "This bit is tricky. I'll show it again more carefully.",
+  "No problem. Let's go back one step and clear it up.",
+  "Take a breath. You don't need to rush this.",
+  "You're not the only one who pauses here. Let's work through it properly.",
 ];
 
 export const REACTION_FRUSTRATED_ASIDES: string[] = [
-  "I know this feels tough right now. But you're closer than you think.",
-  "It's okay to feel stuck. That means you're pushing yourself, and that's good.",
-  "Let's take a different angle. Sometimes looking at it differently helps.",
-  "You're doing better than you realize. Let's keep going — one step at a time.",
-  "Frustration is part of learning. The fact that you're still here means you're strong.",
+  "I know this feels rough right now, but you're not far off.",
+  "It's alright to get stuck here. Let's steady it and sort out the part that's causing trouble.",
+  "Let's come at it from another angle.",
+  "You're doing better than it feels. We'll take it one piece at a time.",
+  "Don't force it. Let's fix the exact step that's wobbling.",
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -86,29 +86,29 @@ export const REACTION_FRUSTRATED_ASIDES: string[] = [
 
 export const PERSONALITY_ASIDES: Record<string, string[]> = {
   mathematics: [
-    "Think of it like a recipe — you need the right ingredients in the right amounts.",
-    "This is one of those beautiful moments in math where everything clicks together.",
-    "Math is like a puzzle. Each piece we add makes the picture clearer.",
-    "You know what I love about this? It's so elegant once you see it.",
-    "Math isn't about memorizing — it's about seeing patterns. And you're starting to see them.",
+    "Think of it like a recipe — the numbers have to work together, not just sit there.",
+    "This is one of those moments where math stops looking random and starts making sense.",
+    "Math gets easier when you notice the pattern instead of trying to memorize everything.",
+    "Once you see why this step works, the rest becomes much less scary.",
+    "This is the kind of detail that separates guessing from understanding.",
   ],
   science: [
-    "This is how the natural world works — it's fascinating once you see the pattern.",
-    "Think about it this way — science is just asking 'why?' and then finding the answer.",
-    "This connects to something you see every day, even if you haven't noticed before.",
-    "Science is like being a detective — you follow the evidence to the answer.",
+    "This is happening in the real world all the time — we're just slowing it down enough to notice it.",
+    "Science usually becomes clearer when you ask one honest question: why is that happening?",
+    "You've seen this before in everyday life, even if nobody named it for you.",
+    "Treat it like evidence. Follow what the atoms, cells, or forces are doing.",
   ],
   technical: [
-    "This is a practical skill you'll use again and again. It's worth mastering.",
-    "Think of this like building with blocks — each piece supports the next.",
-    "In the real world, this is exactly how problems get solved.",
-    "This is one of those skills that separates beginners from experts.",
+    "This is a practical skill, so accuracy matters more than sounding clever.",
+    "Think of this like building something real — each small step has to hold.",
+    "This is how real work gets done: one clear move at a time.",
+    "The people who get good at this usually stop rushing the basics.",
   ],
   social: [
-    "This connects to something we all experience — that's what makes it interesting.",
-    "Think about this from a different perspective. What do you notice?",
-    "This idea has shaped how people think for centuries.",
-    "When you understand this, you start seeing it everywhere.",
+    "This matters because it connects directly to how people live, think, and act.",
+    "Try looking at it from another person's point of view. What changes?",
+    "Ideas like this shape how people explain the world around them.",
+    "Once you understand it, you start noticing it outside class too.",
   ],
 };
 
@@ -118,30 +118,30 @@ export const PERSONALITY_ASIDES: Record<string, string[]> = {
 
 export const BRIDGE_ASIDES: Record<string, string[]> = {
   welcome: [
-    "Now that we've set the stage, let's dive into the actual concept.",
-    "Good — now let's get into the heart of today's lesson.",
+    "Good. Now let's get into the main idea.",
+    "Alright, now we're ready for the actual concept.",
   ],
   concept: [
-    "Now that you understand the concept, let's see it in action.",
-    "Great — you've got the idea. Let me show you how to use it.",
-    "That's the theory. Now let's make it practical.",
+    "Now that you've seen the idea, let's use it.",
+    "Good. Let me show you what it looks like in action.",
+    "That's the idea. Now let's make it practical.",
   ],
   worked_example: [
-    "You've seen how it works. Now let's try it together.",
-    "That example shows the pattern. Let's see if you can apply it.",
-    "Now that we've worked through that, let's practice.",
+    "You've seen it once. Now let's try it together.",
+    "That example showed the pattern. See if you can use it now.",
+    "Good. Now it's time to practise it.",
   ],
   guided_practice: [
-    "You're doing great with guidance. Now let's see you do it on your own.",
-    "Good practice. Now it's your turn — try one independently.",
+    "Good. Now try one without leaning on me too much.",
+    "You've had support. Now it's your turn to carry it.",
   ],
   independent_practice: [
-    "Excellent work. Let me summarize what you've learned today.",
-    "You've proven you can do this. Let's wrap up with a quick review.",
+    "Good work. Let's pull the lesson together.",
+    "You've shown you can do it. Let's finish with a quick review.",
   ],
   summary: [
-    "That's everything for today. Let's do a final check before we finish.",
-    "Great lesson. Let me ask you one last thing before we go.",
+    "That's the lesson. One last check before we finish.",
+    "Good work today. Let me ask you one last thing.",
   ],
 };
 
@@ -160,5 +160,5 @@ export const SECTION_INTRO_PHRASES: Record<string, string[]> = {
   ],
   guided_practice: ["Now let's try one together.", "Your turn to think along with me."],
   independent_practice: ["Now it's all you. Give it a shot.", "Show me what you've learned."],
-  summary: ["Let's回顾 everything we covered.", "Here's a quick summary of what you learned."],
+  summary: ["Let's go back over the main points.", "Here's a quick summary of what you learned."],
 };

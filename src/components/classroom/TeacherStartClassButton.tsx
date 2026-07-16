@@ -76,7 +76,7 @@ export function TeacherStartClassButton({
         onClick={() => void handleStart()}
         disabled={isStarting}
         className={cn(
-          "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#1A5256] disabled:cursor-wait disabled:opacity-70",
+          "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#7D2233] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--crimson-dark)] disabled:cursor-wait disabled:opacity-70",
           compact && "min-h-9 rounded-lg px-3 py-2 text-xs",
           className,
         )}

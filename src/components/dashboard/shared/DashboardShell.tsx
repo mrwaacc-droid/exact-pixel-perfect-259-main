@@ -87,6 +87,18 @@ export function DashboardShell({
   }, [isProfileDropdownOpen]);
 
   useEffect(() => {
+    if (!isProfileDropdownOpen && !isMobileMenuOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsProfileDropdownOpen(false);
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isProfileDropdownOpen, isMobileMenuOpen]);
+
+  useEffect(() => {
     const shell = shellRef.current;
     if (!shell) return;
 
@@ -140,10 +152,10 @@ export function DashboardShell({
       >
         <div className="flex items-center justify-between gap-3 border-b border-border px-6 py-5">
           <Link to="/" className="flex items-center">
-            <Logo size={30} />
+            <Logo size={34} />
           </Link>
           <button
-            className="rounded-lg p-1 transition hover:bg-accent lg:hidden"
+            className="rounded-lg p-2 transition hover:bg-accent lg:hidden"
             onClick={toggleMobileMenu}
             aria-label="Close menu"
           >
@@ -190,8 +202,8 @@ export function DashboardShell({
               className="mb-3 block rounded-xl border border-border bg-white p-3.5 transition-all duration-150 hover:border-border hover:bg-accent"
             >
               <div className="flex items-center gap-2">
-                <Accessibility className="h-4 w-4 text-academic-blue" />
-                <span className="text-xs font-semibold text-academic-blue">Learning Access</span>
+                <Accessibility className="h-4 w-4 text-crimson" />
+                <span className="text-xs font-semibold text-crimson">Learning Access</span>
               </div>
               <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
                 Manage captions, focus mode, and more
@@ -226,10 +238,10 @@ export function DashboardShell({
       {/* Main content */}
       <div className="relative z-10 lg:ml-[260px]">
         {/* Header */}
-        <header className="sticky top-0 z-40 flex min-h-16 items-center justify-between gap-4 border-b border-border px-4 py-3 lg:px-8">
+        <header className="sticky top-0 z-40 flex min-h-16 items-center justify-between gap-4 border-b border-border bg-[color:var(--kr-glass)] px-4 py-3 backdrop-blur-md lg:px-8">
           <div className="flex min-w-0 items-center gap-3">
             <button
-              className="rounded-lg p-1 transition hover:bg-accent lg:hidden"
+              className="rounded-lg p-2 transition hover:bg-accent lg:hidden"
               onClick={toggleMobileMenu}
               aria-label="Open menu"
             >

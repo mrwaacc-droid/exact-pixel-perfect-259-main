@@ -75,17 +75,17 @@ function SignupPage() {
   };
 
   return (
-    <div className="auth-tech-page flex min-h-screen items-center justify-center px-6 py-12">
-      <div className="auth-tech-panel w-full max-w-md space-y-8 p-8">
+    <div className="auth-tech-page flex min-h-screen items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+      <div className="auth-tech-panel w-full max-w-md space-y-6 sm:space-y-8 p-5 sm:p-8">
         <div className="flex justify-center">
           <Link to="/" className="flex items-center">
-            <Logo size={40} />
+            <Logo size={34} />
           </Link>
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1A3233]">Create your account</h1>
-          <p className="mt-2 text-sm text-[#64748B]">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--ink)]">Create your account</h1>
+          <p className="mt-2 text-sm text-[var(--muted)]">
             Sign up with email, then verify your inbox before accessing Klassruum.
           </p>
         </div>
@@ -146,9 +146,9 @@ function SignupPage() {
           </Button>
         </form>
 
-        <div className="text-center text-sm text-[#64748B]">
+        <div className="text-center text-sm text-[var(--muted)]">
           Already have an account?{" "}
-          <Link to={signInHref} className="font-semibold text-[#1F7C80] hover:underline">
+          <Link to={signInHref} className="font-semibold text-crimson hover:underline">
             Sign in
           </Link>
         </div>

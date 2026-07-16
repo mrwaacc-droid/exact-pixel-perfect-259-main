@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 import { requireStudent } from "@/lib/route-guards";
 
 export const Route = createFileRoute("/_authenticated/student/quizzes/$quizId")({
   beforeLoad: (ctx) => requireStudent(ctx.context),
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       role="Student"
       title="Quiz Detail"
       description="A per-quiz review page for scores, answer explanations, and retake status."

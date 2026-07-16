@@ -78,7 +78,7 @@ export function BlogLayout({ meta, children }: { meta: BlogPostMeta; children: R
       <header className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5 sm:px-8">
           <Link to="/" className="flex items-center">
-            <Logo size={30} />
+            <Logo size={34} />
           </Link>
           <nav className="flex items-center gap-6 text-sm font-medium text-body">
             <Link to="/blog" className="hidden transition-colors hover:text-heading sm:inline">

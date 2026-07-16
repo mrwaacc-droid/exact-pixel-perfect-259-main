@@ -68,9 +68,9 @@ type TeachingFlowUIProps = {
 
 const PHASE_LABELS: Record<string, { label: string; color: string; icon: typeof Eye }> = {
   idle: { label: "Ready", color: "bg-gray-100 text-gray-600", icon: Eye },
-  narrating: { label: "Introduction", color: "bg-[#d1eceb] text-[#1A5256]", icon: Volume2 },
+  narrating: { label: "Introduction", color: "bg-[#F7E7EA] text-[#521326]", icon: Volume2 },
   writing: { label: "Writing on Board", color: "bg-purple-100 text-purple-700", icon: Eye },
-  reading: { label: "Reading", color: "bg-[#e8f5f5] text-[#1A5256]", icon: Volume2 },
+  reading: { label: "Reading", color: "bg-[#F7E7EA] text-[#521326]", icon: Volume2 },
   explaining: { label: "Explaining", color: "bg-cyan-100 text-cyan-700", icon: Lightbulb },
   warning: { label: "Common Mistake!", color: "bg-amber-100 text-amber-700", icon: AlertTriangle },
   checking: {

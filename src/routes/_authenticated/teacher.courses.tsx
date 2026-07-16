@@ -81,15 +81,15 @@ const COURSES: Course[] = [
 ];
 
 const SUBJECT_COLORS: Record<string, string> = {
-  Mathematics: "from-[#1F7C80] to-[#3fa8ab]",
-  Chemistry: "from-green-600 to-emerald-400",
-  "Computer Science": "from-purple-600 to-violet-400",
+  Mathematics: "from-[#7D2233] to-[#521326]",
+  Chemistry: "from-[#059669] to-[#047857]",
+  "Computer Science": "from-[#7c3aed] to-[#6d28d9]",
 };
 
 const SUBJECT_PROGRESS_COLORS: Record<string, string> = {
-  Mathematics: "from-[#3fa8ab] to-[#1F7C80]",
-  Chemistry: "from-emerald-400 to-green-600",
-  "Computer Science": "from-violet-400 to-purple-600",
+  Mathematics: "from-[#7D2233] to-[#521326]",
+  Chemistry: "from-[#047857] to-[#059669]",
+  "Computer Science": "from-[#6d28d9] to-[#7c3aed]",
 };
 
 const config = dashboardConfigs.teacher;
@@ -119,44 +119,44 @@ function TeacherCourses() {
       <div className="kr-stat-strip kr-stat-strip--3 mb-6">
         <div className="kr-stat-card-item">
           <div className="flex items-center justify-center mb-2">
-            <BookOpen className="h-4 w-4 text-[#64748B]" />
+            <BookOpen className="h-4 w-4 text-[#6B7280]" />
           </div>
-          <p className="kr-stat-value text-[#0F172A]">{COURSES.length}</p>
+          <p className="kr-stat-value text-[#221C1D]">{COURSES.length}</p>
           <p className="kr-stat-label">Active Courses</p>
         </div>
         <div className="kr-stat-card-item">
           <div className="flex items-center justify-center mb-2">
-            <Users className="h-4 w-4 text-[#64748B]" />
+            <Users className="h-4 w-4 text-[#6B7280]" />
           </div>
-          <p className="kr-stat-value text-[#0F172A]">{totalStudents}</p>
+          <p className="kr-stat-value text-[#221C1D]">{totalStudents}</p>
           <p className="kr-stat-label">Total Students</p>
         </div>
         <div className="kr-stat-card-item kr-stat-card-item--brand">
           <div className="flex items-center justify-center mb-2">
-            <TrendingUp className="h-4 w-4 text-[#1F7C80]" />
+            <TrendingUp className="h-4 w-4 text-[var(--crimson)]" />
           </div>
-          <p className="kr-stat-value text-[#1F7C80]">{avgProgress}%</p>
+          <p className="kr-stat-value text-[var(--crimson)]">{avgProgress}%</p>
           <p className="kr-stat-label">Avg. Progress</p>
         </div>
       </div>
 
       {/* Search */}
       <div className="relative mb-6 max-w-sm">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9CA3AF]" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search courses…"
-          className="w-full rounded-xl border border-[#E2E8F0] bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[#1F7C80] focus:outline-none focus:ring-2 focus:ring-[#1F7C80]/20"
+          className="w-full rounded-xl border border-[#E5E7EB] bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[var(--crimson)] focus:outline-none focus:ring-2 focus:ring-[var(--crimson)]/20"
         />
       </div>
 
       {/* Course Cards */}
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E2E8F0] bg-white">
+        <div className="rounded-2xl border border-dashed border-[#E5E7EB] bg-white">
           <div className="kr-empty-state">
             <div className="kr-empty-state-icon">
-              <BookOpen className="h-6 w-6 text-[#1F7C80]" />
+              <BookOpen className="h-6 w-6 text-[var(--crimson)]" />
             </div>
             <h3>No courses found</h3>
             <p>No courses match "{query}". Try a different search term.</p>
@@ -165,13 +165,13 @@ function TeacherCourses() {
       ) : (
         <div className="space-y-5">
           {filtered.map((course) => {
-            const gradClass = SUBJECT_COLORS[course.subject] ?? "from-slate-600 to-slate-400";
+            const gradClass = SUBJECT_COLORS[course.subject] ?? "from-[#4B5563] to-[#374151]";
             const progressGrad =
-              SUBJECT_PROGRESS_COLORS[course.subject] ?? "from-slate-400 to-slate-600";
+              SUBJECT_PROGRESS_COLORS[course.subject] ?? "from-[#4B5563] to-[#374151]";
             return (
               <article
                 key={course.id}
-                className="rounded-2xl border border-[#E2E8F0] bg-white p-6 transition-all hover:border-[#1F7C80]/30 hover:shadow-md"
+                className="rounded-2xl border border-[#E5E7EB] bg-white p-6 transition-all hover:border-[var(--crimson)]/30 hover:shadow-md"
               >
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
                   {/* Subject icon */}
@@ -186,16 +186,16 @@ function TeacherCourses() {
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="text-lg font-bold text-[#0F172A]">{course.title}</h3>
+                          <h3 className="text-lg font-bold text-[#221C1D]">{course.title}</h3>
                           <StatusBadge variant="success">Active</StatusBadge>
                         </div>
-                        <p className="text-sm text-[#64748B]">{course.institution}</p>
+                        <p className="text-sm text-[#6B7280]">{course.institution}</p>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-[#64748B] line-clamp-1">{course.description}</p>
+                    <p className="mt-2 text-sm text-[#6B7280] line-clamp-1">{course.description}</p>
 
                     {/* Stats row */}
-                    <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-[#64748B]">
+                    <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
                       <span className="flex items-center gap-1.5">
                         <Users className="h-4 w-4" /> {course.students} students
                       </span>
@@ -213,7 +213,7 @@ function TeacherCourses() {
                     </div>
 
                     {/* Subject-colored progress bar */}
-                    <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-[#E2E8F0]">
+                    <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-[#E5E7EB]">
                       <div
                         className={`h-full rounded-full bg-gradient-to-r ${progressGrad} transition-all`}
                         style={{ width: `${course.progress}%` }}
@@ -226,7 +226,7 @@ function TeacherCourses() {
                     <Link
                       to="/teacher/courses/$courseId/lessons"
                       params={{ courseId: course.id }}
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#1A5256]"
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--crimson)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--crimson-dark)]"
                     >
                       <Play className="h-4 w-4" />
                       Choose Lesson
@@ -234,14 +234,14 @@ function TeacherCourses() {
                     <Link
                       to="/teacher/courses/$courseId/analytics"
                       params={{ courseId: course.id }}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] px-4 py-2 text-sm font-semibold text-[#64748B] hover:bg-[#F8FAFC] hover:border-[#1F7C80]/30 transition-all"
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#E5E7EB] px-4 py-2 text-sm font-semibold text-[#6B7280] hover:bg-[#FBF8F5] hover:border-[var(--crimson)]/30 transition-all"
                     >
                       <BarChart2 className="h-4 w-4" />
                       Analytics
                     </Link>
                     <Link
                       to="/teacher/lessons"
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1F7C80] hover:text-[#1A5256] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--crimson)] hover:text-[var(--crimson-dark)] transition-colors"
                     >
                       Manage lessons <ChevronRight className="h-4 w-4" />
                     </Link>

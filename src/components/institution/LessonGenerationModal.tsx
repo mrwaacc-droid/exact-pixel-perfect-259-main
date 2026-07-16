@@ -256,7 +256,7 @@ export function LessonGenerationModal({
 
         {step === "generating" && (
           <div className="py-12 text-center space-y-4">
-            <Loader2 className="h-12 w-12 animate-spin mx-auto text-[#1F7C80]" />
+            <Loader2 className="h-12 w-12 animate-spin mx-auto text-[#7D2233]" />
             <h3 className="font-semibold">Generating Lessons...</h3>
             <p className="text-sm text-muted-foreground">
               This may take a minute. We're creating {settings.lessonCount} complete lessons with
@@ -292,8 +292,8 @@ export function LessonGenerationModal({
             )}
 
             {results.note && (
-              <div className="p-4 bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg">
-                <p className="text-sm text-[#0F172A]">{results.note}</p>
+              <div className="p-4 bg-[#F7E7EA] border border-[#F7E7EA] rounded-lg">
+                <p className="text-sm text-[#191314]">{results.note}</p>
               </div>
             )}
 
@@ -322,9 +322,9 @@ export function LessonGenerationModal({
             </div>
 
             {/* Next Steps */}
-            <div className="p-4 bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg">
-              <h4 className="font-semibold text-[#0F172A] mb-2">Next Steps</h4>
-              <ol className="text-sm text-[#1A5256] space-y-1 list-decimal list-inside">
+            <div className="p-4 bg-[#F7E7EA] border border-[#F7E7EA] rounded-lg">
+              <h4 className="font-semibold text-[#191314] mb-2">Next Steps</h4>
+              <ol className="text-sm text-[#521326] space-y-1 list-decimal list-inside">
                 <li>Review and edit lessons to customize content</li>
                 <li>Publish lessons when ready</li>
                 <li>Learners can then access lessons in their course</li>

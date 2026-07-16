@@ -23,7 +23,7 @@ export function ExitTicketPrompt({ ticket, onSubmit, isLoading = false }: ExitTi
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8">
         <div className="flex items-center gap-3 mb-6">
-          <Target className="h-6 w-6 text-[#1F7C80]" />
+          <Target className="h-6 w-6 text-[var(--crimson)]" />
           <h3 className="text-xl font-bold text-gray-900">Exit Ticket</h3>
         </div>
 
@@ -33,7 +33,7 @@ export function ExitTicketPrompt({ ticket, onSubmit, isLoading = false }: ExitTi
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
           placeholder="Your answer..."
-          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1F7C80] mb-4 h-28 resize-none"
+          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--crimson)] mb-4 h-28 resize-none"
           disabled={submitted || isLoading}
           autoFocus
         />
@@ -41,14 +41,14 @@ export function ExitTicketPrompt({ ticket, onSubmit, isLoading = false }: ExitTi
         <button
           onClick={handleSubmit}
           disabled={!answer.trim() || submitted || isLoading}
-          className="w-full px-4 py-3 bg-[#1F7C80] text-white rounded-lg font-semibold hover:bg-[#1A5256] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full px-4 py-3 bg-[var(--crimson)] text-white rounded-lg font-semibold hover:bg-[var(--crimson-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isLoading ? "Evaluating..." : "Submit"}
         </button>
 
         {submitted && (
-          <div className="mt-3 p-3 bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg">
-            <p className="text-xs text-[#1A5256]">✓ Answer submitted. Thank you!</p>
+          <div className="mt-3 p-3 bg-[var(--crimson-soft)] border border-[var(--crimson-soft)] rounded-lg">
+            <p className="text-xs text-[var(--crimson-dark)]">✓ Answer submitted. Thank you!</p>
           </div>
         )}
       </div>
@@ -91,7 +91,7 @@ export function HomeworkPanel({
     <div className="bg-white border border-gray-200 rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <BookOpen className="h-5 w-5 text-[#1F7C80]" />
+          <BookOpen className="h-5 w-5 text-[var(--crimson)]" />
           <div>
             <h3 className="font-semibold text-gray-900">{title}</h3>
             <p className="text-xs text-gray-500">
@@ -122,9 +122,9 @@ export function HomeworkPanel({
           ))}
 
           {reviewMaterial && (
-            <div className="p-3 bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg">
-              <p className="text-xs font-semibold text-[#0F172A] mb-1">📖 Review Material</p>
-              <p className="text-xs text-[#1A5256]">{reviewMaterial}</p>
+            <div className="p-3 bg-[var(--crimson-soft)] border border-[var(--crimson-soft)] rounded-lg">
+              <p className="text-xs font-semibold text-[#191314] mb-1">📖 Review Material</p>
+              <p className="text-xs text-[var(--crimson-dark)]">{reviewMaterial}</p>
             </div>
           )}
         </div>
@@ -133,7 +133,7 @@ export function HomeworkPanel({
       <div className="flex gap-2">
         <button
           onClick={onStartHomework}
-          className="flex-1 px-4 py-2 bg-[#1F7C80] text-white rounded-lg text-sm font-semibold hover:bg-[#1A5256] transition-colors"
+          className="flex-1 px-4 py-2 bg-[var(--crimson)] text-white rounded-lg text-sm font-semibold hover:bg-[var(--crimson-dark)] transition-colors"
         >
           Start Homework
         </button>
@@ -200,9 +200,9 @@ export function LessonCompletionSummary({
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg p-4 text-center">
-          <p className="text-2xl font-bold text-[#0F172A]">{timeSpentMinutes} min</p>
-          <p className="text-xs text-[#1A5256] mt-1">Time Spent</p>
+        <div className="bg-[var(--crimson-soft)] border border-[var(--crimson-soft)] rounded-lg p-4 text-center">
+          <p className="text-2xl font-bold text-[#191314]">{timeSpentMinutes} min</p>
+          <p className="text-xs text-[var(--crimson-dark)] mt-1">Time Spent</p>
         </div>
 
         <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
@@ -233,9 +233,9 @@ export function LessonCompletionSummary({
           </p>
         </div>
 
-        <div className="bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg p-4 text-center">
-          <p className="text-2xl font-bold text-[#0F172A]">{overallScore}%</p>
-          <p className="text-xs text-[#1A5256] mt-1">Overall Score</p>
+        <div className="bg-[var(--crimson-soft)] border border-[var(--crimson-soft)] rounded-lg p-4 text-center">
+          <p className="text-2xl font-bold text-[#191314]">{overallScore}%</p>
+          <p className="text-xs text-[var(--crimson-dark)] mt-1">Overall Score</p>
         </div>
       </div>
 
@@ -250,7 +250,7 @@ export function LessonCompletionSummary({
               <span className="text-sm font-semibold text-gray-900">{practiceScore}%</span>
             </div>
             <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div className="h-full bg-[#e8f5f5]0" style={{ width: `${practiceScore}%` }} />
+              <div className="h-full bg-[var(--crimson-soft)]0" style={{ width: `${practiceScore}%` }} />
             </div>
           </div>
 
@@ -292,10 +292,10 @@ export function LessonCompletionSummary({
 
       {/* Recommendation */}
       {recommendedNext && (
-        <div className="bg-[#e8f5f5] border border-[#a3d9d8] rounded-lg p-6">
-          <p className="text-sm font-semibold text-[#0F172A] mb-2">🎯 Recommended Next Step</p>
-          <p className="text-sm text-[#1A5256] mb-1">{recommendedNext.title}</p>
-          <p className="text-xs text-[#1A5256]">{recommendedNext.reason}</p>
+        <div className="bg-[var(--crimson-soft)] border border-[var(--crimson-soft)] rounded-lg p-6">
+          <p className="text-sm font-semibold text-[#191314] mb-2">🎯 Recommended Next Step</p>
+          <p className="text-sm text-[var(--crimson-dark)] mb-1">{recommendedNext.title}</p>
+          <p className="text-xs text-[var(--crimson-dark)]">{recommendedNext.reason}</p>
         </div>
       )}
 
@@ -318,7 +318,7 @@ export function LessonCompletionSummary({
 
         <button
           onClick={onNextLesson}
-          className="flex items-center justify-center gap-2 px-4 py-3 bg-[#1F7C80] text-white rounded-lg font-semibold hover:bg-[#1A5256] transition-colors"
+          className="flex items-center justify-center gap-2 px-4 py-3 bg-[var(--crimson)] text-white rounded-lg font-semibold hover:bg-[var(--crimson-dark)] transition-colors"
         >
           Next →
         </button>

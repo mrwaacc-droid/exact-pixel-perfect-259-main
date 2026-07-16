@@ -35,7 +35,7 @@ function CoursesPage() {
         institutionId ? (
           <div className="flex flex-wrap gap-2">
             <Link to="/institution/courses/new">
-              <button className="inline-flex items-center gap-2 rounded-md bg-[#1F7C80] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1A5256]">
+              <button className="inline-flex items-center gap-2 rounded-md bg-[var(--crimson)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--crimson-dark)]">
                 <Plus className="h-4 w-4" />
                 New course page
               </button>

@@ -10,6 +10,132 @@
 @import "./styles/premium.css";
 @import "./styles/premium-design-system.css";
 @import "./styles/interface-uniformity.css";
+@import "./styles/cinematic.css";
+
+/* ── Sharp Corners — Global Override ────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+/* ── Premium Red Glow — Multi-layered luminous depth ────────────────────── */
+.cine-btn-primary,
+.cine-nav-cta,
+.kr-primary-button,
+.btn-primary-academic,
+.cine-pricing-cta--primary,
+.cine-a11y-tab--active {
+  background: var(--ink);
+  box-shadow:
+    0 0 0 1px rgba(125, 34, 51, 0.1),
+    0 1px 2px rgba(34, 27, 28, 0.2),
+    0 4px 12px rgba(125, 34, 51, 0.12),
+    0 12px 32px rgba(125, 34, 51, 0.08),
+    0 0 60px rgba(125, 34, 51, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.cine-btn-primary:hover,
+.cine-nav-cta:hover,
+.kr-primary-button:hover,
+.btn-primary-academic:hover,
+.cine-pricing-cta--primary:hover {
+  background: var(--crimson-dark);
+  box-shadow:
+    0 0 0 1px rgba(125, 34, 51, 0.2),
+    0 2px 4px rgba(34, 27, 28, 0.15),
+    0 8px 20px rgba(125, 34, 51, 0.2),
+    0 20px 48px rgba(125, 34, 51, 0.15),
+    0 0 80px rgba(125, 34, 51, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ── Premium Dark Glow — Rich depth with warm undertone ─────────────────── */
+.cine-final,
+.cine-classroom {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    inset 0 0 80px rgba(125, 34, 51, 0.03),
+    inset 0 0 200px rgba(0, 0, 0, 0.15);
+}
+
+.kr-nav-item.active,
+.cine-mode-tab--active {
+  background: var(--ink);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 2px 8px rgba(34, 27, 28, 0.25),
+    0 8px 24px rgba(34, 27, 28, 0.15),
+    0 0 40px rgba(34, 27, 28, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Dark buttons on light backgrounds */
+.cine-solution-arrow {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 2px 6px rgba(34, 27, 28, 0.2),
+    0 8px 20px rgba(34, 27, 28, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.cine-solution-row:hover .cine-solution-arrow {
+  background: var(--crimson-dark);
+  box-shadow:
+    0 0 0 1px rgba(125, 34, 51, 0.15),
+    0 4px 12px rgba(125, 34, 51, 0.2),
+    0 12px 32px rgba(125, 34, 51, 0.12),
+    0 0 50px rgba(125, 34, 51, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ── Premium Shiny Surfaces — Glass-like depth ──────────────────────────── */
+.kr-kpi-card,
+.kr-card,
+.kr-dashboard-header,
+.kr-continue-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #fdfaf7 100%);
+  box-shadow:
+    0 0 0 1px rgba(231, 218, 209, 0.6),
+    0 1px 2px rgba(34, 27, 28, 0.03),
+    0 4px 12px rgba(34, 27, 28, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.kr-kpi-card:hover,
+.kr-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(231, 218, 209, 0.8),
+    0 2px 4px rgba(34, 27, 28, 0.04),
+    0 8px 24px rgba(34, 27, 28, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Hero stat separator */
+.cine-hero-stat:not(:last-child)::after {
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
+}
+
+/* Nav CTA glow */
+.cine-nav-cta {
+  box-shadow:
+    0 0 0 1px rgba(34, 27, 28, 0.1),
+    0 2px 6px rgba(34, 27, 28, 0.15),
+    0 8px 20px rgba(34, 27, 28, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.cine-nav-cta:hover {
+  background: var(--crimson-dark);
+  box-shadow:
+    0 0 0 1px rgba(125, 34, 51, 0.15),
+    0 4px 12px rgba(125, 34, 51, 0.2),
+    0 12px 32px rgba(125, 34, 51, 0.12),
+    0 0 50px rgba(125, 34, 51, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
 
 /* Scan source files for Tailwind utility classes */
 @source "../src/**/*.{ts,tsx,js,jsx}";
@@ -89,7 +215,7 @@
   /* Question prompt styles */
   .question-prompt-wrapper {
     @apply fixed inset-0 flex items-center justify-center;
-    background: rgba(15, 23, 42, 0.4);
+    background: rgba(25, 19, 20, 0.4);
     backdrop-filter: blur(4px);
     z-index: 50;
   }
@@ -144,7 +270,7 @@
 
   /* Learning mode indicator */
   .learning-mode-badge {
-    @apply inline-flex items-center gap-2 rounded-full border border-[#a3d9d8] bg-[#e8f5f5] px-3 py-1.5 text-xs font-semibold text-[#1A5256];
+    @apply inline-flex items-center gap-2 rounded-full border border-crimson-soft bg-crimson-soft px-3 py-1.5 text-xs font-semibold text-crimson-dark;
   }
 
   /* Transcript drawer */
@@ -178,7 +304,7 @@
   }
 
   .transcript-entry.student {
-    @apply bg-[#e8f5f5] border-[#a3d9d8];
+    @apply bg-crimson-soft border-crimson-soft;
   }
 
   .transcript-entry.teacher {
@@ -208,27 +334,35 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Outfit", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-headings: "Space Grotesk", "Outfit", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --color-academic-navy: #10233f;
-  --color-learning-blue: #2563eb;
-  --color-knowledge-teal: #16a34a;
-  --color-warm-amber: #f59e0b;
+  --font-sans: "Inter", "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-headings: "Inter", "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --color-academic-navy: #221B1C;
+  --color-learning-blue: #7D2233;
+  --color-knowledge-teal: #2F7D5A;
+  --color-warm-amber: #C97922;
   --color-cloud-white: #ffffff;
-  --color-pale-sky: #eff6ff;
-  --color-soft-cream: #fffbeb;
-  --color-deep-ink: #10233f;
-  --color-slate: #475569;
-  --color-mist-blue: #e2e8f0;
-  --color-education-green: #047857;
+  --color-pale-sky: #F4ECE4;
+  --color-soft-cream: #FDF8F0;
+  --color-deep-ink: #221B1C;
+  --color-slate: #6F5C60;
+  --color-mist-blue: #E7DAD1;
+  --color-education-green: #2F7D5A;
+  /* Warm editorial palette */
+  --color-crimson: #7D2233;
+  --color-crimson-dark: #521326;
+  --color-crimson-hover: #6B1C2E;
+  --color-crimson-soft: #F7E7EA;
+  --color-beige: #D9C6B2;
+  --color-beige-soft: #F4ECE4;
+  --color-brown: #A0522D;
   /* Soft premium corners across the product */
   --radius-sm: 8px;
   --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 22px;
-  --radius-3xl: 28px;
-  --radius-4xl: 34px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 22px;
+  --radius-4xl: 28px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -299,26 +433,26 @@
 }
 
 .dark {
-  --background: oklch(0.16 0.02 180);
-  --foreground: oklch(0.98 0.003 180);
-  --navy: oklch(0.12 0.02 180);
-  --card: oklch(0.21 0.02 180);
-  --card-foreground: oklch(0.98 0.003 180);
-  --popover: oklch(0.21 0.02 180);
-  --popover-foreground: oklch(0.98 0.003 180);
-  --primary: oklch(0.65 0.12 180);
-  --primary-foreground: oklch(0.12 0.02 180);
-  --primary-dark: oklch(0.55 0.1 180);
-  --primary-light: oklch(0.25 0.04 180);
-  --primary-glow: oklch(0.72 0.1 180);
-  --secondary: oklch(0.27 0.02 180);
-  --secondary-foreground: oklch(0.98 0.003 180);
-  --muted: oklch(0.27 0.02 180);
-  --muted-foreground: oklch(0.7 0.02 180);
-  --accent: oklch(0.27 0.02 180);
-  --accent-foreground: oklch(0.98 0.003 180);
+  --background: oklch(0.16 0.015 25);
+  --foreground: oklch(0.98 0.003 25);
+  --navy: oklch(0.12 0.015 25);
+  --card: oklch(0.21 0.015 25);
+  --card-foreground: oklch(0.98 0.003 25);
+  --popover: oklch(0.21 0.015 25);
+  --popover-foreground: oklch(0.98 0.003 25);
+  --primary: oklch(0.6 0.14 11);
+  --primary-foreground: oklch(0.98 0.003 25);
+  --primary-dark: oklch(0.5 0.12 11);
+  --primary-light: oklch(0.25 0.045 11);
+  --primary-glow: oklch(0.68 0.13 11);
+  --secondary: oklch(0.27 0.015 25);
+  --secondary-foreground: oklch(0.98 0.003 25);
+  --muted: oklch(0.27 0.015 25);
+  --muted-foreground: oklch(0.7 0.015 25);
+  --accent: oklch(0.27 0.015 25);
+  --accent-foreground: oklch(0.98 0.003 25);
   --destructive: oklch(0.7 0.19 22);
-  --destructive-foreground: oklch(0.98 0.003 180);
+  --destructive-foreground: oklch(0.98 0.003 25);
   --success: oklch(0.65 0.15 155);
   --success-light: oklch(0.25 0.04 155);
   --warning: oklch(0.7 0.15 75);
@@ -329,44 +463,46 @@
   --green-light: oklch(0.25 0.04 155);
   --orange: oklch(0.7 0.15 75);
   --orange-light: oklch(0.25 0.04 75);
-  --purple: oklch(0.6 0.2 300);
-  --purple-light: oklch(0.25 0.05 300);
+  --purple: oklch(0.6 0.15 15);
+  --purple-light: oklch(0.25 0.04 15);
   --yellow: oklch(0.7 0.15 90);
   --yellow-light: oklch(0.25 0.04 90);
   --red: oklch(0.65 0.2 25);
   --red-light: oklch(0.25 0.05 25);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.65 0.12 180);
-  --gray-50: oklch(0.22 0.02 180);
-  --gray-100: oklch(0.24 0.02 180);
-  --gray-200: oklch(0.28 0.02 180);
-  --gray-300: oklch(0.35 0.02 180);
-  --gray-400: oklch(0.5 0.02 180);
-  --gray-500: oklch(0.6 0.02 180);
-  --gray-600: oklch(0.7 0.02 180);
-  --gray-700: oklch(0.8 0.02 180);
-  --gray-800: oklch(0.9 0.02 180);
-  --gray-900: oklch(0.95 0.02 180);
-  --sidebar: oklch(0.21 0.02 180);
-  --sidebar-foreground: oklch(0.98 0.003 180);
-  --sidebar-primary: oklch(0.65 0.12 180);
-  --sidebar-primary-foreground: oklch(0.12 0.02 180);
-  --sidebar-accent: oklch(0.27 0.02 180);
-  --sidebar-accent-foreground: oklch(0.98 0.003 180);
+  --ring: oklch(0.6 0.14 11);
+  --gray-50: oklch(0.22 0.015 25);
+  --gray-100: oklch(0.24 0.015 25);
+  --gray-200: oklch(0.28 0.015 25);
+  --gray-300: oklch(0.35 0.015 25);
+  --gray-400: oklch(0.5 0.015 25);
+  --gray-500: oklch(0.6 0.015 25);
+  --gray-600: oklch(0.7 0.015 25);
+  --gray-700: oklch(0.8 0.015 25);
+  --gray-800: oklch(0.9 0.015 25);
+  --gray-900: oklch(0.95 0.015 25);
+  --sidebar: oklch(0.21 0.015 25);
+  --sidebar-foreground: oklch(0.98 0.003 25);
+  --sidebar-primary: oklch(0.6 0.14 11);
+  --sidebar-primary-foreground: oklch(0.12 0.015 25);
+  --sidebar-accent: oklch(0.27 0.015 25);
+  --sidebar-accent-foreground: oklch(0.98 0.003 25);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.65 0.12 180);
+  --sidebar-ring: oklch(0.6 0.14 11);
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
   }
+
   html {
     min-width: 320px;
     overflow-x: hidden;
     overflow-y: auto;
   }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -378,12 +514,14 @@
     text-rendering: optimizeLegibility;
     overscroll-behavior-y: auto;
   }
+
   img,
   svg,
   video,
   canvas {
     max-width: 100%;
   }
+
   h1,
   h2,
   h3,
@@ -419,6 +557,7 @@
   }
 
   @media (max-width: 768px) {
+
     html,
     body {
       width: 100%;

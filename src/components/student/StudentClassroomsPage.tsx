@@ -87,7 +87,7 @@ const quietTools = [
 
 function getProgressTone(progress: number) {
   if (progress >= 60) return "bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]";
-  if (progress >= 30) return "bg-[#E0F2FE] text-[#0369A1] border-[#BAE6FD]";
+  if (progress >= 30) return "bg-[#F7E7EA] text-[#7D2233] border-[#F0D7DC]";
   return "bg-[#FEF3C7] text-[#B45309] border-[#FDE68A]";
 }
 
@@ -222,7 +222,7 @@ export function StudentClassroomsPage() {
       subtitle="A cleaner classroom hub to resume lessons, track progress, and enter the right session faster."
     >
       <section className="mb-6 grid gap-5 xl:grid-cols-[1.45fr_.85fr]">
-        <div className="rounded-[28px] border border-[#E7EEF5] bg-[#FFFEFC] p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-7">
+        <div className="rounded-[28px] border border-[#E7EEF5] bg-[#FFFEFC] p-6 shadow-[0_20px_60px_rgba(25, 19, 20,0.06)] sm:p-7">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#E6EEF5] bg-[#F8FBFD] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#5C7285]">
             <Sparkles className="h-3.5 w-3.5 text-[#7A8FA3]" />
             Today&apos;s lesson

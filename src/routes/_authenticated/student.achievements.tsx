@@ -37,7 +37,7 @@ function StudentAchievements() {
         ) : (
           items.map((a: any) => (
             <div key={a.id} className="kr-pcard flex items-center gap-4 p-5">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#e8f5f5] text-2xl">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--crimson-soft)] text-2xl">
                 {a.icon || "🏆"}
               </div>
               <div className="min-w-0">

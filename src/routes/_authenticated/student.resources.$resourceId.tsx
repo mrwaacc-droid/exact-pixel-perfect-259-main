@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 import { requireStudent } from "@/lib/route-guards";
 
 export const Route = createFileRoute("/_authenticated/student/resources/$resourceId")({
   beforeLoad: (ctx) => requireStudent(ctx.context),
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       role="Student"
       title="Resource Detail"
       description="Open a specific resource, then download, save to notes, or ask AI about it later."

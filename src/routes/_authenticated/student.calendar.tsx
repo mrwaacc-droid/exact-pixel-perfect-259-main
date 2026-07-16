@@ -15,8 +15,8 @@ export const Route = createFileRoute("/_authenticated/student/calendar")({
 type CalStatus = "live" | "upcoming" | "completed";
 
 const STATUS_META: Record<CalStatus, { label: string; dot: string; bg: string; fg: string }> = {
-  live: { label: "Live", dot: "#2563eb", bg: "#dbeafe", fg: "#1d4ed8" },
-  upcoming: { label: "Upcoming", dot: "#64748b", bg: "#f1f5f9", fg: "#475569" },
+  live: { label: "Live", dot: "#7D2233", bg: "#F7E7EA", fg: "#521326" },
+  upcoming: { label: "Upcoming", dot: "var(--muted)", bg: "#F4ECE4", fg: "var(--muted)" },
   completed: { label: "Completed", dot: "#22c55e", bg: "#dcfce7", fg: "#15803d" },
 };
 

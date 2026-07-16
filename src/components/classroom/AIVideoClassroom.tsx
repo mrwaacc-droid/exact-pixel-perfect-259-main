@@ -2672,7 +2672,7 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
         "Unknown";
       return (
         <div className="min-h-screen bg-[#F6F8FB] px-4 py-10 text-[#132033] sm:px-6">
-          <div className="mx-auto max-w-3xl rounded-[32px] border border-[#E6EDF4] bg-[#FFFDFC] p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-8">
+          <div className="mx-auto max-w-3xl rounded-[32px] border border-[#E6EDF4] bg-[#FFFDFC] p-6 shadow-[0_24px_60px_rgba(25, 19, 20,0.08)] sm:p-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#E7EEF5] bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#6B7F92]">
               <Sparkles className="h-3.5 w-3.5 text-[#8AA0B4]" />
               Continue lesson
@@ -2733,7 +2733,7 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
 
     return (
       <div className="min-h-screen bg-[#F6F8FB] px-4 py-10 text-[#132033] sm:px-6">
-        <div className="mx-auto max-w-5xl rounded-[32px] border border-[#E6EDF4] bg-[#FFFDFC] p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-8">
+        <div className="mx-auto max-w-5xl rounded-[32px] border border-[#E6EDF4] bg-[#FFFDFC] p-6 shadow-[0_24px_60px_rgba(25, 19, 20,0.08)] sm:p-8">
           <div className="grid gap-6 lg:grid-cols-[1.35fr_.95fr] lg:items-start">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-[#E7EEF5] bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#6B7F92]">
@@ -2848,14 +2848,14 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
     teacherState === "reading";
 
   const stateColors: Record<string, { bg: string; text: string }> = {
-    preparing: { bg: "rgba(31,124,128,0.15)", text: "#3fa8ab" },
+    preparing: { bg: "rgba(31,124,128,0.15)", text: "var(--crimson)" },
     writing: { bg: "rgba(124,58,237,0.15)", text: "#a78bfa" },
     speaking: { bg: "rgba(34,197,94,0.15)", text: "#4ade80" },
-    explaining: { bg: "rgba(31,124,128,0.15)", text: "#3fa8ab" },
+    explaining: { bg: "rgba(31,124,128,0.15)", text: "var(--crimson)" },
     listening: { bg: "rgba(234,179,8,0.15)", text: "#facc15" },
     thinking: { bg: "rgba(168,85,247,0.15)", text: "#c084fc" },
     asking_question: { bg: "rgba(249,115,22,0.15)", text: "#fb923c" },
-    paused: { bg: "rgba(148,163,184,0.15)", text: "#94a3b8" },
+    paused: { bg: "rgba(168, 152, 144,0.15)", text: "#A89890" },
     answering: { bg: "rgba(34,197,94,0.15)", text: "#4ade80" },
     encouraging: { bg: "rgba(34,197,94,0.15)", text: "#4ade80" },
     warning: { bg: "rgba(239,68,68,0.15)", text: "#f87171" },
@@ -3804,7 +3804,7 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
       <Drawer open={false} onClose={() => undefined} title="Lesson Transcript">
         <div className="vc-drawer-content" style={{ fontFamily: "system-ui, sans-serif" }}>
           {transcript.length === 0 ? (
-            <div style={{ color: "#64748b", fontStyle: "italic" }}>
+            <div style={{ color: "var(--muted)", fontStyle: "italic" }}>
               Transcript will populate as the lesson progresses...
             </div>
           ) : (
@@ -3820,16 +3820,16 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                       : entry.role === "student"
                         ? "rgba(31,124,128,0.1)"
                         : entry.role === "system"
-                          ? "rgba(148,163,184,0.1)"
+                          ? "rgba(168, 152, 144,0.1)"
                           : "transparent",
                   borderRadius: 8,
                   borderLeft:
                     entry.role === "board"
                       ? "3px solid #7c3aed"
                       : entry.role === "student"
-                        ? "3px solid #3b82f6"
+                        ? "3px solid #C25565"
                         : entry.role === "system"
-                          ? "3px solid #94a3b8"
+                          ? "3px solid #A89890"
                           : "3px solid #22c55e",
                 }}
               >
@@ -3841,9 +3841,9 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                       entry.role === "board"
                         ? "#a78bfa"
                         : entry.role === "student"
-                          ? "#3fa8ab"
+                          ? "var(--crimson)"
                           : entry.role === "system"
-                            ? "#94a3b8"
+                            ? "#A89890"
                             : "#4ade80",
                     textTransform: "uppercase",
                     marginBottom: 4,
@@ -3856,11 +3856,11 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                       : entry.role === "system"
                         ? "?? System"
                         : "????? Teacher"}
-                  <span style={{ marginLeft: 8, fontWeight: 400, color: "#64748b" }}>
+                  <span style={{ marginLeft: 8, fontWeight: 400, color: "var(--muted)" }}>
                     {entry.timestamp}
                   </span>
                 </div>
-                <div style={{ color: "#cbd5e1", fontSize: "0.82rem" }}>{entry.text}</div>
+                <div style={{ color: "#D8CCC6", fontSize: "0.82rem" }}>{entry.text}</div>
               </div>
             ))
           )}
@@ -4040,7 +4040,7 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                 <div
                   style={{
                     fontSize: "0.7rem",
-                    color: "#94a3b8",
+                    color: "#A89890",
                     fontWeight: 600,
                     textTransform: "uppercase",
                     marginBottom: 6,
@@ -4052,7 +4052,7 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                   style={{
                     fontSize: "2.2rem",
                     fontWeight: 800,
-                    background: "linear-gradient(120deg, #34d399, #3fa8ab)",
+                    background: "linear-gradient(120deg, #34d399, var(--crimson))",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -4061,11 +4061,11 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                 >
                   {takeawayScore}
                 </div>
-                <div style={{ fontSize: "0.8rem", color: "#cbd5e1", fontWeight: 500 }}>
+                <div style={{ fontSize: "0.8rem", color: "#D8CCC6", fontWeight: 500 }}>
                   out of 100
                 </div>
                 <div
-                  style={{ fontSize: "0.72rem", color: "#94a3b8", marginTop: 8, lineHeight: 1.4 }}
+                  style={{ fontSize: "0.72rem", color: "#A89890", marginTop: 8, lineHeight: 1.4 }}
                 >
                   Based on practice accuracy, engagement, and efficiency.
                 </div>
@@ -4294,7 +4294,7 @@ function ClassroomTopBar({
           </button>
         ) : null}
         <Link to="/" className="vc-top-bar-brand" title="Klassruum home">
-          <Logo size={26} variant="dark" />
+          <Logo size={34} variant="dark" />
         </Link>
 
         <div className="vc-top-bar-breadcrumb">
@@ -5250,9 +5250,9 @@ function MarkerPen() {
       aria-hidden
     >
       {/* Writing tip (touching the board, bottom-left) */}
-      <path d="M14 50 L19 45 L23 49 L18 54 Z" fill="#1d4ed8" />
+      <path d="M14 50 L19 45 L23 49 L18 54 Z" fill="#7D2233" />
       {/* Nib holder */}
-      <path d="M18 46 L24 40 L29 45 L23 51 Z" fill="#475569" />
+      <path d="M18 46 L24 40 L29 45 L23 51 Z" fill="var(--muted)" />
       {/* Barrel of the marker */}
       <rect
         x="24"
@@ -5261,7 +5261,7 @@ function MarkerPen() {
         height="30"
         rx="3"
         transform="rotate(45 31 29)"
-        fill="#2563eb"
+        fill="#7D2233"
       />
       <rect
         x="27"
@@ -5270,11 +5270,11 @@ function MarkerPen() {
         height="26"
         rx="2.5"
         transform="rotate(45 31 29)"
-        fill="#1A5256"
+        fill="var(--crimson-dark)"
         opacity="0.7"
       />
       {/* Cap end */}
-      <path d="M44 14 L52 6 L58 12 L50 20 Z" fill="#1A5256" />
+      <path d="M44 14 L52 6 L58 12 L50 20 Z" fill="var(--crimson-dark)" />
       {/* Highlight along the barrel */}
       <rect
         x="26"
@@ -5283,7 +5283,7 @@ function MarkerPen() {
         height="26"
         rx="1"
         transform="rotate(45 31 29)"
-        fill="#a3d9d8"
+        fill="var(--crimson-soft)"
         opacity="0.8"
       />
     </svg>
@@ -5629,28 +5629,28 @@ function QuestionModal({
       <PanelWrapper>
         <div className="vc-question-badge">Blind Mode - Voice First</div>
         <div className="vc-question-title">Ask your question verbally</div>
-        <p style={{ color: "#94a3b8", fontSize: "0.85rem", margin: "0 0 16px", lineHeight: 1.5 }}>
-          Speak your question or say <strong style={{ color: "#e2e8f0" }}>"no question"</strong> to continue the lesson.
+        <p style={{ color: "#A89890", fontSize: "0.85rem", margin: "0 0 16px", lineHeight: 1.5 }}>
+          Speak your question or say <strong style={{ color: "#E7DAD1" }}>"no question"</strong> to continue the lesson.
         </p>
 
         {/* Countdown ring - shows how long until mic auto-activates */}
         {!isListening && blindCountdown > 0 && (
           <div className="vc-blind-countdown">
             <svg width="56" height="56" viewBox="0 0 56 56">
-              <circle cx="28" cy="28" r={radius} fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="4" />
+              <circle cx="28" cy="28" r={radius} fill="none" stroke="rgba(154, 50, 71,0.2)" strokeWidth="4" />
               <circle
                 cx="28"
                 cy="28"
                 r={radius}
                 fill="none"
-                stroke={blindCountdown <= 10 ? "#f87171" : "#6366f1"}
+                stroke={blindCountdown <= 10 ? "#f87171" : "#9A3247"}
                 strokeWidth="4"
                 strokeDasharray={circumference}
                 strokeDashoffset={dashOffset}
                 strokeLinecap="round"
                 style={{ transform: "rotate(-90deg)", transformOrigin: "28px 28px", transition: "stroke-dashoffset 1s linear" }}
               />
-              <text x="28" y="33" textAnchor="middle" fill={blindCountdown <= 10 ? "#f87171" : "#a5b4fc"} fontSize="14" fontWeight="700">
+              <text x="28" y="33" textAnchor="middle" fill={blindCountdown <= 10 ? "#f87171" : "#D9798A"} fontSize="14" fontWeight="700">
                 {blindCountdown}s
               </text>
             </svg>
@@ -5667,22 +5667,22 @@ function QuestionModal({
             className="vc-mic-pulse"
             onClick={onToggleMic}
             aria-label={isListening ? "Stop listening" : "Start listening"}
-            style={{ background: isListening ? "#16a34a" : "#4f46e5" }}
+            style={{ background: isListening ? "#16a34a" : "#7D2233" }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
               <path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" strokeWidth="2" fill="none" />
             </svg>
           </button>
-          <span className="vc-mic-text" style={{ color: isListening ? "#4ade80" : "#a5b4fc" }}>
+          <span className="vc-mic-text" style={{ color: isListening ? "#4ade80" : "#D9798A" }}>
             {isListening ? "Listening... speak now" : "Click to start listening"}
           </span>
         </div>
 
         {/* Show transcribed text if any */}
         {questionText && (
-          <div style={{ marginTop: 12, padding: "10px 12px", background: "rgba(99,102,241,0.1)", borderRadius: 8, color: "#e2e8f0", fontSize: "0.875rem" }}>
-            <span style={{ color: "#a5b4fc", fontWeight: 600, fontSize: "0.7rem", textTransform: "uppercase" }}>Heard: </span>
+          <div style={{ marginTop: 12, padding: "10px 12px", background: "rgba(154, 50, 71,0.1)", borderRadius: 8, color: "#E7DAD1", fontSize: "0.875rem" }}>
+            <span style={{ color: "#D9798A", fontWeight: 600, fontSize: "0.7rem", textTransform: "uppercase" }}>Heard: </span>
             {questionText}
           </div>
         )}

@@ -104,18 +104,18 @@ function AuthCallbackPage() {
   }, [acceptInviteFn, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--gray-50)]">
+    <div className="auth-tech-page flex min-h-screen items-center justify-center px-4 sm:px-6">
       <div className="w-full max-w-sm space-y-6 text-center">
         <div className="flex justify-center">
-          <Logo size={48} />
+          <Logo size={34} />
         </div>
 
         {status === "loading" && (
           <div className="space-y-4">
-            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[#1F7C80] border-t-transparent" />
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-crimson border-t-transparent" />
             <div>
-              <h2 className="text-lg font-semibold text-[#1A3233]">Signing you in…</h2>
-              <p className="mt-1 text-sm text-[#A3ADAD]">
+              <h2 className="text-lg font-semibold text-[var(--ink)]">Signing you in…</h2>
+              <p className="mt-1 text-sm text-[var(--muted)]">
                 Finalising your sign-in and preparing your account.
               </p>
             </div>
@@ -124,10 +124,10 @@ function AuthCallbackPage() {
 
         {status === "redirecting" && (
           <div className="space-y-4">
-            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-[#1F7C80] border-t-transparent" />
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-crimson border-t-transparent" />
             <div>
-              <h2 className="text-lg font-semibold text-[#1A3233]">Redirecting…</h2>
-              <p className="mt-1 text-sm text-[#A3ADAD]">Taking you to your dashboard.</p>
+              <h2 className="text-lg font-semibold text-[var(--ink)]">Redirecting…</h2>
+              <p className="mt-1 text-sm text-[var(--muted)]">Taking you to your dashboard.</p>
             </div>
           </div>
         )}
@@ -151,15 +151,15 @@ function AuthCallbackPage() {
               </svg>
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-[#1A3233]">Authentication failed</h2>
+              <h2 className="text-lg font-semibold text-[var(--ink)]">Authentication failed</h2>
               <p className="mt-1 text-sm text-red-600">{errorMsg}</p>
-              <p className="mt-3 text-xs text-[#A3ADAD]">
+              <p className="mt-3 text-xs text-[var(--muted)]">
                 Redirecting to sign-in page in a few seconds…
               </p>
             </div>
             <button
               onClick={() => navigate({ to: "/auth" })}
-              className="mt-2 rounded-xl bg-[#1F7C80] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#1A5256]"
+              className="mt-2 rounded-xl bg-crimson px-6 py-2.5 text-sm font-semibold text-white hover:bg-crimson-dark"
             >
               Back to sign in
             </button>

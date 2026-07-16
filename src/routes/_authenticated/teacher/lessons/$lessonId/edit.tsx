@@ -183,7 +183,7 @@ function DemoLessonEditor({
             </div>
             <div className="flex flex-wrap gap-2">
               <Button
-                className="bg-[#1F7C80] hover:bg-[#1A5256]"
+                className="bg-[var(--crimson)] hover:bg-[var(--crimson-dark)]"
                 onClick={() => {
                   setSaved(true);
                   toast.success("Demo lesson changes saved in this session");
@@ -614,17 +614,17 @@ function PublishSection({
   }
 
   return (
-    <Card className="border-[#a3d9d8] bg-[#e8f5f5]">
+    <Card className="border-[var(--crimson-soft)] bg-[var(--crimson-soft)]">
       <CardContent className="p-6">
-        <h4 className="font-semibold mb-2 text-[#0F172A]">Ready to Publish?</h4>
-        <p className="text-sm text-[#1A5256] mb-4">
+        <h4 className="font-semibold mb-2 text-[#191314]">Ready to Publish?</h4>
+        <p className="text-sm text-[var(--crimson-dark)] mb-4">
           Review all sections and items above. When you're satisfied, publish this lesson to make it
           available to students.
         </p>
         <Button
           onClick={() => m.mutate()}
           disabled={m.isPending}
-          className="bg-[#1F7C80] hover:bg-[#1A5256]"
+          className="bg-[var(--crimson)] hover:bg-[var(--crimson-dark)]"
         >
           {m.isPending ? (
             <>

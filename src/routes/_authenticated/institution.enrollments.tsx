@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
 import { requireInstitutionAdmin } from "@/lib/route-guards";
 
 export const Route = createFileRoute("/_authenticated/institution/enrollments")({
   beforeLoad: (ctx) => requireInstitutionAdmin(ctx.context),
   component: () => (
-    <RouteStubPage
+    <RouteWorkspacePage
       role="Institution"
       title="Enrollments"
       description="Course enrollment management, bulk enroll, and enrollment status tools are prepared here."

@@ -52,11 +52,11 @@ function VerifyEmailPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--gray-50)] px-6 py-12">
-      <div className="w-full max-w-md space-y-6 rounded-2xl border border-[var(--gray-200)] bg-white p-8 text-center shadow-sm">
+    <div className="auth-tech-page flex min-h-screen items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+      <div className="auth-tech-panel w-full max-w-md space-y-6 p-5 sm:p-8 text-center">
         <div className="flex justify-center">
           <Link to="/" className="flex items-center">
-            <Logo size={40} />
+            <Logo size={34} />
           </Link>
         </div>
 
@@ -68,10 +68,10 @@ function VerifyEmailPage() {
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1A3233]">Verify your email</h1>
-          <p className="text-sm leading-relaxed text-[#64748B]">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--ink)]">Verify your email</h1>
+          <p className="text-sm leading-relaxed text-[var(--muted)]">
             We sent a verification link to
-            {email ? <span className="font-semibold text-[#1A3233]"> {email}</span> : " your email address"}.
+            {email ? <span className="font-semibold text-[var(--ink)]"> {email}</span> : " your email address"}.
             Open the message and confirm your account before accessing protected areas of Klassruum.
           </p>
         </div>
@@ -91,7 +91,7 @@ function VerifyEmailPage() {
           </Button>
           <Link
             to="/auth/login"
-            className="inline-flex w-full items-center justify-center rounded-xl border border-[#E2E8F0] px-4 py-3 text-sm font-medium text-[#1A3233] transition-colors hover:bg-[#F8FAFC]"
+            className="inline-flex w-full items-center justify-center rounded-xl border border-[var(--border)] px-4 py-3 text-sm font-medium text-[var(--ink)] transition-colors hover:bg-[var(--page-background)]"
           >
             Back to sign in
           </Link>

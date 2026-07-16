@@ -111,7 +111,7 @@ function StudentMessages() {
                   <div
                     className={`max-w-[75%] rounded-2xl px-3.5 py-2 text-sm ${
                       m.isMine
-                        ? "bg-[#1F7C80] text-white"
+                        ? "bg-crimson text-white"
                         : "bg-[var(--gray-100)] text-[var(--gray-900)]"
                     }`}
                   >
@@ -136,7 +136,7 @@ function StudentMessages() {
               <button
                 onClick={send}
                 disabled={!draft.trim() || mutation.isPending}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-[#1F7C80] px-3 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-crimson px-3 py-2 text-sm font-semibold text-white disabled:opacity-50"
               >
                 <Send className="h-4 w-4" /> Send
               </button>

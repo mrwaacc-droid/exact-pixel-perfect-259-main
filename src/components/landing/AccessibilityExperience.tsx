@@ -74,7 +74,7 @@ function LessonDiagram({ mode }: { mode: ModeId }) {
   const isHighContrast = mode === "lowvision";
   const strokeColor = isHighContrast ? "#facc15" : "#22c55e";
   const fillColor = isHighContrast ? "#facc15" : "#22c55e";
-  const textColor = isHighContrast ? "#fef9c3" : "#0f172a";
+  const textColor = isHighContrast ? "#fef9c3" : "#1A1415";
   const accentColor = isHighContrast ? "#fde68a" : "#f59e0b";
   const fontSize = mode === "lowvision" ? 12 : 9;
 
@@ -117,8 +117,8 @@ function LessonDiagram({ mode }: { mode: ModeId }) {
         Sunlight
       </text>
       {/* CO2 */}
-      <path d="M25,45 Q75,50 105,75" stroke="#3b82f6" strokeWidth={isHighContrast ? 2 : 1.5} />
-      <text x="8" y="38" fill="#3b82f6" fontSize={fontSize} fontWeight="700">
+      <path d="M25,45 Q75,50 105,75" stroke="#C25565" strokeWidth={isHighContrast ? 2 : 1.5} />
+      <text x="8" y="38" fill="#C25565" fontSize={fontSize} fontWeight="700">
         CO₂
       </text>
       {/* O2 */}
@@ -226,7 +226,7 @@ function CaptionsPanel() {
         ))}
       </div>
       {/* live captions bar */}
-      <div className="bg-ink rounded-xl p-4 border border-ink">
+      <div className="bg-white rounded-xl p-4 border border-border">
         <div className="flex items-center gap-2 mb-2">
           <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" aria-hidden="true" />
           <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
@@ -314,7 +314,7 @@ function MotorPanel() {
       {/* large keyboard-action buttons */}
       <div className="flex gap-3 pt-1">
         <button
-          className="flex-1 h-14 bg-ink text-white rounded-xl text-sm font-semibold
+          className="flex-1 h-14 bg-crimson text-white rounded-xl text-sm font-semibold
                      focus-visible:ring-2 focus-visible:ring-ink/50 focus-visible:ring-offset-2
                      active:scale-[0.98] transition-transform"
         >
@@ -422,20 +422,45 @@ export function AccessibilityExperience() {
       : "bg-page-background border-border";
 
   return (
-    <section className="py-20 lg:py-28 bg-white" id="accessibility">
-      <div className="container-editorial">
+    <section className="cine-section" id="accessibility" style={{ background: "#fff" }}>
+      <div className="mx-auto max-w-[1240px] px-6">
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-soft-green border border-green-100 text-xs font-medium text-green-700 mb-5">
-            <Eye size={12} /> Adaptive Delivery
-          </div>
-          <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-heading leading-[1.1] tracking-[-0.02em]">
+          <span className="cine-section-eyebrow justify-center">
+            <Eye size={12} />
+            Adaptive Delivery
+          </span>
+          <h2 className="cine-section-title mt-2">
             The same lesson. A classroom shaped for each learner.
           </h2>
-          <p className="text-body mt-4 text-[1.05rem] leading-relaxed max-w-xl mx-auto">
-            Klassruum adapts the virtual environment dynamically. Click any mode below to see the
-            layout, typography, and controls adapt instantly.
+          <p className="cine-section-sub mt-5 mx-auto">
+            Klassruum adapts the virtual environment dynamically — layout, typography, colors, and controls all respond to the learner's needs. Click any mode below to see the interface adapt instantly. Interface and teaching languages can be set independently, and every mode meets WCAG 2.2 accessibility standards.
           </p>
+        </div>
+
+        {/* SEO content row */}
+        <div className="mx-auto mb-12 grid max-w-4xl gap-4 sm:grid-cols-3">
+          <div className="text-center">
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-crimson-soft">
+              <Captions size={18} className="text-crimson-dark" />
+            </div>
+            <p className="text-[15px] font-semibold text-ink">Live captions</p>
+            <p className="text-[14px] text-muted">Every spoken word is captioned in real time and saved to the transcript.</p>
+          </div>
+          <div className="text-center">
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-crimson-soft">
+              <Type size={18} className="text-crimson-dark" />
+            </div>
+            <p className="text-[15px] font-semibold text-ink">Dyslexia-friendly</p>
+            <p className="text-[14px] text-muted">Adjustable spacing, readable fonts, and slower board pacing for reading ease.</p>
+          </div>
+          <div className="text-center">
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-crimson-soft">
+              <Target size={18} className="text-crimson-dark" />
+            </div>
+            <p className="text-[15px] font-semibold text-ink">Focus & motor support</p>
+            <p className="text-[14px] text-muted">Distraction-free layouts and large keyboard-action buttons for every learner.</p>
+          </div>
         </div>
 
         {/* Tab list */}
@@ -459,11 +484,10 @@ export function AccessibilityExperience() {
                 tabIndex={isSelected ? 0 : -1}
                 onClick={() => setActiveMode(mode.id)}
                 onKeyDown={handleTabKeyDown}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all border focus-visible:ring-2 focus-visible:ring-learning-blue focus-visible:ring-offset-2 ${
-                  isSelected
-                    ? "bg-ink text-white border-ink shadow-sm"
-                    : "bg-white text-body border-border hover:border-border-strong hover:text-heading"
-                }`}
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all border focus-visible:ring-2 focus-visible:ring-learning-blue focus-visible:ring-offset-2 ${isSelected
+                  ? "bg-crimson text-white border-border shadow-sm"
+                  : "bg-white text-body border-border hover:border-border-strong hover:text-heading"
+                  }`}
               >
                 <mode.icon size={13} aria-hidden="true" />
                 {mode.label}
@@ -482,11 +506,10 @@ export function AccessibilityExperience() {
           >
             {/* Chrome bar */}
             <div
-              className={`h-9 border-b flex items-center px-4 justify-between shrink-0 ${
-                activeMode === "lowvision"
-                  ? "bg-gray-900 border-yellow-400/30"
-                  : "bg-page-background-alt border-border"
-              }`}
+              className={`h-9 border-b flex items-center px-4 justify-between shrink-0 ${activeMode === "lowvision"
+                ? "bg-gray-900 border-yellow-400/30"
+                : "bg-page-background-alt border-border"
+                }`}
             >
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-red" aria-hidden="true" />
@@ -495,15 +518,13 @@ export function AccessibilityExperience() {
                   aria-hidden="true"
                 />
                 <span
-                  className={`w-2.5 h-2.5 rounded-full ${
-                    activeMode === "lowvision" ? "bg-yellow-400" : "bg-education-green"
-                  }`}
+                  className={`w-2.5 h-2.5 rounded-full ${activeMode === "lowvision" ? "bg-yellow-400" : "bg-education-green"
+                    }`}
                   aria-hidden="true"
                 />
                 <span
-                  className={`text-[10px] ml-2 font-medium ${
-                    activeMode === "lowvision" ? "text-yellow-300" : "text-muted"
-                  }`}
+                  className={`text-[10px] ml-2 font-medium ${activeMode === "lowvision" ? "text-yellow-300" : "text-muted"
+                    }`}
                 >
                   Session preview · Photosynthesis
                 </span>

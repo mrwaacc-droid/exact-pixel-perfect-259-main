@@ -38,7 +38,7 @@ function SettingsPage() {
             <Row label="Phone" value={inst.phone ?? "—"} />
             <Row label="Status" value={inst.status} />
             <p className="pt-4 text-xs text-muted-foreground">
-              Editing institution details is coming soon.
+              Keep these institution details aligned with billing, teacher access, and learner enrollment records.
             </p>
           </CardContent>
         </Card>

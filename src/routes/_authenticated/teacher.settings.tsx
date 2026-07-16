@@ -135,16 +135,16 @@ function TeacherSettingsPage() {
 
             {availLoading ? (
               <div className="flex items-center justify-center py-10">
-                <Loader2 className="h-6 w-6 animate-spin text-[#1F7C80]" />
+                <Loader2 className="h-6 w-6 animate-spin text-crimson" />
               </div>
             ) : slots.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-[#D9E7EE] bg-[#FBFDFC] p-8 text-center">
-                <Clock className="mx-auto h-8 w-8 text-[#94A3B8]" />
+                <Clock className="mx-auto h-8 w-8 text-[#A89890]" />
                 <h3 className="mt-3 font-bold text-[#132033]">No availability set</h3>
                 <p className="mt-1 text-sm text-[#61758A]">
                   Add your available time slots so students can find and book your sessions.
                 </p>
-                <Button className="mt-4 bg-[#1F7C80] hover:bg-[#1A5256]" onClick={addSlot}>
+                <Button className="mt-4 bg-crimson hover:bg-crimson-dark" onClick={addSlot}>
                   <Plus className="mr-1.5 h-4 w-4" /> Add Your First Slot
                 </Button>
               </div>
@@ -153,12 +153,12 @@ function TeacherSettingsPage() {
                 {slots.map((slot, index) => (
                   <div
                     key={index}
-                    className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#E2E8F0] bg-[#FAFCFE] p-4"
+                    className="flex flex-wrap items-center gap-3 rounded-2xl border border-[var(--border)] bg-[#FAFCFE] p-4"
                   >
                     <select
                       value={slot.day_of_week}
                       onChange={(e) => updateSlot(index, "day_of_week", Number(e.target.value))}
-                      className="rounded-xl border border-[#D9E7EE] bg-white px-3 py-2 text-sm font-semibold text-[#132033] outline-none focus:border-[#1F7C80]"
+                      className="rounded-xl border border-[#D9E7EE] bg-white px-3 py-2 text-sm font-semibold text-[#132033] outline-none focus:border-crimson"
                     >
                       {DAYS.map((day, i) => (
                         <option key={day} value={i}>
@@ -193,7 +193,7 @@ function TeacherSettingsPage() {
                     <button
                       type="button"
                       onClick={() => removeSlot(index)}
-                      className="ml-auto rounded-xl p-2 text-[#94A3B8] transition hover:bg-red-50 hover:text-red-500"
+                      className="ml-auto rounded-xl p-2 text-[#A89890] transition hover:bg-red-50 hover:text-red-500"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -207,7 +207,7 @@ function TeacherSettingsPage() {
                 <Button
                   onClick={save}
                   disabled={mutation.isPending}
-                  className="bg-[#1F7C80] hover:bg-[#1A5256]"
+                  className="bg-crimson hover:bg-crimson-dark"
                 >
                   {mutation.isPending ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -221,7 +221,7 @@ function TeacherSettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Profile section placeholder */}
+        {/* Profile ownership notice */}
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">

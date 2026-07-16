@@ -142,17 +142,17 @@ export function StudentDashboardPage() {
     <DashboardShell config={config} activePath="/student/dashboard" title={config.title}>
       {/* Hero + Continue learning */}
       <section className="mb-5 grid gap-5 xl:grid-cols-[1fr_1.22fr]">
-        <div className="relative overflow-hidden rounded-[22px] border border-[#DCE8F7] bg-gradient-to-br from-white via-[#F6FAFF] to-[#EAF3FF] p-7 shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
+        <div className="relative overflow-hidden rounded-[22px] border border-[#DCE8F7] bg-gradient-to-br from-white via-[#F6FAFF] to-[#EAF3FF] p-7 shadow-[0_18px_45px_rgba(25, 19, 20,0.08)]">
           <div className="relative z-10 max-w-full xl:max-w-[58%]">
-            <p className="text-sm font-bold text-[#1F7C80]">{copy.welcomeLabel}</p>
-            <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#0F172A]">
+            <p className="text-sm font-bold text-[#7D2233]">{copy.welcomeLabel}</p>
+            <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#191314]">
               {copy.heroTitle}
             </h1>
-            <p className="mt-4 text-sm leading-7 text-[#334155]">{copy.heroDescription}</p>
+            <p className="mt-4 text-sm leading-7 text-[#3D3233]">{copy.heroDescription}</p>
             {hasContinue ? (
               <Link
                 to={classroomStartHref(continueLearning.lessonId, continueLearning.sessionId) as any}
-                className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#1F7C80] px-6 text-sm font-bold text-white shadow-lg shadow-[#1F7C80]/25 transition-all hover:bg-[#1A5256]"
+                className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#7D2233] px-6 text-sm font-bold text-white shadow-lg shadow-[#7D2233]/25 transition-all hover:bg-[#521326]"
               >
                 {copy.primaryActionLabel}
                 <ChevronRight className="h-4 w-4" />
@@ -160,7 +160,7 @@ export function StudentDashboardPage() {
             ) : (
               <Link
                 to="/student/courses"
-                className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#1F7C80] px-6 text-sm font-bold text-white shadow-lg shadow-[#1F7C80]/25 transition-all hover:bg-[#1A5256]"
+                className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#7D2233] px-6 text-sm font-bold text-white shadow-lg shadow-[#7D2233]/25 transition-all hover:bg-[#521326]"
               >
                 Browse Courses
                 <ChevronRight className="h-4 w-4" />
@@ -169,29 +169,29 @@ export function StudentDashboardPage() {
           </div>
 
           <div className="absolute bottom-5 right-8 grid h-44 w-52 place-items-center">
-            <div className="absolute h-36 w-48 rounded-[44px] bg-[#d1eceb]" />
-            <div className="relative grid h-28 w-36 place-items-center rounded-3xl bg-white shadow-xl shadow-[#1F7C80]/10">
-              <BookOpen className="h-16 w-16 text-[#1A5256]" />
-              <Award className="absolute -right-4 -top-4 h-11 w-11 rounded-2xl bg-[#e8f5f5] p-2 text-[#1F7C80] shadow-md" />
+            <div className="absolute h-36 w-48 rounded-[44px] bg-[#F7E7EA]" />
+            <div className="relative grid h-28 w-36 place-items-center rounded-3xl bg-white shadow-xl shadow-[#7D2233]/10">
+              <BookOpen className="h-16 w-16 text-[#521326]" />
+              <Award className="absolute -right-4 -top-4 h-11 w-11 rounded-2xl bg-[#F7E7EA] p-2 text-[#7D2233] shadow-md" />
             </div>
           </div>
         </div>
 
         {hasContinue ? (
-          <div className="rounded-[22px] border border-[#DCE8F7] bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
+          <div className="rounded-[22px] border border-[#DCE8F7] bg-white p-7 shadow-[0_18px_45px_rgba(25, 19, 20,0.08)]">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#1F7C80] text-2xl font-black text-white shadow-lg shadow-[#1F7C80]/25">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#7D2233] text-2xl font-black text-white shadow-lg shadow-[#7D2233]/25">
                 {classroomGlyph(continueLearning.lessonTitle || continueLearning.courseTitle)}
               </div>
               <div className="min-w-0 flex-1">
-                <h2 className="text-xl font-extrabold tracking-tight text-[#0F172A]">
+                <h2 className="text-xl font-extrabold tracking-tight text-[#191314]">
                   {continueLearning.lessonTitle || "Continue your lesson"}
                 </h2>
-                <p className="mt-1 text-sm text-[#475569]">{continueLearning.courseTitle}</p>
+                <p className="mt-1 text-sm text-[var(--muted)]">{continueLearning.courseTitle}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <StatusBadge variant="success">AI Teacher Ready</StatusBadge>
                   {data.accessProfile.captionsEnabled && (
-                    <span className="inline-flex items-center gap-1 rounded-lg border border-[#BFDBFE] bg-[#e8f5f5] px-3 py-1 text-xs font-bold text-[#1A5256]">
+                    <span className="inline-flex items-center gap-1 rounded-lg border border-[#F0D7DC] bg-[#F7E7EA] px-3 py-1 text-xs font-bold text-[#521326]">
                       <Eye className="h-3.5 w-3.5" />
                       Captions On
                     </span>
@@ -208,19 +208,19 @@ export function StudentDashboardPage() {
 
             <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
               <div>
-                <p className="text-sm text-[#334155]">
+                <p className="text-sm text-[#3D3233]">
                   <span className="font-bold">Current Step:</span>{" "}
                   {continueLearning.currentStep || "hook"}
                 </p>
-                <div className="mt-4 h-3 overflow-hidden rounded-full bg-[#d1eceb]">
+                <div className="mt-4 h-3 overflow-hidden rounded-full bg-[#F7E7EA]">
                   <div
-                    className="h-full rounded-full bg-[#1F7C80]"
+                    className="h-full rounded-full bg-[#7D2233]"
                     style={{ width: `${continueLearning.progressPercentage}%` }}
                   />
                 </div>
               </div>
               <div className="text-left sm:text-right">
-                <p className="text-2xl font-extrabold text-[#1A5256]">
+                <p className="text-2xl font-extrabold text-[#521326]">
                   {continueLearning.progressPercentage}%
                 </p>
               </div>
@@ -229,39 +229,39 @@ export function StudentDashboardPage() {
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
               <Link
                 to={classroomStartHref(continueLearning.lessonId, continueLearning.sessionId) as any}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#1F7C80] px-4 text-sm font-bold text-white transition-all hover:bg-[#1A5256]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#7D2233] px-4 text-sm font-bold text-white transition-all hover:bg-[#521326]"
               >
                 {copy.primaryActionLabel}
                 <ChevronRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/student/notes"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#a3d9d8] bg-white px-4 text-sm font-bold text-[#1A5256] transition-all hover:bg-[#e8f5f5]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#F7E7EA] bg-white px-4 text-sm font-bold text-[#521326] transition-all hover:bg-[#F7E7EA]"
               >
                 Review Notes
               </Link>
               <Link
                 to="/student/quizzes"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#a3d9d8] bg-white px-4 text-sm font-bold text-[#1A5256] transition-all hover:bg-[#e8f5f5]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#F7E7EA] bg-white px-4 text-sm font-bold text-[#521326] transition-all hover:bg-[#F7E7EA]"
               >
                 Quick Quiz
               </Link>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-center rounded-[22px] border border-dashed border-[#BFDBFE] bg-white p-7 shadow-sm">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e8f5f5] text-[#1F7C80]">
+          <div className="flex flex-col justify-center rounded-[22px] border border-dashed border-[#F0D7DC] bg-white p-7 shadow-sm">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F7E7EA] text-[#7D2233]">
               <Sparkles className="h-6 w-6" />
             </div>
-            <h2 className="mt-4 text-xl font-extrabold text-[#0F172A]">Start your first lesson</h2>
-            <p className="mt-1 text-sm text-[#475569]">
+            <h2 className="mt-4 text-xl font-extrabold text-[#191314]">Start your first lesson</h2>
+            <p className="mt-1 text-sm text-[var(--muted)]">
               {hasCourses
                 ? "Pick up a course below and enter the AI classroom to begin."
                 : "Browse the catalog, enroll in a course, and your continue-learning card will appear here."}
             </p>
             <Link
               to="/student/courses"
-              className="mt-4 inline-flex h-11 w-fit items-center justify-center gap-2 rounded-xl bg-[#1F7C80] px-5 text-sm font-bold text-white transition-all hover:bg-[#1A5256]"
+              className="mt-4 inline-flex h-11 w-fit items-center justify-center gap-2 rounded-xl bg-[#7D2233] px-5 text-sm font-bold text-white transition-all hover:bg-[#521326]"
             >
               {hasCourses ? "Go to My Courses" : "Browse Catalog"}
               <ChevronRight className="h-4 w-4" />
@@ -314,10 +314,10 @@ export function StudentDashboardPage() {
         <div className="rounded-[18px] border border-[#DCE8F7] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold text-[#0F172A]">My Classrooms</h2>
-              <p className="mt-0.5 text-sm text-[#64748B]">Continue your active learning spaces</p>
+              <h2 className="text-xl font-bold text-[#191314]">My Classrooms</h2>
+              <p className="mt-0.5 text-sm text-[#8A7478]">Continue your active learning spaces</p>
             </div>
-            <Link to="/student/classrooms" className="text-sm font-bold text-[#1F7C80] hover:text-[#1A5256]">
+            <Link to="/student/classrooms" className="text-sm font-bold text-[#7D2233] hover:text-[#521326]">
               View all
             </Link>
           </div>
@@ -327,38 +327,38 @@ export function StudentDashboardPage() {
                 <Link
                   key={course.id}
                   to={classroomStartHref(course.lessonId, course.sessionId) as any}
-                  className="grid grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-[#E2E8F0] bg-white p-3 transition-all hover:border-[#BFDBFE] hover:bg-[#F8FBFF]"
+                  className="grid grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-[var(--border)] bg-white p-3 transition-all hover:border-[#F0D7DC] hover:bg-[#FCF4F5]"
                 >
-                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#1F7C80] text-sm font-black text-white">
+                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#7D2233] text-sm font-black text-white">
                     {classroomGlyph(course.title)}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="truncate text-sm font-extrabold leading-snug text-[#0F172A]">
+                    <h3 className="truncate text-sm font-extrabold leading-snug text-[#191314]">
                       {course.title}
                     </h3>
-                    <p className="truncate text-xs leading-snug text-[#64748B]">
+                    <p className="truncate text-xs leading-snug text-[#8A7478]">
                       {course.institutionName || course.subject} · {course.completedLessons}/
                       {course.totalLessons} lessons
                     </p>
                     <div className="mt-2 flex items-center gap-3">
-                      <div className="h-2 w-28 overflow-hidden rounded-full bg-[#d1eceb]">
+                      <div className="h-2 w-28 overflow-hidden rounded-full bg-[#F7E7EA]">
                         <div
-                          className="h-full rounded-full bg-[#1F7C80]"
+                          className="h-full rounded-full bg-[#7D2233]"
                           style={{ width: `${course.progressPercentage}%` }}
                         />
                       </div>
-                      <span className="text-xs font-bold text-[#1A5256]">
+                      <span className="text-xs font-bold text-[#521326]">
                         {course.progressPercentage}%
                       </span>
                     </div>
                   </div>
-                  <span className="inline-flex h-9 shrink-0 items-center rounded-lg border border-[#BFDBFE] px-3 text-xs font-bold text-[#1A5256]">
+                  <span className="inline-flex h-9 shrink-0 items-center rounded-lg border border-[#F0D7DC] px-3 text-xs font-bold text-[#521326]">
                     Enter
                   </span>
                 </Link>
               ))
             ) : (
-              <p className="py-6 text-center text-sm text-[#64748B]">
+              <p className="py-6 text-center text-sm text-[#8A7478]">
                 No classrooms yet. Enroll in a course to get started.
               </p>
             )}
@@ -367,31 +367,31 @@ export function StudentDashboardPage() {
 
         <div className="rounded-[18px] border border-[#DCE8F7] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-bold text-[#0F172A]">Today's Plan</h3>
-            <Calendar className="h-4 w-4 text-[#94A3B8]" />
+            <h3 className="font-bold text-[#191314]">Today's Plan</h3>
+            <Calendar className="h-4 w-4 text-[#A89890]" />
           </div>
           <div className="space-y-3">
             {learningPlan.length > 0 ? (
               learningPlan.slice(0, 3).map((item, index) => (
                 <div
                   key={item.id}
-                  className={`flex items-start gap-3 rounded-xl p-3 ${index === 0 ? "bg-[#e8f5f5]" : "bg-[#F8FAFC]"}`}
+                  className={`flex items-start gap-3 rounded-xl p-3 ${index === 0 ? "bg-[#F7E7EA]" : "bg-[var(--page-background)]"}`}
                 >
                   <div
-                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${index === 0 ? "bg-[#1F7C80] text-white" : "bg-[#d1eceb] text-[#1F7C80]"}`}
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${index === 0 ? "bg-[#7D2233] text-white" : "bg-[#F7E7EA] text-[#7D2233]"}`}
                   >
                     {index + 1}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-[#0F172A]">{item.title}</p>
+                    <p className="text-sm font-semibold text-[#191314]">{item.title}</p>
                     {item.description && (
-                      <p className="text-xs text-[#64748B]">{item.description}</p>
+                      <p className="text-xs text-[#8A7478]">{item.description}</p>
                     )}
                   </div>
                 </div>
               ))
             ) : (
-              <p className="py-6 text-center text-sm text-[#64748B]">
+              <p className="py-6 text-center text-sm text-[#8A7478]">
                 No planned tasks right now. Start a lesson to build your plan.
               </p>
             )}
@@ -399,13 +399,13 @@ export function StudentDashboardPage() {
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <Link
               to={classroomStartHref(continueLearning?.lessonId, continueLearning?.sessionId) as any}
-              className="inline-flex min-h-10 items-center justify-center rounded-xl bg-[#1F7C80] px-3 py-2 text-center text-sm font-bold leading-snug text-white"
+              className="inline-flex min-h-10 items-center justify-center rounded-xl bg-[#7D2233] px-3 py-2 text-center text-sm font-bold leading-snug text-white"
             >
               Start Plan
             </Link>
             <Link
               to="/student/learning-plan"
-              className="inline-flex min-h-10 items-center justify-center rounded-xl border border-[#a3d9d8] px-3 py-2 text-center text-sm font-bold leading-snug text-[#1A5256]"
+              className="inline-flex min-h-10 items-center justify-center rounded-xl border border-[#F7E7EA] px-3 py-2 text-center text-sm font-bold leading-snug text-[#521326]"
             >
               Customize
             </Link>
@@ -415,10 +415,10 @@ export function StudentDashboardPage() {
         <div className="rounded-[18px] border border-[#DCE8F7] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold text-[#0F172A]">Recent Sessions</h2>
-              <p className="mt-0.5 text-sm text-[#64748B]">Your recent learning activity</p>
+              <h2 className="text-xl font-bold text-[#191314]">Recent Sessions</h2>
+              <p className="mt-0.5 text-sm text-[#8A7478]">Your recent learning activity</p>
             </div>
-            <Link to="/student/sessions" className="text-sm font-bold text-[#1F7C80] hover:text-[#1A5256]">
+            <Link to="/student/sessions" className="text-sm font-bold text-[#7D2233] hover:text-[#521326]">
               View all
             </Link>
           </div>
@@ -429,16 +429,16 @@ export function StudentDashboardPage() {
                   key={session.id}
                   to="/student/sessions/$sessionId/summary"
                   params={{ sessionId: session.id } as any}
-                  className="grid grid-cols-[46px_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-[#E2E8F0] bg-white p-3 transition-all hover:border-[#BFDBFE] hover:bg-[#F8FBFF]"
+                  className="grid grid-cols-[46px_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-[var(--border)] bg-white p-3 transition-all hover:border-[#F0D7DC] hover:bg-[#FCF4F5]"
                 >
-                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#1F7C80] text-xs font-black text-white">
+                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#7D2233] text-xs font-black text-white">
                     {classroomGlyph(session.lessonTitle || session.courseTitle)}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="truncate text-sm font-extrabold leading-snug text-[#0F172A]">
+                    <h3 className="truncate text-sm font-extrabold leading-snug text-[#191314]">
                       {session.lessonTitle}
                     </h3>
-                    <p className="truncate text-xs leading-snug text-[#64748B]">
+                    <p className="truncate text-xs leading-snug text-[#8A7478]">
                       {session.courseTitle}
                       {session.durationMinutes ? ` · ${session.durationMinutes} min` : ""}
                     </p>
@@ -461,7 +461,7 @@ export function StudentDashboardPage() {
                 </Link>
               ))
             ) : (
-              <p className="py-6 text-center text-sm text-[#64748B]">
+              <p className="py-6 text-center text-sm text-[#8A7478]">
                 No sessions yet. Enter a classroom to start learning.
               </p>
             )}
@@ -473,12 +473,12 @@ export function StudentDashboardPage() {
       <section className="mt-5 rounded-[18px] border border-[#DCE8F7] bg-white p-5 shadow-sm">
         <div className="grid gap-4 lg:grid-cols-[1fr_1.15fr_auto_auto] lg:items-center">
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#e8f5f5] text-[#1F7C80]">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#F7E7EA] text-[#7D2233]">
               <Accessibility className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-[#0F172A]">Learning Access</h2>
-              <p className="text-sm text-[#475569]">{data.accessProfile.currentMode} profile</p>
+              <h2 className="text-lg font-extrabold text-[#191314]">Learning Access</h2>
+              <p className="text-sm text-[var(--muted)]">{data.accessProfile.currentMode} profile</p>
             </div>
           </div>
           <div className="grid gap-3 sm:grid-cols-4">
@@ -488,10 +488,10 @@ export function StudentDashboardPage() {
               ["Keyboard shortcuts", data.accessProfile.keyboardShortcutsEnabled ? "On" : "Off"],
               ["Focus mode", data.accessProfile.focusModeEnabled ? "On" : "Off"],
             ].map(([label, value]) => (
-              <div key={label} className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3">
-                <p className="text-xs font-bold text-[#334155]">{label}</p>
+              <div key={label} className="rounded-xl border border-[var(--border)] bg-[var(--page-background)] px-4 py-3">
+                <p className="text-xs font-bold text-[#3D3233]">{label}</p>
                 <p
-                  className={`mt-1 text-sm font-extrabold ${value === "On" ? "text-[#16A34A]" : "text-[#64748B]"}`}
+                  className={`mt-1 text-sm font-extrabold ${value === "On" ? "text-[#16A34A]" : "text-[#8A7478]"}`}
                 >
                   {value}
                 </p>
@@ -500,13 +500,13 @@ export function StudentDashboardPage() {
           </div>
           <Link
             to="/student/access"
-            className="inline-flex h-11 items-center justify-center rounded-xl bg-[#1F7C80] px-5 text-sm font-bold text-white"
+            className="inline-flex h-11 items-center justify-center rounded-xl bg-[#7D2233] px-5 text-sm font-bold text-white"
           >
             Adjust Access
           </Link>
           <Link
             to="/student/access"
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-[#a3d9d8] px-5 text-sm font-bold text-[#1A5256]"
+            className="inline-flex h-11 items-center justify-center rounded-xl border border-[#F7E7EA] px-5 text-sm font-bold text-[#521326]"
           >
             Focus Mode
           </Link>

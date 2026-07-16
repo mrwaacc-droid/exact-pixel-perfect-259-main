@@ -92,15 +92,15 @@ function InstitutionSessionsPage() {
             onClick={() => setTab(t.key)}
             className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
               tab === t.key
-                ? "border-[#1F7C80] bg-[#EAF8F7] text-[#1F7C80]"
-                : "border-[#E2E8F0] bg-white text-[#64748B] hover:bg-[#F8FBFD]"
+                ? "border-crimson bg-crimson-soft text-crimson"
+                : "border-[var(--border)] bg-white text-[#8A7478] hover:bg-[#F8FBFD]"
             }`}
           >
             {t.icon}
             {t.label}
             <span
               className={`ml-1 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
-                tab === t.key ? "bg-[#1F7C80] text-white" : "bg-[#F1F5F9] text-[#64748B]"
+                tab === t.key ? "bg-crimson text-white" : "bg-[var(--beige-soft)] text-[#8A7478]"
               }`}
             >
               {t.count}
@@ -114,18 +114,18 @@ function InstitutionSessionsPage() {
         <div className="space-y-4">
           {liveSessions.length === 0 ? (
             <EmptyState
-              icon={<Radio className="h-8 w-8 text-[#94A3B8]" />}
+              icon={<Radio className="h-8 w-8 text-[#A89890]" />}
               title="No live sessions"
               description="When a teacher or AI starts a session, it will appear here in real-time."
             />
           ) : (
             liveSessions.map((s: any) => (
-              <Card key={s.id} className="border-[#1F7C80]/20">
+              <Card key={s.id} className="border-crimson/20">
                 <CardContent className="flex items-center justify-between gap-4 p-5">
                   <div className="flex items-center gap-4">
                     <div className="relative flex h-10 w-10 items-center justify-center">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1F7C80] opacity-40" />
-                      <Zap className="relative h-5 w-5 text-[#1F7C80]" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-crimson opacity-40" />
+                      <Zap className="relative h-5 w-5 text-crimson" />
                     </div>
                     <div>
                       <p className="font-bold text-[#132033]">{s.lessonTitle}</p>
@@ -137,13 +137,13 @@ function InstitutionSessionsPage() {
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <div className="flex items-center gap-1.5 text-sm font-semibold text-[#132033]">
-                        <Users className="h-4 w-4 text-[#1F7C80]" /> {s.participantCount}
+                        <Users className="h-4 w-4 text-crimson" /> {s.participantCount}
                       </div>
                       <p className="text-[11px] text-[#61758A]">learners</p>
                     </div>
                     <Button
                       size="sm"
-                      className="bg-[#1F7C80] hover:bg-[#1A5256]"
+                      className="bg-crimson hover:bg-crimson-dark"
                       onClick={() => {
                         window.location.href = `/teacher/sessions/${s.id}`;
                       }}
@@ -163,7 +163,7 @@ function InstitutionSessionsPage() {
         <div className="space-y-4">
           {scheduledEvents.length === 0 ? (
             <EmptyState
-              icon={<Calendar className="h-8 w-8 text-[#94A3B8]" />}
+              icon={<Calendar className="h-8 w-8 text-[#A89890]" />}
               title="No scheduled sessions"
               description="Schedule a session from a course page to see it here."
             />
@@ -191,7 +191,7 @@ function InstitutionSessionsPage() {
         <div className="space-y-4">
           {completedEvents.length === 0 ? (
             <EmptyState
-              icon={<CheckCircle2 className="h-8 w-8 text-[#94A3B8]" />}
+              icon={<CheckCircle2 className="h-8 w-8 text-[#A89890]" />}
               title="No completed sessions"
               description="Completed sessions and recordings will appear here."
             />
@@ -229,7 +229,7 @@ function EmptyState({
 }) {
   return (
     <div className="rounded-2xl border border-dashed border-[#D9E7EE] bg-[#FBFDFC] p-12 text-center">
-      <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#F1F5F9]">
+      <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--beige-soft)]">
         {icon}
       </div>
       <h3 className="text-lg font-bold text-[#132033]">{title}</h3>

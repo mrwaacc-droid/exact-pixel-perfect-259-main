@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteStubPage } from "@/components/route/RouteStubPage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/materials")({
-  component: () => (
-    <RouteStubPage
-      title="Course Materials"
-      description="Manage materials for this course"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+// Materials are managed in the Materials tab of the course detail page.
+export const Route = createFileRoute(
+  "/_authenticated/institution/courses/$courseId/materials",
+)({
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/institution/courses/$courseId",
+      params: { courseId: params.courseId },
+    } as any);
+  },
 });

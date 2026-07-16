@@ -70,7 +70,7 @@ export function ChatPanel({
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                   message.sender === "student"
-                    ? "bg-[#1F7C80] text-white rounded-br-md"
+                    ? "bg-[var(--crimson)] text-white rounded-br-md"
                     : "bg-gray-100 text-gray-800 rounded-bl-md"
                 }`}
               >
@@ -99,7 +99,7 @@ export function ChatPanel({
               key={action.label}
               onClick={() => handleQuickAction(action.label)}
               disabled={isLoading}
-              className="text-left px-3 py-2 text-xs font-medium rounded-lg border border-gray-200 hover:border-[#a3d9d8] hover:text-[#1F7C80] disabled:opacity-50 transition-colors"
+              className="text-left px-3 py-2 text-xs font-medium rounded-lg border border-gray-200 hover:border-[var(--crimson-soft)] hover:text-[var(--crimson)] disabled:opacity-50 transition-colors"
             >
               <span className="mr-1">{action.icon}</span>
               {action.label}
@@ -121,7 +121,7 @@ export function ChatPanel({
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question…"
             disabled={isLoading}
-            className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#1F7C80] disabled:opacity-50"
+            className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[var(--crimson)] disabled:opacity-50"
           />
 
           {learnerAccessProfile.voiceInputEnabled && (
@@ -143,7 +143,7 @@ export function ChatPanel({
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="p-2.5 rounded-lg bg-[#1F7C80] text-white hover:bg-[#1A5256] disabled:opacity-50 transition-colors"
+            className="p-2.5 rounded-lg bg-[var(--crimson)] text-white hover:bg-[var(--crimson-dark)] disabled:opacity-50 transition-colors"
             aria-label="Send message"
           >
             <Send size={18} />

@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { AuthBrandRail } from "@/components/auth/AuthBrandRail";
 import { Logo } from "@/components/brand/Logo";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -54,7 +55,9 @@ function LoginPage() {
     typeof window !== "undefined"
       ? new URLSearchParams(window.location.search).get("invite")
       : null;
-  const signupHref = inviteToken ? `/auth/signup?invite=${encodeURIComponent(inviteToken)}` : "/auth/signup";
+  const signupHref = inviteToken
+    ? `/auth/signup?invite=${encodeURIComponent(inviteToken)}`
+    : "/auth/signup";
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,91 +117,36 @@ function LoginPage() {
 
   return (
     <div className="auth-tech-page flex min-h-screen">
-      {/* Left panel — brand + image */}
-      <div className="auth-tech-brand hidden lg:flex lg:w-[480px] xl:w-[540px] flex-col justify-between overflow-hidden p-10 relative">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1F7C80]/30 via-transparent to-[#5F5B46]/20" />
-
-        {/* Dot grid texture */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: "radial-gradient(circle, #1F7C80 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-        />
-
-        {/* Content */}
-        <div className="relative z-10">
-          <Link to="/" className="flex items-center gap-2.5">
-            <Logo size={36} />
-          </Link>
-        </div>
-
-        <div className="relative z-10">
-          <h1 className="text-3xl font-bold leading-tight text-white xl:text-4xl">
-            Welcome back to the classroom that teaches like a real teacher.
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-[#A3ADAD]">
-            Sign in to access your AI-powered virtual classrooms, track learner progress, and manage
-            courses — all in one place.
-          </p>
-
-          {/* Feature highlights */}
-          <div className="mt-8 space-y-3">
-            {[
-              "AI teacher-led lessons with voice and captions",
-              "Real-time learner progress tracking",
-              "Accessible learning modes for every student",
-            ].map((feature) => (
-              <div key={feature} className="flex items-center gap-3 text-sm text-[#d1eceb]">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1F7C80]/20 text-[#1F7C80]">
-                  <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-                {feature}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom decorative element */}
-        <div className="relative z-10">
-          <div className="h-1 w-16 rounded-full bg-[#1F7C80]" />
-          <p className="mt-3 text-xs text-[#A3ADAD]">
-            © {new Date().getFullYear()} Klassruum. All rights reserved.
-          </p>
-        </div>
-      </div>
-
+      <AuthBrandRail
+        eyebrow="Secure classroom access"
+        title="Resume teaching with the room already set."
+        body="Return to live lessons, learner progress, transcripts, notes, and institution controls without losing the teaching thread."
+        stats={[
+          { label: "Lesson evidence", value: "Live" },
+          { label: "Access modes", value: "10+" },
+          { label: "Setup", value: "0 min" },
+        ]}
+      />
       {/* Right panel — form */}
-      <div className="flex flex-1 items-center justify-center px-6 py-12">
-        <div className="auth-tech-panel w-full max-w-[430px] space-y-8 p-6 sm:p-8">
+      <div className="flex flex-1 items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+        <div className="auth-tech-panel w-full max-w-[430px] space-y-6 sm:space-y-8 p-5 sm:p-8">
           {/* Mobile logo */}
           <div className="lg:hidden">
             <Link to="/" className="flex items-center gap-2.5">
-              <Logo size={32} />
+              <Logo size={34} />
             </Link>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-[#1A3233]">Sign in</h2>
-            <p className="mt-2 text-sm text-[#A3ADAD]">
+            <h2 className="text-2xl font-bold tracking-tight text-[var(--ink)]">Sign in</h2>
+            <p className="mt-2 text-sm text-[var(--muted)]">
               Enter your credentials to access your account
             </p>
           </div>
 
           <form className="space-y-5" onSubmit={handleEmailSignIn}>
             <div className="space-y-1.5">
-              <label htmlFor="email" className="block text-sm font-medium text-[#1A3233]">
+              <label htmlFor="email" className="block text-sm font-medium text-[var(--ink)]">
                 Email address
               </label>
               <input
@@ -207,19 +155,19 @@ function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-[#d1eceb] bg-white px-4 py-3 text-sm text-[#1A3233] outline-none transition-all focus:border-[#1F7C80] focus:ring-2 focus:ring-[#1F7C80]/10"
+                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--ink)] outline-none transition-all focus:border-crimson focus:ring-2 focus:ring-crimson/10"
                 placeholder="you@example.com"
               />
             </div>
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium text-[#1A3233]">
+                <label htmlFor="password" className="block text-sm font-medium text-[var(--ink)]">
                   Password
                 </label>
                 <Link
                   to="/auth/forgot-password"
-                  className="text-xs font-medium text-[#1F7C80] hover:text-[#1A5256]"
+                  className="text-xs font-medium text-crimson hover:text-crimson-dark"
                 >
                   Forgot password?
                 </Link>
@@ -230,7 +178,7 @@ function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-[#d1eceb] bg-white px-4 py-3 text-sm text-[#1A3233] outline-none transition-all focus:border-[#1F7C80] focus:ring-2 focus:ring-[#1F7C80]/10"
+                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--ink)] outline-none transition-all focus:border-crimson focus:ring-2 focus:ring-crimson/10"
                 placeholder="Enter your password"
               />
             </div>
@@ -238,7 +186,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={busy}
-              className="w-full rounded-xl bg-[#1F7C80] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1F7C80]/25 transition-all hover:bg-[#1A5256] hover:shadow-xl hover:shadow-[#1F7C80]/30 focus:outline-none focus:ring-2 focus:ring-[#1F7C80] focus:ring-offset-2 disabled:opacity-60"
+              className="w-full rounded-xl bg-crimson px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-crimson/25 transition-all hover:bg-crimson-dark hover:shadow-xl hover:shadow-crimson/30 focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2 disabled:opacity-60"
             >
               {busy ? "Please wait…" : "Sign in"}
             </button>
@@ -246,10 +194,10 @@ function LoginPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#d1eceb]" />
+              <div className="w-full border-t border-[var(--border)]" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-[#A3ADAD]">or continue with</span>
+              <span className="bg-white px-3 text-[var(--muted)]">or continue with</span>
             </div>
           </div>
 
@@ -257,7 +205,7 @@ function LoginPage() {
             <button
               type="button"
               onClick={handleGoogleSignIn}
-              className="flex items-center justify-center gap-2 rounded-xl border border-[#d1eceb] bg-white px-4 py-3 text-sm font-medium text-[#1A3233] transition-all hover:bg-[#f8fafb] hover:border-[#A3ADAD]"
+              className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-[var(--ink)] transition-all hover:bg-[var(--page-background)] hover:border-[var(--border-strong)]"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path
@@ -279,7 +227,7 @@ function LoginPage() {
               </svg>
               Google
             </button>
-            <button className="flex items-center justify-center gap-2 rounded-xl border border-[#d1eceb] bg-white px-4 py-3 text-sm font-medium text-[#1A3233] transition-all hover:bg-[#f8fafb] hover:border-[#A3ADAD]">
+            <button className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-[var(--ink)] transition-all hover:bg-[var(--page-background)] hover:border-[var(--border-strong)]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
               </svg>
@@ -287,20 +235,17 @@ function LoginPage() {
             </button>
           </div>
 
-          <p className="text-center text-sm text-[#A3ADAD]">
+          <p className="text-center text-sm text-[var(--muted)]">
             Don't have an account?{" "}
-            <Link
-              to={signupHref}
-              className="font-semibold text-[#1F7C80] hover:text-[#1A5256]"
-            >
+            <Link to={signupHref} className="font-semibold text-crimson hover:text-crimson-dark">
               Create an account
             </Link>
           </p>
-          <p className="text-center text-sm text-[#A3ADAD]">
+          <p className="text-center text-sm text-[var(--muted)]">
             Running an institution?{" "}
             <Link
               to="/institutions/register"
-              className="font-semibold text-[#1F7C80] hover:text-[#1A5256]"
+              className="font-semibold text-crimson hover:text-crimson-dark"
             >
               Register your institution
             </Link>

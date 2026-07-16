@@ -100,7 +100,7 @@ function StudentProfileEdit() {
             <button
               onClick={save}
               disabled={mutation.isPending}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#1F7C80] px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 hover:bg-[#1A5256]"
+              className="inline-flex items-center gap-2 rounded-xl bg-crimson px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 hover:bg-crimson-dark"
             >
               {mutation.isPending ? "Saving…" : "Save changes"}
             </button>

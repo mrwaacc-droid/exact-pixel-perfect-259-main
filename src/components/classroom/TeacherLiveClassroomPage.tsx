@@ -111,13 +111,13 @@ function buildRoster(
 function rosterTone(state: RosterState) {
   switch (state) {
     case "ready":
-      return "border-emerald-200 bg-emerald-50 text-emerald-700";
+      return "border-emerald-200 bg-success-light text-emerald-700";
     case "needs_help":
       return "border-amber-200 bg-amber-50 text-amber-700";
     case "hand_raised":
       return "border-sky-200 bg-sky-50 text-sky-700";
     default:
-      return "border-slate-200 bg-slate-50 text-slate-700";
+      return "border-slate-200 bg-slate-50 text-gray-700";
   }
 }
 
@@ -175,7 +175,7 @@ export function TeacherLiveClassroomPage({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[28px] border border-[#C9DDE7] bg-white p-6 shadow-[0_16px_60px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[28px] border border-[#C9DDE7] bg-white p-6 shadow-[0_16px_60px_rgba(25, 19, 20,0.08)]">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -232,7 +232,7 @@ export function TeacherLiveClassroomPage({
 
         <div className="mt-6 flex flex-wrap gap-3">
           <Button
-            className="bg-[#1F7C80] text-white hover:bg-[#1A5256]"
+            className="bg-[#7D2233] text-white hover:bg-[var(--crimson-dark)]"
             onClick={() => setRecordingLive(true)}
           >
             <PlayCircle className="mr-2 h-4 w-4" />{" "}
@@ -282,7 +282,7 @@ export function TeacherLiveClassroomPage({
 
       <section className="grid gap-6 xl:grid-cols-[1.45fr_.95fr]">
         <div className="space-y-6">
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -292,13 +292,13 @@ export function TeacherLiveClassroomPage({
                   Teacher broadcast console
                 </h2>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF8F7] px-3 py-1 text-xs font-semibold text-[#1F7C80]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF8F7] px-3 py-1 text-xs font-semibold text-[#7D2233]">
                 <Radio className="h-3.5 w-3.5" /> Broadcasting
               </div>
             </div>
 
             <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
-              <div className="rounded-[24px] border border-[#E6EEF5] bg-[#0F172A] p-5 text-white">
+              <div className="rounded-[24px] border border-[#E6EEF5] bg-[#191314] p-5 text-white">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-white/60">
@@ -414,7 +414,7 @@ export function TeacherLiveClassroomPage({
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -424,7 +424,7 @@ export function TeacherLiveClassroomPage({
                   Prompts sent to learners during recording
                 </h2>
               </div>
-              <WandSparkles className="h-5 w-5 text-[#1F7C80]" />
+              <WandSparkles className="h-5 w-5 text-[#7D2233]" />
             </div>
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {quickActions.map((action) => {
@@ -436,7 +436,7 @@ export function TeacherLiveClassroomPage({
                     key={prompt}
                     type="button"
                     onClick={() => void sendMessage(prompt)}
-                    className="rounded-2xl border border-[#DDE8EF] bg-[#FAFCFE] p-4 text-left text-sm font-semibold text-[#244059] transition hover:border-[#1F7C80]/35 hover:bg-[#F4FBFA]"
+                    className="rounded-2xl border border-[#DDE8EF] bg-[#FAFCFE] p-4 text-left text-sm font-semibold text-[#244059] transition hover:border-[#7D2233]/35 hover:bg-[var(--crimson-soft)]"
                   >
                     {prompt}
                   </button>
@@ -447,7 +447,7 @@ export function TeacherLiveClassroomPage({
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -455,7 +455,7 @@ export function TeacherLiveClassroomPage({
                 </p>
                 <h2 className="mt-2 text-xl font-black text-[#132033]">Who the teacher sees</h2>
               </div>
-              <Users className="h-5 w-5 text-[#1F7C80]" />
+              <Users className="h-5 w-5 text-[#7D2233]" />
             </div>
             <div className="mt-5 space-y-3">
               {roster.length > 0 ? (
@@ -484,7 +484,7 @@ export function TeacherLiveClassroomPage({
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
@@ -530,12 +530,12 @@ export function TeacherLiveClassroomPage({
                   value={announcement}
                   onChange={(e) => setAnnouncement(e.target.value)}
                   placeholder="Type a live announcement for learners"
-                  className="h-11 flex-1 rounded-xl border border-[#D9E7EE] bg-white px-4 text-sm outline-none transition focus:border-[#1F7C80]"
+                  className="h-11 flex-1 rounded-xl border border-[#D9E7EE] bg-white px-4 text-sm outline-none transition focus:border-[#7D2233]"
                 />
                 <Button
                   onClick={() => void sendMessage(announcement)}
                   disabled={sending || !announcement.trim()}
-                  className="h-11 bg-[#1F7C80] hover:bg-[#1A5256]"
+                  className="h-11 bg-[#7D2233] hover:bg-[var(--crimson-dark)]"
                 >
                   <Send className="mr-2 h-4 w-4" /> Send
                 </Button>
@@ -543,9 +543,9 @@ export function TeacherLiveClassroomPage({
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.07)]">
+          <div className="rounded-[28px] border border-[#D9E7EE] bg-white p-6 shadow-[0_12px_40px_rgba(25, 19, 20,0.07)]">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#7B8EA2]">
-              <BadgeCheck className="h-4 w-4 text-[#1F7C80]" /> Teacher support snapshot
+              <BadgeCheck className="h-4 w-4 text-[#7D2233]" /> Teacher support snapshot
             </div>
             <ul className="mt-4 space-y-3 text-sm text-[#53697D]">
               <li className="rounded-2xl border border-[#E6EEF5] bg-[#FAFCFE] p-3">

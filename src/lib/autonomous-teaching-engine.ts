@@ -14,7 +14,7 @@
 
 import { generateText, generateObject } from "ai";
 import { z } from "zod";
-import { createLovableAiGatewayProvider } from "./ai-gateway.server";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -57,6 +57,13 @@ export type CognitiveState = {
   idleSeconds: number;
   /** Cognitive load estimate 0-1 */
   cognitiveLoad: number;
+  // Ambient Learner Model properties
+  attentionSpanSeconds?: number;
+  readingLevel?: string;
+  confidenceScore?: number;
+  motivationProfile?: "intrinsic" | "extrinsic" | "achievement" | "social";
+  academicGoal?: string;
+  learningHistorySummary?: string;
 };
 
 export type TeachingContext = {
@@ -120,6 +127,13 @@ const CognitiveAnalysisSchema = z.object({
     "encourage",
   ]),
   reasoning: z.string(),
+  // Learner Model parameters
+  attentionSpanSeconds: z.number().optional(),
+  readingLevel: z.string().optional(),
+  confidenceScore: z.number().min(0).max(1).optional(),
+  motivationProfile: z.enum(["intrinsic", "extrinsic", "achievement", "social"]).optional(),
+  academicGoal: z.string().optional(),
+  learningHistorySummary: z.string().optional(),
 });
 
 const TeachingDecisionSchema = z.object({
@@ -148,7 +162,9 @@ const TeachingDecisionSchema = z.object({
 // ─────────────────────────────────────────────────────────────────────────────
 
 export class AutonomousTeachingEngine {
-  private model: ReturnType<typeof createLovableAiGatewayProvider> | null = null;
+  private model: ReturnType<typeof createOpenAICompatible> | null = null;
+  /** Allowed OpenAI models only: gpt-4o-mini, gpt-5-nano, gpt-4.1-nano; DeepSeek always uses deepseek-v4-flash. */
+  private modelId = "gpt-4o-mini";
   private initialized = false;
 
   constructor() {
@@ -156,9 +172,23 @@ export class AutonomousTeachingEngine {
   }
 
   private initializeModel() {
-    const apiKey = process.env.LOVABLE_API_KEY;
-    if (apiKey) {
-      this.model = createLovableAiGatewayProvider(apiKey);
+    const openaiKey = process.env.OPENAI_API_KEY;
+    const deepseekKey = process.env.DEEPSEEK_API_KEY;
+
+    if (openaiKey) {
+      this.model = createOpenAICompatible({
+        name: "openai",
+        baseURL: "https://api.openai.com/v1",
+        apiKey: openaiKey,
+      });
+      this.modelId = "gpt-4o-mini";
+    } else if (deepseekKey) {
+      this.model = createOpenAICompatible({
+        name: "deepseek",
+        baseURL: "https://api.deepseek.com/v1",
+        apiKey: deepseekKey,
+      });
+      this.modelId = "deepseek-v4-flash";
     }
     this.initialized = true;
   }
@@ -183,7 +213,7 @@ export class AutonomousTeachingEngine {
 
     try {
       const { object } = await generateObject({
-        model: this.model("google/gemini-3-flash-preview"),
+        model: this.model(this.modelId),
         schema: CognitiveAnalysisSchema,
         system: `You are an expert educational psychologist analyzing a student's cognitive and emotional state during an AI-taught lesson.
 
@@ -223,6 +253,13 @@ Analyze and update this student's cognitive state.`,
         streakCount: currentCognitive.streakCount,
         idleSeconds: currentCognitive.idleSeconds,
         cognitiveLoad: object.cognitiveLoad,
+        // Map Learner Model fields
+        attentionSpanSeconds: object.attentionSpanSeconds,
+        readingLevel: object.readingLevel,
+        confidenceScore: object.confidenceScore,
+        motivationProfile: object.motivationProfile,
+        academicGoal: object.academicGoal,
+        learningHistorySummary: object.learningHistorySummary,
       };
     } catch (error) {
       return this.fallbackCognitiveAnalysis(currentCognitive, recentInteractions);
@@ -245,9 +282,9 @@ Analyze and update this student's cognitive state.`,
 
     try {
       const { object } = await generateObject({
-        model: this.model("google/gemini-3-flash-preview"),
+        model: this.model(this.modelId),
         schema: TeachingDecisionSchema,
-        system: `You are an expert AI teacher delivering a lesson autonomously. Your job is to decide what to do next.
+        system: `You are an expert AI teacher executing a pedagogically structured lesson under the Klassruum Classroom Intelligence Engine. Your job is to decide what to do next by using the AI Teacher Mind reasoning pipeline.
 
 LESSON CONTEXT:
 - Title: ${context.lessonTitle}
@@ -267,15 +304,20 @@ STUDENT COGNITIVE STATE:
 - Weak Concepts: ${cognitive.weakConcepts.join(", ") || "none detected"}
 - Mastery: ${cognitive.streakCount} correct in a row
 
+AI TEACHER MIND REASONING PROCESS:
+Before deciding, reason step-by-step through these three stages:
+1. BEFORE TEACHING (Planning): What is the pedagogical intent of the current step? How complex is it? What mistakes usually happen here?
+2. DURING TEACHING (Instruction): Is the student paying attention? Did they answer correctly? Should I explain, demonstrate on the whiteboard, repeat, or pause?
+3. AFTER TEACHING (Assessment): Did the objectives get achieved? What misconceptions remain?
+
 TEACHING RULES:
-1. If emotion is "confused" or "frustrated", slow down and explain differently
-2. If understanding > 80% and streak > 3, accelerate or quiz
-3. If cognitive load > 70%, pause or simplify
-4. If weak concepts exist, remediate before moving on
-5. Always be encouraging but not patronizing
-6. Use the student's preferred learning style
-7. Keep spoken text conversational (not like reading a book)
-8. Board content should be SHORT: equations, key terms, examples - not paragraphs
+1. If emotion is "confused" or "frustrated", slow down the Human Teaching Voice, simplify explanations, and use alternate visual plans or analogies.
+2. If understanding > 80% and streak > 3, accelerate, pose advanced practice, or quiz.
+3. If cognitive load > 70%, pause, summarize, or reduce whiteboard clutter.
+4. If weak concepts exist, remediate on the Intelligent Teaching Canvas before moving on.
+5. Always sound like an experienced, warm, and calm human educator—never robotic.
+6. Keep whiteboard content SHORT: calculations, key terms, examples.
+7. Speech (spokenText) must be highly conversational, natural, and encouraging.
 
 ESCALATION: If student seems completely lost after 3+ remediation attempts, set shouldEscalate=true.
 
@@ -324,7 +366,7 @@ What should the AI teacher do next?`,
     }
 
     const { text } = await generateText({
-      model: this.model("google/gemini-3-flash-preview"),
+      model: this.model(this.modelId),
       system: `You are an expert teacher providing an alternative explanation for a confused student.
 The student learns best through ${cognitive.preferredStyle} methods.
 Keep the explanation under 150 words and conversational.`,
@@ -358,7 +400,7 @@ Explain it in a completely different way that might click better.`,
     });
 
     const { object } = await generateObject({
-      model: this.model("google/gemini-3-flash-preview"),
+      model: this.model(this.modelId),
       schema: PracticeSchema,
       system: `Generate a ${difficulty} practice problem for a student learning ${context.topic}.
 Subject: ${context.subject}
@@ -401,7 +443,7 @@ The problem should:
     });
 
     const { object } = await generateObject({
-      model: this.model("google/gemini-3-flash-preview"),
+      model: this.model(this.modelId),
       schema: EvaluationSchema,
       system: `Evaluate a student's answer in the context of learning.
 
@@ -441,7 +483,7 @@ Keep feedback constructive and encouraging.`,
     }
 
     const { text } = await generateText({
-      model: this.model("google/gemini-3-flash-preview"),
+      model: this.model(this.modelId),
       system: `Generate a summary of what was learned in this lesson.
 Student's mastery level: ${Math.round(cognitive.understandingScore * 100)}%
 Areas of strength: ${cognitive.masteredConcepts.join(", ") || "general concepts"}

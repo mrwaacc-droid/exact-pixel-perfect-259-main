@@ -60,6 +60,7 @@ import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-pas
 import { Route as AuthCompleteProfileRouteImport } from './routes/auth.complete-profile'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as ApiPaystackWebhookRouteImport } from './routes/api.paystack-webhook'
+import { Route as ApiElevenlabsWebhookRouteImport } from './routes/api.elevenlabs-webhook'
 import { Route as ApiBlogRouteImport } from './routes/api.blog'
 import { Route as AuthenticatedDevRouteRouteImport } from './routes/_authenticated/dev/route'
 import { Route as CoursesSlugCheckoutRouteImport } from './routes/courses.$slug.checkout'
@@ -71,6 +72,7 @@ import { Route as AuthenticatedTeacherStudentsRouteImport } from './routes/_auth
 import { Route as AuthenticatedTeacherSettingsRouteImport } from './routes/_authenticated/teacher.settings'
 import { Route as AuthenticatedTeacherSessionsRouteImport } from './routes/_authenticated/teacher.sessions'
 import { Route as AuthenticatedTeacherResourcesRouteImport } from './routes/_authenticated/teacher.resources'
+import { Route as AuthenticatedTeacherRentalsRouteImport } from './routes/_authenticated/teacher.rentals'
 import { Route as AuthenticatedTeacherOnboardingRouteImport } from './routes/_authenticated/teacher.onboarding'
 import { Route as AuthenticatedTeacherNotificationsRouteImport } from './routes/_authenticated/teacher.notifications'
 import { Route as AuthenticatedTeacherMessagesRouteImport } from './routes/_authenticated/teacher.messages'
@@ -470,6 +472,11 @@ const ApiPaystackWebhookRoute = ApiPaystackWebhookRouteImport.update({
   path: '/api/paystack-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiElevenlabsWebhookRoute = ApiElevenlabsWebhookRouteImport.update({
+  id: '/api/elevenlabs-webhook',
+  path: '/api/elevenlabs-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiBlogRoute = ApiBlogRouteImport.update({
   id: '/api/blog',
   path: '/api/blog',
@@ -530,6 +537,12 @@ const AuthenticatedTeacherResourcesRoute =
   AuthenticatedTeacherResourcesRouteImport.update({
     id: '/teacher/resources',
     path: '/teacher/resources',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTeacherRentalsRoute =
+  AuthenticatedTeacherRentalsRouteImport.update({
+    id: '/teacher/rentals',
+    path: '/teacher/rentals',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedTeacherOnboardingRoute =
@@ -1372,6 +1385,7 @@ export interface FileRoutesByFullPath {
   '/webinars': typeof WebinarsRoute
   '/dev': typeof AuthenticatedDevRouteRouteWithChildren
   '/api/blog': typeof ApiBlogRoute
+  '/api/elevenlabs-webhook': typeof ApiElevenlabsWebhookRoute
   '/api/paystack-webhook': typeof ApiPaystackWebhookRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/complete-profile': typeof AuthCompleteProfileRoute
@@ -1478,6 +1492,7 @@ export interface FileRoutesByFullPath {
   '/teacher/messages': typeof AuthenticatedTeacherMessagesRoute
   '/teacher/notifications': typeof AuthenticatedTeacherNotificationsRoute
   '/teacher/onboarding': typeof AuthenticatedTeacherOnboardingRoute
+  '/teacher/rentals': typeof AuthenticatedTeacherRentalsRoute
   '/teacher/resources': typeof AuthenticatedTeacherResourcesRoute
   '/teacher/sessions': typeof AuthenticatedTeacherSessionsRouteWithChildren
   '/teacher/settings': typeof AuthenticatedTeacherSettingsRoute
@@ -1572,6 +1587,7 @@ export interface FileRoutesByTo {
   '/webinars': typeof WebinarsRoute
   '/dev': typeof AuthenticatedDevRouteRouteWithChildren
   '/api/blog': typeof ApiBlogRoute
+  '/api/elevenlabs-webhook': typeof ApiElevenlabsWebhookRoute
   '/api/paystack-webhook': typeof ApiPaystackWebhookRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/complete-profile': typeof AuthCompleteProfileRoute
@@ -1678,6 +1694,7 @@ export interface FileRoutesByTo {
   '/teacher/messages': typeof AuthenticatedTeacherMessagesRoute
   '/teacher/notifications': typeof AuthenticatedTeacherNotificationsRoute
   '/teacher/onboarding': typeof AuthenticatedTeacherOnboardingRoute
+  '/teacher/rentals': typeof AuthenticatedTeacherRentalsRoute
   '/teacher/resources': typeof AuthenticatedTeacherResourcesRoute
   '/teacher/sessions': typeof AuthenticatedTeacherSessionsRouteWithChildren
   '/teacher/settings': typeof AuthenticatedTeacherSettingsRoute
@@ -1774,6 +1791,7 @@ export interface FileRoutesById {
   '/webinars': typeof WebinarsRoute
   '/_authenticated/dev': typeof AuthenticatedDevRouteRouteWithChildren
   '/api/blog': typeof ApiBlogRoute
+  '/api/elevenlabs-webhook': typeof ApiElevenlabsWebhookRoute
   '/api/paystack-webhook': typeof ApiPaystackWebhookRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/complete-profile': typeof AuthCompleteProfileRoute
@@ -1880,6 +1898,7 @@ export interface FileRoutesById {
   '/_authenticated/teacher/messages': typeof AuthenticatedTeacherMessagesRoute
   '/_authenticated/teacher/notifications': typeof AuthenticatedTeacherNotificationsRoute
   '/_authenticated/teacher/onboarding': typeof AuthenticatedTeacherOnboardingRoute
+  '/_authenticated/teacher/rentals': typeof AuthenticatedTeacherRentalsRoute
   '/_authenticated/teacher/resources': typeof AuthenticatedTeacherResourcesRoute
   '/_authenticated/teacher/sessions': typeof AuthenticatedTeacherSessionsRouteWithChildren
   '/_authenticated/teacher/settings': typeof AuthenticatedTeacherSettingsRoute
@@ -1976,6 +1995,7 @@ export interface FileRouteTypes {
     | '/webinars'
     | '/dev'
     | '/api/blog'
+    | '/api/elevenlabs-webhook'
     | '/api/paystack-webhook'
     | '/auth/callback'
     | '/auth/complete-profile'
@@ -2082,6 +2102,7 @@ export interface FileRouteTypes {
     | '/teacher/messages'
     | '/teacher/notifications'
     | '/teacher/onboarding'
+    | '/teacher/rentals'
     | '/teacher/resources'
     | '/teacher/sessions'
     | '/teacher/settings'
@@ -2176,6 +2197,7 @@ export interface FileRouteTypes {
     | '/webinars'
     | '/dev'
     | '/api/blog'
+    | '/api/elevenlabs-webhook'
     | '/api/paystack-webhook'
     | '/auth/callback'
     | '/auth/complete-profile'
@@ -2282,6 +2304,7 @@ export interface FileRouteTypes {
     | '/teacher/messages'
     | '/teacher/notifications'
     | '/teacher/onboarding'
+    | '/teacher/rentals'
     | '/teacher/resources'
     | '/teacher/sessions'
     | '/teacher/settings'
@@ -2377,6 +2400,7 @@ export interface FileRouteTypes {
     | '/webinars'
     | '/_authenticated/dev'
     | '/api/blog'
+    | '/api/elevenlabs-webhook'
     | '/api/paystack-webhook'
     | '/auth/callback'
     | '/auth/complete-profile'
@@ -2483,6 +2507,7 @@ export interface FileRouteTypes {
     | '/_authenticated/teacher/messages'
     | '/_authenticated/teacher/notifications'
     | '/_authenticated/teacher/onboarding'
+    | '/_authenticated/teacher/rentals'
     | '/_authenticated/teacher/resources'
     | '/_authenticated/teacher/sessions'
     | '/_authenticated/teacher/settings'
@@ -2578,6 +2603,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WebinarsRoute: typeof WebinarsRoute
   ApiBlogRoute: typeof ApiBlogRoute
+  ApiElevenlabsWebhookRoute: typeof ApiElevenlabsWebhookRoute
   ApiPaystackWebhookRoute: typeof ApiPaystackWebhookRoute
   ClassroomDesignLessonIdRoute: typeof ClassroomDesignLessonIdRoute
   ClassroomEnhancedLessonIdRoute: typeof ClassroomEnhancedLessonIdRoute
@@ -2958,6 +2984,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPaystackWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/elevenlabs-webhook': {
+      id: '/api/elevenlabs-webhook'
+      path: '/api/elevenlabs-webhook'
+      fullPath: '/api/elevenlabs-webhook'
+      preLoaderRoute: typeof ApiElevenlabsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/blog': {
       id: '/api/blog'
       path: '/api/blog'
@@ -3033,6 +3066,13 @@ declare module '@tanstack/react-router' {
       path: '/teacher/resources'
       fullPath: '/teacher/resources'
       preLoaderRoute: typeof AuthenticatedTeacherResourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/teacher/rentals': {
+      id: '/_authenticated/teacher/rentals'
+      path: '/teacher/rentals'
+      fullPath: '/teacher/rentals'
+      preLoaderRoute: typeof AuthenticatedTeacherRentalsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/teacher/onboarding': {
@@ -4676,6 +4716,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedTeacherMessagesRoute: typeof AuthenticatedTeacherMessagesRoute
   AuthenticatedTeacherNotificationsRoute: typeof AuthenticatedTeacherNotificationsRoute
   AuthenticatedTeacherOnboardingRoute: typeof AuthenticatedTeacherOnboardingRoute
+  AuthenticatedTeacherRentalsRoute: typeof AuthenticatedTeacherRentalsRoute
   AuthenticatedTeacherResourcesRoute: typeof AuthenticatedTeacherResourcesRoute
   AuthenticatedTeacherSessionsRoute: typeof AuthenticatedTeacherSessionsRouteWithChildren
   AuthenticatedTeacherSettingsRoute: typeof AuthenticatedTeacherSettingsRoute
@@ -4784,6 +4825,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedTeacherNotificationsRoute:
     AuthenticatedTeacherNotificationsRoute,
   AuthenticatedTeacherOnboardingRoute: AuthenticatedTeacherOnboardingRoute,
+  AuthenticatedTeacherRentalsRoute: AuthenticatedTeacherRentalsRoute,
   AuthenticatedTeacherResourcesRoute: AuthenticatedTeacherResourcesRoute,
   AuthenticatedTeacherSessionsRoute:
     AuthenticatedTeacherSessionsRouteWithChildren,
@@ -4887,6 +4929,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WebinarsRoute: WebinarsRoute,
   ApiBlogRoute: ApiBlogRoute,
+  ApiElevenlabsWebhookRoute: ApiElevenlabsWebhookRoute,
   ApiPaystackWebhookRoute: ApiPaystackWebhookRoute,
   ClassroomDesignLessonIdRoute: ClassroomDesignLessonIdRoute,
   ClassroomEnhancedLessonIdRoute: ClassroomEnhancedLessonIdRoute,
