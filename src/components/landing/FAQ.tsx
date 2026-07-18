@@ -69,7 +69,7 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="cine-section" id="faq" style={{ background: "#fff" }}>
+    <section className="cine-section" id="faq" style={{ background: "var(--white, #FFFFFF)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
         <CineReveal className="mx-auto mb-14 max-w-2xl text-center">
           <span className="cine-section-eyebrow justify-center">Frequently asked questions</span>

@@ -1,13 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// Per-lesson progress already renders inline on the student course detail page.
 export const Route = createFileRoute("/_authenticated/student/courses/$courseId/progress")({
-  component: () => (
-    <RouteWorkspacePage
-      title="Course Progress"
-      description="Track your progress in this course"
-      role="Learner"
-      items={[]}
-    />
-  ),
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/student/courses/$courseId",
+      params: { courseId: params.courseId },
+    });
+  },
 });

@@ -60,7 +60,7 @@ export function ClassroomExperience() {
             </CineReveal>
 
             <CineReveal delay={4} className="mt-10">
-              <Link to="/demo/classroom" className="cine-final-btn" style={{ background: "#fff", color: "var(--ink)" }}>
+              <Link to="/demo/classroom" className="cine-final-btn" style={{ background: "var(--white, #FFFFFF)", color: "var(--ink)" }}>
                 Experience the classroom
                 <ArrowRight size={16} />
               </Link>

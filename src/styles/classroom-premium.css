@@ -77,7 +77,7 @@
   letter-spacing: -0.02em;
 }
 .vc-top-bar-crumb-active {
-  color: #E7DAD1;
+  color: #DDD5D0;
   font-weight: 700;
 }
 
@@ -262,12 +262,12 @@
 .vc-math-graph {
   width: 100%;
   height: auto;
-  background: #FBF8F5;
+  background: #FAF8F7;
   border-radius: 12px;
   border: 1px solid #eef2f8;
 }
 .vc-graph-grid {
-  stroke: #E7DAD1;
+  stroke: #DDD5D0;
   stroke-width: 1;
 }
 .vc-graph-axis {
@@ -285,7 +285,7 @@
   stroke-width: 1.5;
 }
 .vc-graph-label {
-  fill: #6F5C60;
+  fill: #7A7470;
   font-size: 11px;
   font-weight: 700;
 }
@@ -361,7 +361,7 @@
   position: relative;
   padding: 8px 10px 8px 24px;
   border-radius: 10px;
-  background: #FBF8F5;
+  background: #FAF8F7;
   border: 1px solid #eef2f8;
   font-size: 0.82rem;
   line-height: 1.35;
@@ -414,7 +414,7 @@
   padding: 9px 12px;
   font-size: 0.76rem;
   font-weight: 600;
-  color: #E7DAD1; /* brighter label (was #A89890) */
+  color: #DDD5D0; /* brighter label (was #A89890) */
   background: rgba(168, 152, 144, 0.1); /* subtle surface so it reads as a button */
   border: 1px solid rgba(168, 152, 144, 0.18);
   border-radius: 12px;
@@ -466,7 +466,7 @@
   min-height: 38px;
   background: rgba(168, 152, 144, 0.12);
   border: 1px solid rgba(168, 152, 144, 0.2);
-  color: #E7DAD1;
+  color: #DDD5D0;
 }
 .vc-teacher-btn:hover {
   background: rgba(194, 85, 101, 0.16);
@@ -544,7 +544,7 @@
 .vc-engagement-body {
   margin: 6px 0 0;
   font-size: 0.88rem;
-  color: #6F5C60;
+  color: #7A7470;
   line-height: 1.55;
 }
 .vc-engagement-list {
@@ -570,8 +570,8 @@
   color: #b45309;
 }
 .vc-engagement-feedback-neutral {
-  background: #FBF8F5;
-  color: #6F5C60;
+  background: #FAF8F7;
+  color: #7A7470;
 }
 .vc-engagement-actions {
   display: flex;
@@ -597,8 +597,8 @@
   font-weight: 600;
   cursor: pointer;
   color: var(--ink);
-  background: #FBF8F5;
-  border: 1px solid #E7DAD1;
+  background: #FAF8F7;
+  border: 1px solid #DDD5D0;
   transition: all 0.16s ease;
 }
 .vc-engagement-btn:hover {
@@ -654,19 +654,19 @@
 /* ════════════════════════════════════════════════════════════════════
    LIGHT THEME — premium soft-teal / white / navy classroom.
    Reskins the classroom from the original dark theme to the Klassruum
-   design tokens (bg #FBF8F5, surface #FFFFFF, navy text). Appended last so
+   design tokens (bg #FAF8F7, surface #FFFFFF, navy text). Appended last so
    it wins the cascade. The caption bar stays dark navy for high-contrast
    captions; the teacher photo tile keeps its dark frame.
    ════════════════════════════════════════════════════════════════════ */
 .vc-root {
-  background: #FBF8F5;
+  background: #FAF8F7;
   color: var(--ink);
 }
 
 /* Top bar */
 .vc-top-bar {
   background: #ffffff;
-  border-bottom: 1px solid #E7DAD1;
+  border-bottom: 1px solid #DDD5D0;
   height: 56px;
 }
 .vc-top-bar-logo {
@@ -676,25 +676,25 @@
   color: #D8CCC6;
 }
 .vc-top-bar-breadcrumb {
-  color: #6F5C60;
+  color: #7A7470;
 }
 .vc-top-bar-crumb-active {
   color: var(--ink);
   font-weight: 700;
 }
 .vc-top-bar-progress-text {
-  color: #6F5C60;
+  color: #7A7470;
 }
 .vc-top-bar-progress-bar {
-  background: #E7DAD1;
+  background: #DDD5D0;
 }
 .vc-top-bar-progress-fill {
   background: var(--crimson);
 }
 .vc-back-btn {
-  color: #6F5C60;
-  background: #FBF8F5;
-  border: 1px solid #E7DAD1;
+  color: #7A7470;
+  background: #FAF8F7;
+  border: 1px solid #DDD5D0;
   border-radius: 10px;
 }
 .vc-back-btn:hover {
@@ -702,9 +702,9 @@
   color: var(--crimson-dark);
 }
 .vc-icon-btn {
-  color: #6F5C60;
-  background: #FBF8F5;
-  border: 1px solid #E7DAD1;
+  color: #7A7470;
+  background: #FAF8F7;
+  border: 1px solid #DDD5D0;
 }
 .vc-icon-btn:hover {
   background: #FCF4F5;
@@ -717,13 +717,13 @@
 .vc-course-type-chip {
   background: #FCF4F5;
   color: var(--crimson-dark);
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
 }
 
 /* Teacher panel → white surface */
 .vc-teacher-panel {
   background: #ffffff;
-  border-right: 1px solid #E7DAD1;
+  border-right: 1px solid #DDD5D0;
 }
 .vc-teacher-name {
   color: var(--ink);
@@ -735,7 +735,7 @@
   color: var(--ink);
 }
 .vc-teacher-step-bar {
-  background: #E7DAD1;
+  background: #DDD5D0;
 }
 .vc-teacher-step-bar-fill {
   background: var(--crimson);
@@ -743,7 +743,7 @@
 .vc-mode-indicator {
   background: #FCF4F5;
   color: var(--crimson-dark);
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
 }
 .vc-progress-tracker-label {
   color: #8A7478;
@@ -752,7 +752,7 @@
   color: var(--ink);
 }
 .vc-progress-tracker-bar {
-  background: #E7DAD1;
+  background: #DDD5D0;
 }
 .vc-progress-tracker-fill {
   background: var(--crimson);
@@ -766,7 +766,7 @@
   color: #8A7478;
 }
 .vc-lesson-plan-item {
-  color: #6F5C60;
+  color: #7A7470;
 }
 .vc-lesson-plan-item-completed {
   color: #16a34a;
@@ -791,15 +791,15 @@
 /* Bottom controls bar → white */
 .vc-controls {
   background: #ffffff;
-  border-top: 1px solid #E7DAD1;
+  border-top: 1px solid #DDD5D0;
 }
 .vc-controls-divider {
-  background: #E7DAD1;
+  background: #DDD5D0;
 }
 .vc-control-btn {
-  color: #6F5C60;
+  color: #7A7470;
   background: #ffffff;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
 }
 .vc-control-btn:hover {
   background: #FCF4F5;
@@ -836,9 +836,9 @@
 
 /* Teacher quick-action buttons (Replay / Ask under the photo) → light */
 .vc-teacher-btn {
-  color: #6F5C60;
+  color: #7A7470;
   background: #ffffff;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
 }
 .vc-teacher-btn:hover {
   background: #FCF4F5;
@@ -890,7 +890,7 @@
   flex-direction: column;
   min-height: 0;
   background: #ffffff;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(25, 19, 20, 0.06);
   overflow: hidden;
@@ -899,7 +899,7 @@
   display: flex;
   gap: 4px;
   padding: 10px 10px 0;
-  border-bottom: 1px solid #E7DAD1;
+  border-bottom: 1px solid #DDD5D0;
 }
 .vc-notes-tab {
   flex: 1;
@@ -914,7 +914,7 @@
   transition: all 0.15s ease;
 }
 .vc-notes-tab:hover {
-  background: #FBF8F5;
+  background: #FAF8F7;
   color: var(--crimson-dark);
 }
 .vc-notes-tab-active {
@@ -948,11 +948,11 @@
 .vc-notes-action {
   padding: 6px 12px;
   border-radius: 10px;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
   background: #fff;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #6F5C60;
+  color: #7A7470;
   cursor: pointer;
 }
 .vc-notes-action:hover {
@@ -1015,7 +1015,7 @@
   padding: 8px 10px;
   border-radius: 10px;
   border-left: 3px solid #D8CCC6;
-  background: #FBF8F5;
+  background: #FAF8F7;
 }
 .vc-tr-teacher {
   border-left-color: #16a34a;
@@ -1068,7 +1068,7 @@
 .vc-progress-track {
   height: 8px;
   border-radius: 999px;
-  background: #E7DAD1;
+  background: #DDD5D0;
   overflow: hidden;
   margin-top: 8px;
 }
@@ -1089,8 +1089,8 @@
    REFERENCE REDESIGN — pixel-aligned light premium classroom.
    Appended last so it wins the cascade. Restyles the top bar, teacher panel,
    whiteboard chrome, caption bar and bottom controls to match the Klassruum
-   reference screenshot. Design tokens: bg #FBF8F5 · surface #FFFFFF ·
-   border #E7DAD1 · navy #191314 · slate #6F5C60 · muted #8A7478 · primary var(--crimson).
+   reference screenshot. Design tokens: bg #FAF8F7 · surface #FFFFFF ·
+   border #DDD5D0 · navy #191314 · slate #7A7470 · muted #8A7478 · primary var(--crimson).
    ════════════════════════════════════════════════════════════════════════════ */
 
 :root {
@@ -1377,7 +1377,7 @@
   width: 100%;
   height: 200px;
   border-radius: 16px;
-  background: linear-gradient(160deg, #3D1520 0%, #2C2224 50%, #7D2233 100%);
+  background: linear-gradient(160deg, #3D1520 0%, #2C2224 50%, #7B1E2B 100%);
   border: 1px solid rgba(25, 19, 20, 0.08);
   box-shadow: 0 10px 26px rgba(49, 46, 129, 0.28);
 }
@@ -1823,7 +1823,7 @@
   flex: 1;
   margin: 0;
   border: none;
-  border-radius: 0;
+  border-radius: var(--radius-lg);
   background: #ffffff;
   box-shadow: none;
   padding: 26px 36px;
@@ -1926,7 +1926,7 @@
   background: rgba(124, 58, 237, 0.25);
 }
 .vc-caption-text {
-  color: #FBF8F5;
+  color: #FAF8F7;
   font-size: 0.95rem;
   line-height: 1.6;
   font-weight: 500;
@@ -2615,7 +2615,7 @@
   padding: 5px 14px 5px 6px;
   border-radius: 999px;
   cursor: pointer;
-  background: #E7DAD1;
+  background: #DDD5D0;
   border: none;
   transition: all 0.18s ease;
   min-width: 86px;
@@ -3053,7 +3053,7 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 3px;
   padding: 8px;
-  background: #FBF8F5;
+  background: #FAF8F7;
   border-bottom: 1px solid var(--kl-border);
 }
 
@@ -3196,8 +3196,8 @@
 .vc-question-card-inline {
   padding: 10px 11px;
   border-radius: 11px;
-  background: #FBF8F5;
-  border: 1px solid #E7DAD1;
+  background: #FAF8F7;
+  border: 1px solid #DDD5D0;
 }
 
 .vc-transcript-line {
@@ -3243,7 +3243,7 @@
   height: 9px;
   overflow: hidden;
   border-radius: 999px;
-  background: #E7DAD1;
+  background: #DDD5D0;
 }
 
 .vc-drawer-progress-track span {
@@ -3263,8 +3263,8 @@
 .vc-progress-grid div {
   padding: 12px;
   border-radius: 11px;
-  background: #FBF8F5;
-  border: 1px solid #E7DAD1;
+  background: #FAF8F7;
+  border: 1px solid #DDD5D0;
 }
 
 .vc-progress-grid strong {
@@ -5332,7 +5332,7 @@
 .vc-visual-frame {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
   background: #ffffff;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -5343,7 +5343,7 @@
   gap: 6px;
   padding: 8px 12px;
   background: #F4ECE4;
-  border-bottom: 1px solid #E7DAD1;
+  border-bottom: 1px solid #DDD5D0;
 }
 .vc-browser-dot {
   width: 8px;
@@ -5364,7 +5364,7 @@
 }
 .vc-visual-image-wrapper {
   position: relative;
-  background: #FBF8F5;
+  background: #FAF8F7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -5388,21 +5388,21 @@
   font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #7D2233;
+  color: #7B1E2B;
   margin-bottom: 4px;
 }
 .vc-visual-cue-box p {
   margin: 0;
   font-size: 0.78rem;
   line-height: 1.4;
-  color: #521326;
+  color: #4F111B;
   font-weight: 500;
 }
 .vc-visual-description {
   margin: 8px 0 0;
   font-size: 0.78rem;
   line-height: 1.45;
-  color: #6F5C60;
+  color: #7A7470;
 }
 .vc-visual-labels {
   display: flex;
@@ -5413,18 +5413,18 @@
 .vc-visual-label-chip {
   font-size: 0.68rem;
   font-weight: 600;
-  color: #6F5C60;
+  color: #7A7470;
   background: #F4ECE4;
   padding: 2px 8px;
   border-radius: 4px;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
 }
 
 /* Fallback representations */
 .vc-visual-fallback-box {
   width: 100%;
   padding: 24px 16px;
-  background: #FBF8F5;
+  background: #FAF8F7;
   border: 2px dashed #D8CCC6;
   border-radius: 8px;
   display: flex;
@@ -5439,7 +5439,7 @@
 .vc-visual-fallback-title {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #6F5C60;
+  color: #7A7470;
 }
 .vc-visual-fallback-desc {
   font-size: 0.74rem;
@@ -5472,19 +5472,19 @@
 }
 .vc-visual-table-card th {
   background: #F4ECE4;
-  color: #6F5C60;
+  color: #7A7470;
   font-weight: 700;
   text-align: left;
   padding: 6px 8px;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
 }
 .vc-visual-table-card td {
   padding: 6px 8px;
-  border: 1px solid #E7DAD1;
+  border: 1px solid #DDD5D0;
   color: #2C2224;
 }
 .vc-visual-table-card tr:nth-child(even) td {
-  background: #FBF8F5;
+  background: #FAF8F7;
 }
 
 /* =============================================================================
@@ -5593,6 +5593,62 @@
 
   .vc-root {
     --vc-board-min-h: clamp(260px, 42dvh, 460px) !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE FIX — whiteboard wrapper containers had no min-height of
+   their own (only the innermost .vc-whiteboard did, via
+   --vc-board-min-h), so .vc-whiteboard-area/.vc-board-row collapsed
+   to ~0px on phone widths. .vc-main followed suit. The whiteboard's
+   content was still rendering at full height but overflowing
+   invisibly behind the controls bar below it. Give the wrappers the
+   same min-height floor so the board is always actually visible.
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 980px) {
+  .vc-main {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .vc-whiteboard-area,
+  .vc-board-row {
+    min-height: var(--vc-board-min-h, 300px) !important;
+  }
+
+  /* Same collapse affected the teacher panel — it was capped at a
+     fixed height with overflow:auto, clipping the teacher photo,
+     name, and course outline to a tiny scrollable sliver. Let it
+     size to its actual content instead. */
+  .vc-teacher-panel {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* The top-bar brand wordmark (fixed ~141px, flex-shrink:0) left the
+   lesson title only ~120px to work with, so it wrapped to 2 lines and
+   got clipped vertically. On phones the "Back" button already covers
+   navigation — drop the redundant wordmark and let the title truncate
+   cleanly with an ellipsis instead of wrapping and clipping. */
+@media (max-width: 480px) {
+  .vc-top-bar-brand {
+    display: none !important;
+  }
+
+  .vc-top-bar-breadcrumb {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  .vc-top-bar-crumb-active {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
   }
 }
 

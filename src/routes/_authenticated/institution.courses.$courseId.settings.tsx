@@ -1,13 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// Course settings already live in the Settings tab of the course detail page.
 export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/settings")({
-  component: () => (
-    <RouteWorkspacePage
-      title="Course Settings"
-      description="Course configuration and settings"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/institution/courses/$courseId",
+      params: { courseId: params.courseId },
+    });
+  },
 });

@@ -1,13 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// Lesson creation already lives in the Lessons tab of the course detail page.
 export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/lessons/new")({
-  component: () => (
-    <RouteWorkspacePage
-      title="Create Lesson"
-      description="Create a new lesson manually"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/institution/courses/$courseId",
+      params: { courseId: params.courseId },
+    });
+  },
 });

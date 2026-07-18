@@ -8,7 +8,9 @@ export type EmailTemplateKey =
   | "admission_status_update"
   | "admission_enrollment_invite"
   | "session_reminder"
-  | "certificate_issued";
+  | "certificate_issued"
+  | "password_reset"
+  | "magic_link";
 
 type EmailJobPayload = Record<string, unknown>;
 
@@ -27,6 +29,9 @@ type RenderedEmailTemplate = {
   replyTo: string;
 };
 
+// NOTE: env is read lazily inside getContactDetails() (called per-request),
+// never at module scope — on Workers-style runtimes env binds per-request,
+// so a module-scope `process.env` read would freeze at "unset" forever.
 const BRAND = {
   companyName: "Klassruum",
   supportEmail: "support@klassruum.co.ke",
@@ -43,6 +48,20 @@ const BRAND = {
   canvas: "#f4f8fc",
   soft: "#e9f4f7",
 };
+
+function getContactDetails() {
+  const contact = getServerConfig().brand;
+  return {
+    supportPhone: contact.supportPhone,
+    address: contact.address,
+    social: {
+      twitter: contact.twitterUrl,
+      linkedin: contact.linkedinUrl,
+      instagram: contact.instagramUrl,
+      facebook: contact.facebookUrl,
+    },
+  };
+}
 
 function escapeHtml(value: unknown) {
   return String(value ?? "")
@@ -88,6 +107,37 @@ function renderShell(params: {
   footerNote?: string;
 }) {
   const logoUrl = toAbsoluteUrl(BRAND.logoUrl);
+  const contact = getContactDetails();
+
+  const socialIcons: Array<{ href: string | null; label: string }> = [
+    { href: contact.social.twitter, label: "X (Twitter)" },
+    { href: contact.social.linkedin, label: "LinkedIn" },
+    { href: contact.social.instagram, label: "Instagram" },
+    { href: contact.social.facebook, label: "Facebook" },
+  ].filter((icon): icon is { href: string; label: string } => Boolean(icon.href));
+
+  const socialHtml = socialIcons.length
+    ? `<div style="margin-top:12px;">
+        ${socialIcons
+          .map(
+            (icon) =>
+              `<a href="${escapeHtml(icon.href)}" style="display:inline-block;margin-right:14px;font-size:12px;font-weight:700;color:${BRAND.accent};text-decoration:none;">${escapeHtml(icon.label)}</a>`,
+          )
+          .join("")}
+      </div>`
+    : "";
+
+  const contactLinesHtml = [
+    contact.supportPhone
+      ? `<p style="margin:0 0 6px 0;font-size:14px;line-height:1.7;color:${BRAND.muted};"><strong style="color:${BRAND.ink};">Phone:</strong> <a href="tel:${escapeHtml(contact.supportPhone.replace(/[^+\d]/g, ""))}" style="color:${BRAND.accent};text-decoration:none;font-weight:700;">${escapeHtml(contact.supportPhone)}</a></p>`
+      : "",
+    contact.address
+      ? `<p style="margin:0 0 6px 0;font-size:14px;line-height:1.7;color:${BRAND.muted};"><strong style="color:${BRAND.ink};">Address:</strong> ${escapeHtml(contact.address)}</p>`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("");
+
   const ctaHtml =
     params.ctaLabel && params.ctaUrl
       ? `<tr>
@@ -138,13 +188,15 @@ function renderShell(params: {
               <td style="padding:0 40px 36px 40px;">
                 <div style="padding:18px 20px;border-radius:20px;background:${BRAND.soft};border:1px solid #d7ebf0;color:${BRAND.ink};">
                   <p style="margin:0 0 8px 0;font-size:13px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.secondary};">Contact Klassruum</p>
-                  <p style="margin:0;font-size:14px;line-height:1.7;color:${BRAND.muted};">
+                  <p style="margin:0 0 6px 0;font-size:14px;line-height:1.7;color:${BRAND.muted};">
                     Need help? Reply to this email or contact us at
                     <a href="mailto:${BRAND.supportEmail}" style="color:${BRAND.accent};text-decoration:none;font-weight:700;">${BRAND.supportEmail}</a>.
                     Visit
                     <a href="${BRAND.siteUrl}" style="color:${BRAND.accent};text-decoration:none;font-weight:700;">klassruum.co.ke</a>
                     for product and institution support.
                   </p>
+                  ${contactLinesHtml}
+                  ${socialHtml}
                 </div>
               </td>
             </tr>
@@ -565,6 +617,94 @@ function renderCertificateIssuedTemplate(
   } satisfies RenderedEmailTemplate;
 }
 
+function renderPasswordResetTemplate(
+  subject: string,
+  recipientName?: string | null,
+  payload?: EmailJobPayload,
+) {
+  const resetUrl =
+    typeof payload?.reset_url === "string" ? payload.reset_url : toAbsoluteUrl("/auth/reset-password");
+
+  const bodyHtml = `
+    <p style="margin:0 0 16px 0;">Hello ${getRecipientLabel(recipientName)},</p>
+    <p style="margin:0 0 18px 0;">We received a request to reset your Klassruum account password. Use the button below to choose a new one.</p>
+    <div style="margin:0 0 20px 0;padding:18px 20px;border-left:4px solid ${BRAND.secondary};border-radius:14px;background:#f8fbfd;color:${BRAND.muted};">
+      <p style="margin:0;font-size:14px;">This link expires shortly and can only be used once. If you didn't request a password reset, you can safely ignore this email — your password will not be changed.</p>
+    </div>
+  `;
+
+  const text = [
+    `Hello ${recipientName?.trim() || "there"},`,
+    "",
+    "We received a request to reset your Klassruum account password.",
+    "If you didn't request this, you can safely ignore this email.",
+    "",
+    `Reset your password: ${resetUrl}`,
+    `Support: ${BRAND.supportEmail}`,
+  ].join("\n");
+
+  return {
+    html: renderShell({
+      preheader: "Reset your Klassruum password.",
+      title: "Reset your password",
+      eyebrow: "Account security",
+      intro: "Choose a new password to regain secure access to your Klassruum account.",
+      bodyHtml,
+      ctaLabel: "Reset password",
+      ctaUrl: resetUrl,
+      footerNote: "This message was sent because a password reset was requested for this account.",
+    }),
+    text,
+    fromEmail: BRAND.supportEmail,
+    fromName: "Klassruum Support",
+    replyTo: BRAND.replyTo,
+  } satisfies RenderedEmailTemplate;
+}
+
+function renderMagicLinkTemplate(
+  subject: string,
+  recipientName?: string | null,
+  payload?: EmailJobPayload,
+) {
+  const magicUrl =
+    typeof payload?.magic_url === "string" ? payload.magic_url : toAbsoluteUrl("/auth");
+
+  const bodyHtml = `
+    <p style="margin:0 0 16px 0;">Hello ${getRecipientLabel(recipientName)},</p>
+    <p style="margin:0 0 18px 0;">Use the button below to sign in to Klassruum instantly — no password needed.</p>
+    <div style="margin:0 0 20px 0;padding:18px 20px;border-left:4px solid ${BRAND.secondary};border-radius:14px;background:#f8fbfd;color:${BRAND.muted};">
+      <p style="margin:0;font-size:14px;">This link expires shortly and can only be used once. If you didn't request it, you can safely ignore this email.</p>
+    </div>
+  `;
+
+  const text = [
+    `Hello ${recipientName?.trim() || "there"},`,
+    "",
+    "Use the link below to sign in to Klassruum instantly.",
+    "If you didn't request this, you can safely ignore this email.",
+    "",
+    `Sign in: ${magicUrl}`,
+    `Support: ${BRAND.supportEmail}`,
+  ].join("\n");
+
+  return {
+    html: renderShell({
+      preheader: "Your Klassruum sign-in link.",
+      title: "Your sign-in link",
+      eyebrow: "Secure sign-in",
+      intro: "One click and you're in — no password required.",
+      bodyHtml,
+      ctaLabel: "Sign in to Klassruum",
+      ctaUrl: magicUrl,
+      footerNote: "This message was sent because a passwordless sign-in link was requested for this account.",
+    }),
+    text,
+    fromEmail: BRAND.supportEmail,
+    fromName: "Klassruum Support",
+    replyTo: BRAND.replyTo,
+  } satisfies RenderedEmailTemplate;
+}
+
 export function renderEmailTemplate(input: RenderEmailTemplateInput): RenderedEmailTemplate {
   switch (input.templateKey) {
     case "institution_member_invite":
@@ -583,6 +723,10 @@ export function renderEmailTemplate(input: RenderEmailTemplateInput): RenderedEm
       return renderSessionReminderTemplate(input.subject, input.recipientName, input.payload);
     case "certificate_issued":
       return renderCertificateIssuedTemplate(input.subject, input.recipientName, input.payload);
+    case "password_reset":
+      return renderPasswordResetTemplate(input.subject, input.recipientName, input.payload);
+    case "magic_link":
+      return renderMagicLinkTemplate(input.subject, input.recipientName, input.payload);
     default:
       throw new Error(`Unsupported email template: ${input.templateKey satisfies never}`);
   }

@@ -14,6 +14,17 @@ function isTruthyFlag(value?: string) {
   return ["1", "true", "yes", "on"].includes(value.trim().toLowerCase());
 }
 
+/**
+ * Vercel sets VERCEL_ENV to "production" | "preview" | "development".
+ * On Vercel, preview builds still report NODE_ENV=production and Vite's
+ * import.meta.env.PROD === true, but they're NOT actual production
+ * traffic — they're short-lived URLs for review. Security hardening
+ * should only fire on the real production deploy.
+ */
+function readVercelEnv() {
+  return typeof process !== "undefined" ? process.env?.VERCEL_ENV : undefined;
+}
+
 export function isDevelopmentRuntime() {
   return Boolean(
     (typeof import.meta !== "undefined" && import.meta.env?.DEV) || readNodeEnv() === "development",
@@ -21,6 +32,13 @@ export function isDevelopmentRuntime() {
 }
 
 export function isProductionRuntime() {
+  // On Vercel, only true production deploys (VERCEL_ENV=production)
+  // should be treated as production runtime for security assertions.
+  const vercelEnv = readVercelEnv();
+  if (vercelEnv === "production") return true;
+  if (vercelEnv === "preview" || vercelEnv === "development") return false;
+
+  // Non-Vercel hosts fall back to the original heuristic.
   return Boolean(
     (typeof import.meta !== "undefined" && import.meta.env?.PROD) || readNodeEnv() === "production",
   );

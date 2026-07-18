@@ -13,7 +13,7 @@ const controls = [
 
 export function InstitutionControl() {
   return (
-    <section className="cine-section" id="institutions" style={{ background: "#fff" }}>
+    <section className="cine-section" id="institutions" style={{ background: "var(--white, #FFFFFF)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <CineReveal className="max-w-2xl">

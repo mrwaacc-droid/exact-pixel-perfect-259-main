@@ -5,7 +5,7 @@ const learnerOverview = {
   currentCourses: [
     { title: "Chemistry Form 3", progress: 78, color: "bg-crimson" },
     { title: "Mathematics Form 2", progress: 92, color: "bg-[#22c55e]" },
-    { title: "English Form 3", progress: 65, color: "bg-[#f59e0b]" },
+    { title: "English Form 3", progress: 65, color: "bg-[#D97706]" },
   ],
   stats: [
     { label: "Lessons completed", value: "24", icon: BookOpen },

@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { AlertTriangle, Home, RefreshCw, Compass } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -17,19 +18,34 @@ import { ThemeProvider } from "@/components/theme/ThemeContext";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+    <div className="flex min-h-screen items-center justify-center bg-[var(--page-background)] px-4 py-12">
+      <div className="w-full max-w-lg text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[var(--radius-xl)] bg-[var(--crimson-soft)] text-[var(--crimson)] shadow-[var(--shadow-soft)]">
+          <Compass className="h-7 w-7" strokeWidth={1.75} />
+        </div>
+        <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--crimson)]">
+          Error 404
         </p>
-        <div className="mt-6">
+        <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-[var(--ink)] sm:text-5xl">
+          We can't find that page
+        </h1>
+        <p className="mx-auto mt-4 max-w-md text-[15px] leading-7 text-[var(--muted)]">
+          The page you were looking for has moved, been renamed, or never existed. The rest of
+          Klassruum is still right here.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius)] bg-[var(--crimson)] px-5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] transition-colors hover:bg-[var(--crimson-hover)]"
           >
-            Go home
+            <Home className="h-4 w-4" />
+            Back to home
+          </Link>
+          <Link
+            to="/auth"
+            className="inline-flex h-11 items-center justify-center rounded-[var(--radius)] border border-[var(--border)] bg-white px-5 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--hover-bg)]"
+          >
+            Sign in
           </Link>
         </div>
       </div>
@@ -45,31 +61,50 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
+    <div className="flex min-h-screen items-center justify-center bg-[var(--page-background)] px-4 py-12">
+      <div className="w-full max-w-lg">
+        <div className="rounded-[var(--radius-xl)] border border-[var(--border)] bg-white p-7 text-center shadow-[var(--shadow-lg)]">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--error-light)] text-[var(--error)]">
+            <AlertTriangle className="h-6 w-6" strokeWidth={1.75} />
+          </div>
+          <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--error)]">
+            Something broke
+          </p>
+          <h1 className="mt-3 text-2xl font-extrabold tracking-tight text-[var(--ink)]">
+            This page didn't load
+          </h1>
+          <p className="mx-auto mt-3 max-w-md text-[14px] leading-6 text-[var(--muted)]">
+            We hit an unexpected error rendering this view. Your data and progress elsewhere are
+            safe. You can try again or head back to the home page.
+          </p>
+          {error?.message ? (
+            <pre className="mt-5 max-h-32 overflow-auto rounded-[var(--radius)] border border-[var(--border-soft)] bg-[var(--page-background-alt)] p-3 text-left text-[12px] leading-5 text-[var(--muted)]">
+              {error.message}
+            </pre>
+          ) : null}
+          <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+            <button
+              onClick={() => {
+                router.invalidate();
+                reset();
+              }}
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius)] bg-[var(--crimson)] px-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--crimson-hover)]"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              Try again
+            </button>
+            <a
+              href="/"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-white px-4 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--hover-bg)]"
+            >
+              <Home className="h-3.5 w-3.5" />
+              Go home
+            </a>
+          </div>
         </div>
+        <p className="mt-4 text-center text-[12px] text-[var(--muted)]">
+          If this keeps happening, please share the message above with support.
+        </p>
       </div>
     </div>
   );
@@ -97,8 +132,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "twitter:description",
         content: "The AI classroom that speaks, writes, explains, and adapts.",
       },
-      { name: "theme-color", content: "#7D2233" },
-      { name: "msapplication-TileColor", content: "#7D2233" },
+      { name: "theme-color", content: "#7B1E2B" },
+      { name: "msapplication-TileColor", content: "#7B1E2B" },
       {
         property: "og:image",
         content:
@@ -120,7 +155,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", sizes: "192x192", href: "/android-chrome-192x192.png" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "apple-touch-icon-precomposed", href: "/apple-touch-icon-precomposed.png" },
-      { rel: "mask-icon", href: "/favicon.svg", color: "#7D2233" },
+      { rel: "mask-icon", href: "/favicon.svg", color: "#7B1E2B" },
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
@@ -149,7 +184,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:text-sm focus:font-medium"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-[var(--radius)] focus:bg-[var(--crimson)] focus:px-4 focus:py-2 focus:text-white focus:text-sm focus:font-medium"
         >
           Skip to main content
         </a>

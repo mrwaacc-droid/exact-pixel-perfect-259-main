@@ -12,19 +12,19 @@ const steps = [
     icon: Sparkles,
     label: "Structure",
     description: "Generate lesson plan",
-    color: "bg-[#7D2233]",
+    color: "bg-[#7B1E2B]",
   },
   {
     icon: GraduationCap,
     label: "Teaching",
     description: "AI delivers the lesson",
-    color: "bg-[#2F7D5A]",
+    color: "bg-[#2E7D32]",
   },
   {
     icon: FileText,
     label: "Evidence",
     description: "Progress and transcripts",
-    color: "bg-[#C97922]",
+    color: "bg-[#D97706]",
   },
 ];
 
@@ -44,8 +44,8 @@ export function LessonJourney({ className = "" }: LessonJourneyProps) {
                 <Icon size={20} className="text-white" />
               </div>
               <div className="text-center">
-                <p className="text-[11px] font-bold text-[#221B1C]">{step.label}</p>
-                <p className="text-[10px] text-[#6F5C60]">{step.description}</p>
+                <p className="text-[11px] font-bold text-[#231F20]">{step.label}</p>
+                <p className="text-[10px] text-[#7A7470]">{step.description}</p>
               </div>
             </div>
             {index < steps.length - 1 && (

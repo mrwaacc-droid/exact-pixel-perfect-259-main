@@ -42,7 +42,12 @@ export type ClassroomVisualKind =
   | "map"
   | "text_reference";
 
-export type ClassroomVisualSource = "uploaded_material" | "ai_generated" | "whiteboard" | "fallback";
+export type ClassroomVisualSource =
+  | "uploaded_material"
+  | "ai_generated"
+  | "web_search"
+  | "whiteboard"
+  | "fallback";
 
 export interface ClassroomVisualAsset {
   id: string;

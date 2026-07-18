@@ -29,6 +29,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoIndexRouteImport } from './routes/demo/index'
+import { Route as CoursesIndexRouteImport } from './routes/courses.index'
 import { Route as SolutionsUniversitiesRouteImport } from './routes/solutions.universities'
 import { Route as SolutionsTutoringCentersRouteImport } from './routes/solutions.tutoring-centers'
 import { Route as SolutionsTrainingProvidersRouteImport } from './routes/solutions.training-providers'
@@ -308,6 +309,11 @@ const IndexRoute = IndexRouteImport.update({
 const DemoIndexRoute = DemoIndexRouteImport.update({
   id: '/demo/',
   path: '/demo/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesIndexRoute = CoursesIndexRouteImport.update({
+  id: '/courses/',
+  path: '/courses/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsUniversitiesRoute = SolutionsUniversitiesRouteImport.update({
@@ -1417,6 +1423,7 @@ export interface FileRoutesByFullPath {
   '/solutions/training-providers': typeof SolutionsTrainingProvidersRoute
   '/solutions/tutoring-centers': typeof SolutionsTutoringCentersRoute
   '/solutions/universities': typeof SolutionsUniversitiesRoute
+  '/courses/': typeof CoursesIndexRoute
   '/demo/': typeof DemoIndexRoute
   '/admin/activity': typeof AuthenticatedAdminActivityRoute
   '/admin/ai-settings': typeof AuthenticatedAdminAiSettingsRoute
@@ -1619,6 +1626,7 @@ export interface FileRoutesByTo {
   '/solutions/training-providers': typeof SolutionsTrainingProvidersRoute
   '/solutions/tutoring-centers': typeof SolutionsTutoringCentersRoute
   '/solutions/universities': typeof SolutionsUniversitiesRoute
+  '/courses': typeof CoursesIndexRoute
   '/demo': typeof DemoIndexRoute
   '/admin/activity': typeof AuthenticatedAdminActivityRoute
   '/admin/ai-settings': typeof AuthenticatedAdminAiSettingsRoute
@@ -1823,6 +1831,7 @@ export interface FileRoutesById {
   '/solutions/training-providers': typeof SolutionsTrainingProvidersRoute
   '/solutions/tutoring-centers': typeof SolutionsTutoringCentersRoute
   '/solutions/universities': typeof SolutionsUniversitiesRoute
+  '/courses/': typeof CoursesIndexRoute
   '/demo/': typeof DemoIndexRoute
   '/_authenticated/admin/activity': typeof AuthenticatedAdminActivityRoute
   '/_authenticated/admin/ai-settings': typeof AuthenticatedAdminAiSettingsRoute
@@ -2027,6 +2036,7 @@ export interface FileRouteTypes {
     | '/solutions/training-providers'
     | '/solutions/tutoring-centers'
     | '/solutions/universities'
+    | '/courses/'
     | '/demo/'
     | '/admin/activity'
     | '/admin/ai-settings'
@@ -2229,6 +2239,7 @@ export interface FileRouteTypes {
     | '/solutions/training-providers'
     | '/solutions/tutoring-centers'
     | '/solutions/universities'
+    | '/courses'
     | '/demo'
     | '/admin/activity'
     | '/admin/ai-settings'
@@ -2432,6 +2443,7 @@ export interface FileRouteTypes {
     | '/solutions/training-providers'
     | '/solutions/tutoring-centers'
     | '/solutions/universities'
+    | '/courses/'
     | '/demo/'
     | '/_authenticated/admin/activity'
     | '/_authenticated/admin/ai-settings'
@@ -2621,6 +2633,7 @@ export interface RootRouteChildren {
   SolutionsTrainingProvidersRoute: typeof SolutionsTrainingProvidersRoute
   SolutionsTutoringCentersRoute: typeof SolutionsTutoringCentersRoute
   SolutionsUniversitiesRoute: typeof SolutionsUniversitiesRoute
+  CoursesIndexRoute: typeof CoursesIndexRoute
   DemoIndexRoute: typeof DemoIndexRoute
   ApiCronSessionLifecycleRoute: typeof ApiCronSessionLifecycleRoute
 }
@@ -2765,6 +2778,13 @@ declare module '@tanstack/react-router' {
       path: '/demo'
       fullPath: '/demo/'
       preLoaderRoute: typeof DemoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/': {
+      id: '/courses/'
+      path: '/courses'
+      fullPath: '/courses/'
+      preLoaderRoute: typeof CoursesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions/universities': {
@@ -4947,6 +4967,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsTrainingProvidersRoute: SolutionsTrainingProvidersRoute,
   SolutionsTutoringCentersRoute: SolutionsTutoringCentersRoute,
   SolutionsUniversitiesRoute: SolutionsUniversitiesRoute,
+  CoursesIndexRoute: CoursesIndexRoute,
   DemoIndexRoute: DemoIndexRoute,
   ApiCronSessionLifecycleRoute: ApiCronSessionLifecycleRoute,
 }

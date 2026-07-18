@@ -372,7 +372,7 @@ export default function TeacherDashboard() {
                   data.lessonReview.map((lesson: TeacherDashboardLesson) => (
                     <Link
                       key={lesson.id}
-                      to="/teacher/lessons/$lessonId"
+                      to="/teacher/lessons/$lessonId/edit"
                       params={{ lessonId: lesson.id }}
                       className="kr-review-row"
                     >

@@ -8,6 +8,7 @@ import { CTAButton } from "@/components/landing/primitives";
 import { createSeoHead } from "@/lib/seo";
 import { getCourseForPurchase } from "@/lib/course-billing.functions";
 import { formatCoursePrice, isFreeCourse } from "@/lib/course-pricing";
+import { useClientSession } from "@/hooks/useClientSession";
 
 export const Route = createFileRoute("/courses/$slug")({
   head: ({ params }) =>
@@ -24,6 +25,7 @@ function CourseDetailPage() {
   const fn = useServerFn(getCourseForPurchase);
   const q = useQuery({ queryKey: ["course-for-purchase", slug], queryFn: () => fn({ data: { slug } }) });
   const course = q.data?.course ?? null;
+  const { isSignedIn } = useClientSession();
 
   return (
     <div className="min-h-screen bg-white text-heading">
@@ -37,10 +39,10 @@ function CourseDetailPage() {
               Pricing
             </Link>
             <Link
-              to="/auth"
+              to={isSignedIn ? "/student/courses" : "/auth"}
               className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-[#221B1C] bg-[#221B1C] px-5 py-2 text-sm font-bold !text-white hover:bg-[#1A1415]"
             >
-              Sign in
+              {isSignedIn ? "Go to dashboard" : "Sign in"}
             </Link>
           </div>
         </div>
@@ -55,7 +57,7 @@ function CourseDetailPage() {
             <p className="mt-2 text-sm text-body">
               This course may have been removed or is no longer available.
             </p>
-            <CTAButton to="/pricing" variant="secondary" className="mt-6">
+            <CTAButton to="/courses" variant="secondary" className="mt-6">
               Browse courses
             </CTAButton>
           </div>

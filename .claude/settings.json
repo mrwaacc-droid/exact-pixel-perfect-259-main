@@ -8,7 +8,9 @@
       "Bash(sed -i 's/color: \"#2563eb\"/color: \"#B22234\"/g' src/routes/_authenticated/student.resources.tsx)",
       "Bash(sed -i 's/dot: \"#2563eb\", bg: \"#dbeafe\", fg: \"#1d4ed8\"/dot: \"#B22234\", bg: \"#FCE8EB\", fg: \"#8B0000\"/g' src/routes/_authenticated/student.calendar.tsx)",
       "Bash(cd \"e:/Codes/exact-pixel-perfect-259-main\" && grep -n -A12 \"interface LessonGenerationModalProps\\\\|type LessonGenerationModalProps\" src/components/institution/LessonGenerationModal.tsx | head -16 && echo \"── jobs table ──\" && grep -rln \"lesson_generation_jobs\" supabase/migrations src/lib | head -5 && echo \"── course page lessons tab ──\" && grep -n \"Tabs\\\\|TabsTrigger\" \"src/routes/_authenticated/institution.courses.\\\\$courseId.tsx\" | head -10)",
-      "Read(//e/Codes/exact-pixel-perfect-259-main/src/routes/_authenticated/**)"
+      "Read(//e/Codes/exact-pixel-perfect-259-main/src/routes/_authenticated/**)",
+      "Bash(cd \"e:\\\\Codes\\\\exact-pixel-perfect-259-main\" && grep -n \"to=\\\\\"/student/courses/\\\\$courseId\\\\\"\\\\|createFileRoute\\(\\\\\"/_authenticated/student/courses\" src/routes/_authenticated/student.courses.\\\\$courseId.tsx | head -5)",
+      "Bash(git status *)"
     ]
   }
 }

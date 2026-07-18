@@ -1,13 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// Teacher-to-course assignment already lives on the institution Teachers page.
 export const Route = createFileRoute("/_authenticated/institution/courses/$courseId/teachers")({
-  component: () => (
-    <RouteWorkspacePage
-      title="Course Teachers"
-      description="Manage teachers assigned to this course"
-      role="Institution Admin"
-      items={[]}
-    />
-  ),
+  beforeLoad: () => {
+    throw redirect({ to: "/institution/teachers" });
+  },
 });

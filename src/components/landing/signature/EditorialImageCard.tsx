@@ -19,10 +19,10 @@ const shapeMap = {
 
 export function EditorialImageCard({ image, imageAlt, caption, shape = "organic", children, className = "" }: EditorialImageCardProps) {
   return (
-    <div className={cn("relative overflow-hidden bg-[#F4ECE4] border border-[#E7DAD1]", shapeMap[shape], className)}>
+    <div className={cn("relative overflow-hidden bg-[#F5F2F0] border border-[#DDD5D0]", shapeMap[shape], className)}>
       <img src={image} alt={imageAlt} loading="lazy" className="w-full h-full object-cover" />
       {caption && (
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#221B1C]/80 to-transparent p-4">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#231F20]/80 to-transparent p-4">
           <p className="text-[13px] text-white/90 font-medium">{caption}</p>
         </div>
       )}

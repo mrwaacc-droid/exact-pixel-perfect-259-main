@@ -69,7 +69,7 @@ const solutions = [
 
 export function Solutions() {
   return (
-    <section className="cine-section" id="solutions" style={{ background: "#FBF8F5" }}>
+    <section className="cine-section" id="solutions" style={{ background: 'var(--page-background, #FAF8F7)' }}>
       <div className="mx-auto max-w-[1240px] px-6">
         <CineReveal className="mx-auto mb-14 max-w-2xl text-center">
           <span className="cine-section-eyebrow justify-center">Use cases</span>

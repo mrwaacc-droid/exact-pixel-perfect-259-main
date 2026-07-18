@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { AIVideoClassroom } from "@/components/classroom/AIVideoClassroom";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { loadClassroomLesson } from "@/lib/classroom-lesson.functions";
 import { DEMO_LESSON_LIST, getDemoLessonContent } from "@/lib/demo-lessons/demo-lesson-registry";
 import { buildKingpinGrade9MathematicsClassroomContent } from "@/lib/kingpin-grade9-mathematics-classroom";
@@ -10,6 +10,14 @@ import { requireClientAuthRoute } from "@/lib/route-guards";
 
 const SITE_URL = "https://klassruum.com";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Lazy-loaded: AIVideoClassroom is a very large component tree (video, AI
+// teacher, whiteboard, captions, transcript). Splitting it out of the route
+// chunk keeps the initial classroom-page load fast for everyone, even before
+// a lesson has finished loading.
+const AIVideoClassroom = lazy(() =>
+  import("@/components/classroom/AIVideoClassroom").then((m) => ({ default: m.AIVideoClassroom })),
+);
 
 export const Route = createFileRoute("/classroom/$lessonId")({
   beforeLoad: ({ params }) => {
@@ -163,11 +171,24 @@ function Classroom() {
   }
 
   return (
-    <AIVideoClassroom
-      content={content}
-      sessionId={sessionId}
-      onExit={leaveClassroom}
-      autoPlay={true}
-    />
+    <ErrorBoundary label="This lesson hit a problem">
+      <Suspense
+        fallback={
+          <div className="flex min-h-screen items-center justify-center bg-background text-foreground transition-colors duration-200">
+            <div className="text-center">
+              <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-border border-t-primary" />
+              <p className="text-sm text-muted-foreground">Preparing your classroom…</p>
+            </div>
+          </div>
+        }
+      >
+        <AIVideoClassroom
+          content={content}
+          sessionId={sessionId}
+          onExit={leaveClassroom}
+          autoPlay={true}
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 }

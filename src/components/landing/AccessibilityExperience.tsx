@@ -75,7 +75,7 @@ function LessonDiagram({ mode }: { mode: ModeId }) {
   const strokeColor = isHighContrast ? "#facc15" : "#22c55e";
   const fillColor = isHighContrast ? "#facc15" : "#22c55e";
   const textColor = isHighContrast ? "#fef9c3" : "#1A1415";
-  const accentColor = isHighContrast ? "#fde68a" : "#f59e0b";
+  const accentColor = isHighContrast ? "#fde68a" : "#D97706";
   const fontSize = mode === "lowvision" ? 12 : 9;
 
   return (
@@ -422,7 +422,7 @@ export function AccessibilityExperience() {
       : "bg-page-background border-border";
 
   return (
-    <section className="cine-section" id="accessibility" style={{ background: "#fff" }}>
+    <section className="cine-section" id="accessibility" style={{ background: "var(--white, #FFFFFF)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-10">

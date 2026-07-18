@@ -49,6 +49,7 @@ export function Navigation() {
     { href: "#institutions", label: "Institutions" },
     { href: "#pricing", label: "Pricing" },
   ];
+  const courseLink = { to: "/courses", label: "Courses" };
 
   return (
     <nav
@@ -67,6 +68,9 @@ export function Navigation() {
               {link.label}
             </a>
           ))}
+          <Link to={courseLink.to} className="cine-nav-link">
+            {courseLink.label}
+          </Link>
         </div>
 
         <div className="hidden items-center gap-4 shrink-0 md:flex">
@@ -112,6 +116,14 @@ export function Navigation() {
               {link.label}
             </a>
           ))}
+          <Link
+            to={courseLink.to}
+            role="menuitem"
+            onClick={() => setIsMobileOpen(false)}
+            className="rounded-lg py-2 text-[16px] font-medium text-heading focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {courseLink.label}
+          </Link>
           <hr className="border-border" />
           <Link
             to="/auth"

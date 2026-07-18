@@ -83,6 +83,7 @@ export function LessonGenerationModal({
           level: settings.level,
           timeline_weeks: settings.timelineWeeks,
           material_text: textResult.combinedText,
+          include_images: settings.includeImages,
         },
       });
 
@@ -238,7 +239,7 @@ export function LessonGenerationModal({
                   }
                 />
                 <Label htmlFor="images" className="font-normal cursor-pointer">
-                  Include Images from Materials
+                  Include illustration photos (uploaded materials first, web search otherwise)
                 </Label>
               </div>
             </div>

@@ -10,10 +10,10 @@ interface FloatingFeatureCalloutProps {
 }
 
 const colorMap = {
-  crimson: "bg-[#7D2233] text-white",
+  crimson: "bg-[#7B1E2B] text-white",
   brown: "bg-[#A0522D] text-white",
-  green: "bg-[#2F7D5A] text-white",
-  amber: "bg-[#C97922] text-white",
+  green: "bg-[#2E7D32] text-white",
+  amber: "bg-[#D97706] text-white",
 };
 
 export function FloatingFeatureCallout({

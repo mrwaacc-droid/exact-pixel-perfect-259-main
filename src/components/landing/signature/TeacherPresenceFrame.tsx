@@ -20,8 +20,8 @@ export function TeacherPresenceFrame({
       {/* Teacher portrait container */}
       <div className="relative overflow-hidden rounded-[1.5rem] bg-crimson shadow-[0_32px_80px_rgba(34,27,28,0.25)]">
         {/* Teacher image placeholder */}
-        <div className="aspect-[4/3] bg-gradient-to-br from-[#2C2224] to-[#221B1C] flex items-center justify-center">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#7D2233] to-violet-500 flex items-center justify-center">
+        <div className="aspect-[4/3] bg-gradient-to-br from-[#2C2224] to-[#231F20] flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#7B1E2B] to-violet-500 flex items-center justify-center">
             <span className="text-3xl font-bold text-white">AI</span>
           </div>
         </div>

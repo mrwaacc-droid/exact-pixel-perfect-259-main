@@ -88,6 +88,13 @@ export const Route = createFileRoute("/pricing")({
               </a>{" "}
               or contact the team for a rollout-focused discussion.
             </p>
+            <p className="text-body mt-3 text-sm leading-8">
+              Looking to enroll in an individual course instead of an institution rollout? Browse the{" "}
+              <a href="/courses" className="text-learning-blue hover:text-academic-blue">
+                course catalog
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>

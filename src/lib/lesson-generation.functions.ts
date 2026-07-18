@@ -21,6 +21,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { createResilientModelCaller } from "./ai-gateway.server";
+import { createImageSearchSession } from "./image-search.server";
 import {
   buildFallbackVisualPlan,
   clampClassDuration,
@@ -59,6 +60,8 @@ const TeachingItemSchema = z.object({
   visualTitle: z.string().nullable().optional(),
   visualCue: z.string().nullable().optional(),
   imageAlt: z.string().nullable().optional(),
+  /** Not produced by the model — filled in server-side by the image-search enrichment pass. */
+  imageUrl: z.string().nullable().optional(),
 });
 
 const SectionSchema = z.object({
@@ -128,7 +131,7 @@ const LessonSchema = z.object({
           "map",
           "text_reference",
         ]),
-        source: z.enum(["uploaded_material", "ai_generated", "whiteboard", "fallback"]),
+        source: z.enum(["uploaded_material", "ai_generated", "web_search", "whiteboard", "fallback"]),
         title: z.string(),
         description: z.string(),
         alt: z.string(),
@@ -213,6 +216,8 @@ const InputSchema = z.object({
   source_book_reference: z.string().trim().max(255).optional(),
   /** Optional override; if omitted, the course's ready materials are concatenated. */
   material_text: z.string().max(60000).optional(),
+  /** When true (default), look up a real photo for visuals the lesson flags as needing one. */
+  include_images: z.boolean().default(true),
 });
 
 function generationSystemPrompt(args: {
@@ -331,7 +336,7 @@ function fallbackBatch(
           id: `vis_${i}_1`,
           kind: "illustration",
           source: "fallback",
-          title: "Visual Overview",
+          title: topic,
           description: `Overview visual for ${topic}`,
           alt: `Visual support for ${topic}`,
           teacherCue: "Focus on the main ideas on the board."
@@ -446,6 +451,114 @@ function fallbackBatch(
         ? `Course material was limited; generated ${requestedCount} lessons by dividing available content evenly.`
         : null,
   };
+}
+
+// ── Image enrichment (course-content images first, web search fallback) ──────
+
+type MaterialImageRow = {
+  id: string;
+  image_url: string;
+  caption: string | null;
+  extracted_context: string | null;
+};
+
+const IMAGE_MATCH_STOPWORDS = new Set([
+  "the", "and", "for", "with", "this", "that", "from", "into", "your", "have",
+  "are", "was", "were", "its", "using", "use", "how", "what", "when", "where",
+  "which", "will", "would", "could", "should", "also", "than", "then", "them",
+  "they", "these", "those", "about", "after", "before", "over", "under",
+  "between", "each", "such", "more", "most", "some", "only", "very", "just", "like",
+]);
+
+function significantWords(text: string): Set<string> {
+  return new Set(
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter((w) => w.length > 3 && !IMAGE_MATCH_STOPWORDS.has(w)),
+  );
+}
+
+/** Finds an uploaded material image whose caption/context shares enough keywords with the query to be a real match — not just the first unused image. */
+function findMatchingMaterialImage(
+  query: string,
+  images: MaterialImageRow[],
+  used: Set<string>,
+): MaterialImageRow | null {
+  const queryWords = significantWords(query);
+  if (!queryWords.size) return null;
+
+  let best: { row: MaterialImageRow; score: number } | null = null;
+  for (const row of images) {
+    if (used.has(row.id)) continue;
+    const haystackWords = significantWords(`${row.caption ?? ""} ${row.extracted_context ?? ""}`);
+    if (!haystackWords.size) continue;
+    let score = 0;
+    for (const w of queryWords) if (haystackWords.has(w)) score++;
+    if (score >= 2 && (!best || score > best.score)) best = { row, score };
+  }
+  return best?.row ?? null;
+}
+
+/**
+ * The model can flag that a teaching item or visual-plan entry needs an
+ * illustration (visualKind/visualTitle/visualCue) but has no way to fetch or
+ * produce a real image. This pass fills every flagged visual that doesn't
+ * already have an imageUrl: first by matching it against real images
+ * extracted from the institution's own uploaded materials, then — only when
+ * no relevant material image exists — via a Pexels web search. Mutates the
+ * batch in place. No-ops entirely when PEXELS_API_KEY is unset and no
+ * material images exist.
+ */
+async function enrichBatchWithImages(
+  batch: GeneratedBatch,
+  courseTitle: string,
+  subject: string | undefined,
+  materialImages: MaterialImageRow[],
+): Promise<void> {
+  const lookup = createImageSearchSession();
+  const usedMaterialImages = new Set<string>();
+
+  const resolve = async (query: string): Promise<{ url: string; alt: string; source: "uploaded_material" | "web_search" } | null> => {
+    const material = findMatchingMaterialImage(query, materialImages, usedMaterialImages);
+    if (material) {
+      usedMaterialImages.add(material.id);
+      return { url: material.image_url, alt: material.caption || query, source: "uploaded_material" };
+    }
+    const found = await lookup(query);
+    if (found) return { url: found.url, alt: found.alt, source: "web_search" };
+    return null;
+  };
+
+  for (const lesson of batch.lessons) {
+    if (lesson.visualPlan) {
+      for (const visual of lesson.visualPlan) {
+        if (visual.imageUrl) continue;
+        const query = [visual.title, subject].filter(Boolean).join(" ") || courseTitle;
+        const resolved = await resolve(query);
+        if (resolved) {
+          visual.imageUrl = resolved.url;
+          visual.alt = visual.alt || resolved.alt;
+          visual.source = resolved.source;
+        }
+      }
+    }
+
+    for (const section of lesson.sections) {
+      for (const item of section.teachingItems) {
+        if (!item.visualKind || item.imageUrl) continue;
+        const query =
+          [item.visualTitle, item.visualCue].filter(Boolean).join(" ") ||
+          [subject, item.boardText].filter(Boolean).join(" ");
+        const resolved = await resolve(query);
+        if (resolved) {
+          item.imageUrl = resolved.url;
+          item.imageAlt = item.imageAlt || resolved.alt;
+        }
+      }
+    }
+  }
 }
 
 // ── Server function ───────────────────────────────────────────────────────────
@@ -586,6 +699,20 @@ export const generateLessonsForCourse = createServerFn({ method: "POST" })
         null,
     }));
 
+    if (data.include_images) {
+      const { data: materialImages } = await context.supabase
+        .from("material_images")
+        .select("id, image_url, caption, extracted_context")
+        .eq("course_id", data.course_id)
+        .limit(100);
+      await enrichBatchWithImages(
+        batch,
+        course.title,
+        course.curriculum_subject ?? course.subject ?? undefined,
+        (materialImages ?? []) as MaterialImageRow[],
+      );
+    }
+
     // Find current lesson count for ordering
     const { count: existing } = await context.supabase
       .from("lessons")
@@ -691,6 +818,7 @@ export const generateLessonsForCourse = createServerFn({ method: "POST" })
           accessible_description: item.accessibleDescription,
           why_this_matters: item.whyThisMatters,
           common_mistake: item.commonMistake,
+          image_url: item.imageUrl ?? null,
           image_alt: item.imageAlt ?? item.visualTitle ?? null,
           estimated_seconds: Math.max(
             90,

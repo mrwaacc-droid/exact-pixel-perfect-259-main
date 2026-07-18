@@ -1,14 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PlatformAdminDashboard } from "@/components/dashboard/platform/PlatformAdminDashboard";
-import { requirePlatformAdmin } from "@/lib/route-guards";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// The platform admin dashboard lives at /admin/dashboard (the sidebar's actual link target).
 export const Route = createFileRoute("/_authenticated/admin/platform")({
-  beforeLoad: (ctx) => requirePlatformAdmin(ctx.context),
-  component: PlatformAdminDashboard,
-  head: () => ({
-    meta: [
-      { title: "Platform Admin — Klassruum" },
-      { name: "description", content: "Platform administration dashboard" },
-    ],
-  }),
+  beforeLoad: () => {
+    throw redirect({ to: "/admin/dashboard" });
+  },
 });

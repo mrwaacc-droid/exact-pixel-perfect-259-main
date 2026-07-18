@@ -196,6 +196,94 @@ export const listInstitutionTeachers = createServerFn({ method: "GET" })
     };
   });
 
+export const listInstitutionStudents = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { institution_id: string }) =>
+    z.object({ institution_id: z.string().uuid() }).parse(data),
+  )
+  .handler(async ({ data, context }: any) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await requireInstitutionStaffAccess(supabaseAdmin, data.institution_id, context.userId);
+
+    const [membersResult, invitesResult] = await Promise.all([
+      supabaseAdmin
+        .from("institution_members")
+        .select("id, user_id, role, status, created_at, updated_at")
+        .eq("institution_id", data.institution_id)
+        .eq("role", "student")
+        .order("created_at", { ascending: false }),
+      supabaseAdmin
+        .from("institution_invites")
+        .select("id, email, full_name, role, status, expires_at, created_at, accepted_at")
+        .eq("institution_id", data.institution_id)
+        .eq("role", "student")
+        .in("status", ["pending", "sent"])
+        .order("created_at", { ascending: false }),
+    ]);
+
+    if (membersResult.error) throw new Error(membersResult.error.message);
+    if (invitesResult.error) throw new Error(invitesResult.error.message);
+
+    const members = membersResult.data ?? [];
+    const studentIds = members.map((member: any) => member.user_id).filter(Boolean);
+
+    const [profilesResult, enrollmentsResult] = await Promise.all([
+      studentIds.length
+        ? supabaseAdmin
+            .from("profiles")
+            .select("id, full_name, email, avatar_url, public_id")
+            .in("id", studentIds)
+        : Promise.resolve({ data: [], error: null }),
+      studentIds.length
+        ? supabaseAdmin
+            .from("course_enrollments")
+            .select("student_id, course_id, status")
+            .in("student_id", studentIds)
+            .eq("institution_id", data.institution_id)
+        : Promise.resolve({ data: [], error: null }),
+    ]);
+
+    if (profilesResult.error) throw new Error(profilesResult.error.message);
+    if (enrollmentsResult.error) throw new Error(enrollmentsResult.error.message);
+
+    const profilesById = new Map(
+      ((profilesResult.data ?? []) as any[]).map((profile) => [profile.id, profile]),
+    );
+    const enrollmentCountByStudent = new Map<string, number>();
+    for (const enrollment of enrollmentsResult.data ?? []) {
+      if (enrollment.status !== "active" && enrollment.status !== "completed") continue;
+      enrollmentCountByStudent.set(
+        enrollment.student_id,
+        (enrollmentCountByStudent.get(enrollment.student_id) ?? 0) + 1,
+      );
+    }
+
+    const students = members.map((member: any) => {
+      const profile = profilesById.get(member.user_id) ?? null;
+      return {
+        membershipId: member.id,
+        userId: member.user_id,
+        status: member.status,
+        joinedAt: member.created_at,
+        fullName: profile?.full_name ?? null,
+        email: profile?.email ?? null,
+        avatarUrl: profile?.avatar_url ?? null,
+        publicId: profile?.public_id ?? null,
+        enrolledCourses: enrollmentCountByStudent.get(member.user_id) ?? 0,
+      };
+    });
+
+    return {
+      students,
+      pendingInvites: invitesResult.data ?? [],
+      stats: {
+        activeStudents: students.filter((s: any) => s.status === "active").length,
+        pendingInvites: (invitesResult.data ?? []).length,
+        enrolled: students.filter((s: any) => s.enrolledCourses > 0).length,
+      },
+    };
+  });
+
 export const assignTeacherToCourse = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator((data: unknown) => AssignTeacherCourseSchema.parse(data))

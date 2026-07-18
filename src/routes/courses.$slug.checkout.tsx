@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect, useSearch } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate, useSearch } from "@tanstack/react-router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
@@ -10,6 +10,12 @@ import { getCourseForPurchase, initializeCourseCheckout, verifyCoursePayment } f
 import { formatCoursePrice, isFreeCourse } from "@/lib/course-pricing";
 
 export const Route = createFileRoute("/courses/$slug/checkout")({
+  // Must not SSR: the Supabase browser client only persists sessions to
+  // localStorage, so a server-rendered beforeLoad can never see a logged-in
+  // user. This route also receives the Paystack callback redirect (a hard
+  // top-level navigation), which would otherwise always bounce a genuinely
+  // signed-in user to /auth before their purchase could be verified.
+  ssr: false,
   beforeLoad: async () => {
     if (!isSupabaseConfigured()) return {};
     const { data, error } = await supabase.auth.getUser();
@@ -21,6 +27,7 @@ export const Route = createFileRoute("/courses/$slug/checkout")({
 
 function CheckoutPage() {
   const { slug } = Route.useParams();
+  const navigate = useNavigate();
   const search = useSearch({ from: "/courses/$slug/checkout" }) as { reference?: string };
   const callbackReference = search.reference;
 
@@ -48,8 +55,9 @@ function CheckoutPage() {
     mutationFn: (courseId: string) => initFn({ data: { courseId } }),
     onSuccess: (res: any) => {
       if (res.free) {
-        window.location.href = "/student/courses";
+        navigate({ to: "/student/courses" });
       } else if (res.authorizationUrl) {
+        // External redirect to Paystack — must be a hard navigation.
         window.location.href = res.authorizationUrl;
       }
     },
@@ -75,7 +83,7 @@ function CheckoutPage() {
         ) : !course ? (
           <div className="rounded-lg border border-border bg-white p-10 text-center">
             <h1 className="text-xl font-bold">Course not found</h1>
-            <Link to="/pricing" className="mt-4 inline-block text-sm font-semibold text-[var(--crimson)]">
+            <Link to="/courses" className="mt-4 inline-block text-sm font-semibold text-[var(--crimson)]">
               Browse courses
             </Link>
           </div>

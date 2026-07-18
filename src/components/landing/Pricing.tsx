@@ -76,7 +76,7 @@ export function Pricing() {
   ];
 
   return (
-    <section className="cine-section" id="pricing" style={{ background: "#fff" }}>
+    <section className="cine-section" id="pricing" style={{ background: "var(--white, #FFFFFF)" }}>
       <div className="mx-auto max-w-[1400px] px-6">
         <div className="mx-auto mb-12 grid max-w-6xl gap-6 border-b border-border pb-8 text-left md:grid-cols-[0.75fr_1fr] md:items-end">
           <div>
@@ -100,7 +100,7 @@ export function Pricing() {
             <article
               key={plan.name}
               className={`pricing-track-card interactive-surface relative flex min-h-full flex-col overflow-hidden p-6 sm:p-7 xl:p-8 ${plan.featured
-                ? "border border-white/10 text-white shadow-[0_24px_60px_-12px_rgba(125,34,51,0.45),0_8px_24px_-6px_rgba(0,0,0,0.5)] [background:linear-gradient(155deg,#1A0A0E_0%,#0A0608_55%,#15080C_100%)] before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_top,rgba(125,34,51,0.28),transparent_60%)] before:opacity-90"
+                ? "border border-white/10 text-white shadow-[0_24px_60px_-12px_rgba(125,34,51,0.45),0_8px_24px_-6px_rgba(0,0,0,0.5)] [background:linear-gradient(155deg,#1A1415_0%,#0F0A0B_55%,#15080C_100%)] before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_top,rgba(125,34,51,0.28),transparent_60%)] before:opacity-90"
                 : "border-border bg-white"
                 }`}
             >
@@ -116,7 +116,7 @@ export function Pricing() {
                 <span
                   className={`inline-flex border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] ${plan.featured
                     ? "border-white/15 bg-white/8 text-white"
-                    : "border-border bg-[#FBF8F5] text-body"
+                    : "border-border bg-[#FAF8F7] text-body"
                     }`}
                 >
                   {plan.badge}
@@ -170,8 +170,8 @@ export function Pricing() {
               <Link
                 to={plan.cta.to}
                 className={`mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 px-4 text-sm font-bold transition-all ${plan.featured
-                  ? "border border-white/15 !text-white shadow-[0_8px_24px_-4px_rgba(125,34,51,0.6),inset_0_1px_0_rgba(255,255,255,0.12)] [background:linear-gradient(135deg,#9A3247_0%,#7D2233_50%,#521326_100%)] hover:[background:linear-gradient(135deg,#A9384F_0%,#8B2A3D_50%,#5C1829_100%)] hover:shadow-[0_10px_28px_-2px_rgba(125,34,51,0.7)] hover:-translate-y-0.5"
-                  : "border border-border bg-white !text-ink hover:border-border-strong hover:bg-[#FBF8F5]"
+                  ? "border border-white/15 !text-white shadow-[0_8px_24px_-4px_rgba(125,34,51,0.6),inset_0_1px_0_rgba(255,255,255,0.12)] [background:linear-gradient(135deg,#A63A4B_0%,#7B1E2B_50%,#4F111B_100%)] hover:[background:linear-gradient(135deg,#B85060_0%,#8B2A3D_50%,#5C1829_100%)] hover:shadow-[0_10px_28px_-2px_rgba(125,34,51,0.7)] hover:-translate-y-0.5"
+                  : "border border-border bg-white !text-ink hover:border-border-strong hover:bg-[#FAF8F7]"
                   }`}
               >
                 <span>{plan.cta.label}</span>

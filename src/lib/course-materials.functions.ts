@@ -25,6 +25,17 @@ const UploadSchema = z.object({
     .default("institution_provided"),
   rights_notes: z.string().trim().max(1000).optional(),
   curriculum_metadata: z.record(z.string(), z.unknown()).optional(),
+  /** Real images extracted from the uploaded file (e.g. PDF pages with diagrams/photos). */
+  images: z
+    .array(
+      z.object({
+        url: z.string().url(),
+        caption: z.string().max(300).optional(),
+        extracted_context: z.string().max(2000).optional(),
+      }),
+    )
+    .max(10)
+    .optional(),
 });
 
 const UpdateStatusSchema = z.object({
@@ -113,6 +124,22 @@ export const uploadCourseMaterial = createServerFn({ method: "POST" })
       .single();
 
     if (insertErr) throw new Error(`Upload failed: ${insertErr.message}`);
+
+    if (data.images?.length) {
+      const { error: imagesErr } = await context.supabase.from("material_images").insert(
+        data.images.map((img: { url: string; caption?: string; extracted_context?: string }) => ({
+          institution_id: course.institution_id,
+          course_id: data.course_id,
+          course_material_id: material.id,
+          image_url: img.url,
+          caption: img.caption || null,
+          extracted_context: img.extracted_context || null,
+        })),
+      );
+      // Don't fail the whole upload over image persistence — the material
+      // and its text are already saved, which is what generation needs most.
+      if (imagesErr) console.warn(`[course-materials] Failed to save material images: ${imagesErr.message}`);
+    }
 
     return {
       success: true,

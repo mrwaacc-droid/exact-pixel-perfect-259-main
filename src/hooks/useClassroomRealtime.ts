@@ -7,6 +7,13 @@
  *
  * Falls back to polling (query refetch) when Supabase is not configured
  * so the demo mode keeps working.
+ *
+ * The realtime channel is ref-counted via a module-level registry so that:
+ *   - multiple components subscribing to the same session share one channel
+ *   - React StrictMode double-mounts cannot race the async `removeChannel`
+ *     cleanup (the original cause of
+ *     "cannot add postgres_changes callbacks ... after subscribe()")
+ *   - postgres_changes listeners are ALWAYS attached before `.subscribe()`
  */
 
 import { useEffect, useRef, useCallback } from "react";
@@ -63,6 +70,190 @@ export interface RealtimeCallbacks {
 }
 
 // ---------------------------------------------------------------------------
+// Module-level session registry
+// ---------------------------------------------------------------------------
+
+type ChannelHandle = ReturnType<typeof supabase.channel>;
+
+type RegistryEntry = {
+  channel: ChannelHandle;
+  refCount: number;
+  pendingUnsubscribe: boolean;
+  /**
+   * Set of callback-handle ids. Each hook instance registers one. When the
+   * underlying channel fires, we look up the latest callbacks via a module
+   * map keyed by handle id.
+   */
+  handleIds: Set<number>;
+};
+
+type HandleRecord = {
+  sessionId: string;
+  callbacks: RealtimeCallbacks;
+  queryClient: ReturnType<typeof useQueryClient>;
+};
+
+const channelRegistry = new Map<string, RegistryEntry>();
+const handleRecords = new Map<number, HandleRecord>();
+let nextHandleId = 1;
+
+function fanOutToHandles(
+  entry: RegistryEntry,
+  eventName: keyof RealtimeCallbacks,
+  payload: unknown,
+) {
+  for (const id of entry.handleIds) {
+    const rec = handleRecords.get(id);
+    if (!rec) continue;
+    const cb = rec.callbacks[eventName] as ((p: any) => void) | undefined;
+    if (cb) {
+      try {
+        cb(payload as any);
+      } catch (err) {
+        console.warn(`[classroom-realtime] ${eventName} listener threw:`, err);
+      }
+    }
+  }
+}
+
+function invalidateForAll(entry: RegistryEntry, queryKey: unknown[]) {
+  for (const id of entry.handleIds) {
+    const rec = handleRecords.get(id);
+    if (rec) {
+      try {
+        rec.queryClient.invalidateQueries({ queryKey: queryKey as any });
+      } catch (err) {
+        console.warn("[classroom-realtime] invalidate threw:", err);
+      }
+    }
+  }
+}
+
+function acquireChannel(sessionId: string, queryClient: ReturnType<typeof useQueryClient>, handleId: number): RegistryEntry {
+  const existing = channelRegistry.get(sessionId);
+  if (existing) {
+    existing.refCount += 1;
+    existing.handleIds.add(handleId);
+    // Make sure this handle has a current record so fan-out can find it.
+    handleRecords.set(handleId, {
+      sessionId,
+      callbacks: handleRecords.get(handleId)?.callbacks ?? {},
+      queryClient,
+    });
+    return existing;
+  }
+
+  const handleIds = new Set<number>([handleId]);
+  const entry: RegistryEntry = {
+    channel: undefined as unknown as ChannelHandle,
+    refCount: 1,
+    pendingUnsubscribe: false,
+    handleIds,
+  };
+
+  // CRITICAL: register every `postgres_changes` listener BEFORE `.subscribe()`.
+  // Doing it after subscribe() throws "cannot add postgres_changes callbacks
+  // ... after subscribe()" from the Supabase realtime client.
+  const channel = supabase
+    .channel(`classroom:${sessionId}`)
+    // ---- chat_messages INSERT ----
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "chat_messages",
+        filter: `session_id=eq.${sessionId}`,
+      },
+      (payload: { new: Record<string, any> }) => {
+        const msg = payload.new as any;
+        fanOutToHandles(entry, "onChatMessage", msg);
+        invalidateForAll(entry, ["classroom-context", sessionId]);
+      },
+    )
+    // ---- session_participants INSERT / UPDATE ----
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "session_participants",
+        filter: `session_id=eq.${sessionId}`,
+      },
+      (payload: { new: Record<string, any> }) => {
+        const row = payload.new as any;
+        fanOutToHandles(entry, "onParticipantChange", row);
+        invalidateForAll(entry, ["classroom-context", sessionId]);
+      },
+    )
+    // ---- session_board_state UPSERT (shared whiteboard) ----
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "session_board_state",
+        filter: `session_id=eq.${sessionId}`,
+      },
+      (payload: { new: Record<string, any> }) => {
+        const row = payload.new as any;
+        if (row) fanOutToHandles(entry, "onBoardUpdate", row);
+      },
+    )
+    // ---- classroom_sessions UPDATE (status changes) ----
+    .on(
+      "postgres_changes",
+      {
+        event: "UPDATE",
+        schema: "public",
+        table: "classroom_sessions",
+        filter: `id=eq.${sessionId}`,
+      },
+      (payload: { new: Record<string, any> }) => {
+        const row = payload.new as any;
+        fanOutToHandles(entry, "onSessionStatusChange", {
+          id: row.id,
+          status: row.status,
+        });
+        invalidateForAll(entry, ["classroom-context", sessionId]);
+      },
+    )
+    .subscribe((status: string) => {
+      if (status === "SUBSCRIBED") {
+        /* ready */
+      } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+        if (!entry.pendingUnsubscribe) {
+          console.warn(`[classroom-realtime] channel ${String(status).toLowerCase()}`);
+        }
+      }
+    });
+
+  entry.channel = channel;
+  channelRegistry.set(sessionId, entry);
+  return entry;
+}
+
+function releaseChannel(sessionId: string, handleId: number) {
+  const entry = channelRegistry.get(sessionId);
+  if (!entry) return;
+  entry.refCount -= 1;
+  entry.handleIds.delete(handleId);
+  handleRecords.delete(handleId);
+  if (entry.refCount > 0) return;
+  entry.pendingUnsubscribe = true;
+  try {
+    const result = supabase.removeChannel(entry.channel);
+    if (result && typeof (result as Promise<unknown>).catch === "function") {
+      (result as Promise<unknown>).catch(() => { /* already gone */ });
+    }
+  } catch (err) {
+    console.warn("[classroom-realtime] removeChannel failed:", err);
+  } finally {
+    channelRegistry.delete(sessionId);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Hook
 // ---------------------------------------------------------------------------
 
@@ -84,89 +275,46 @@ export function useClassroomRealtime(
   callbacks: RealtimeCallbacks = {},
 ) {
   const queryClient = useQueryClient();
+
+  // Stable per-hook handle id so each useClassroomRealtime instance gets its
+  // own slot in the registry. This survives StrictMode double-mounts because
+  // refs are preserved across the double-invocation.
+  const handleIdRef = useRef<number>(-1);
+  if (handleIdRef.current === -1) {
+    handleIdRef.current = nextHandleId++;
+  }
+  const handleId = handleIdRef.current;
+
+  // Track active channel so we can broadcast cursor/highlight via Presence.
+  const channelRef = useRef<ChannelHandle | null>(null);
   const callbacksRef = useRef(callbacks);
   callbacksRef.current = callbacks;
 
-  // Track active channel so we can clean up
-  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  // Keep the registry's view of our callbacks fresh without resubscribing.
+  useEffect(() => {
+    if (handleId === -1) return;
+    const rec = handleRecords.get(handleId);
+    if (rec) rec.callbacks = callbacks;
+  });
 
   useEffect(() => {
     if (!sessionId || !isSupabaseConfigured()) return;
 
-    const channel = supabase
-      .channel(`classroom:${sessionId}`)
-      // ---- chat_messages INSERT ----
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "chat_messages",
-          filter: `session_id=eq.${sessionId}`,
-        },
-        (payload: { new: Record<string, any> }) => {
-          const msg = payload.new as any;
-          callbacksRef.current.onChatMessage?.(msg);
-          queryClient.invalidateQueries({ queryKey: ["classroom-context", sessionId] });
-        },
-      )
-      // ---- session_participants INSERT / UPDATE ----
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "session_participants",
-          filter: `session_id=eq.${sessionId}`,
-        },
-        (payload: { new: Record<string, any> }) => {
-          const row = payload.new as any;
-          callbacksRef.current.onParticipantChange?.(row);
-          queryClient.invalidateQueries({ queryKey: ["classroom-context", sessionId] });
-        },
-      )
-      // ---- session_board_state UPSERT (shared whiteboard) ----
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "session_board_state",
-          filter: `session_id=eq.${sessionId}`,
-        },
-        (payload: { new: Record<string, any> }) => {
-          const row = payload.new as any;
-          if (row) callbacksRef.current.onBoardUpdate?.(row);
-        },
-      )
-      // ---- classroom_sessions UPDATE (status changes) ----
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "classroom_sessions",
-          filter: `id=eq.${sessionId}`,
-        },
-        (payload: { new: Record<string, any> }) => {
-          const row = payload.new as any;
-          callbacksRef.current.onSessionStatusChange?.({
-            id: row.id,
-            status: row.status,
-          });
-          queryClient.invalidateQueries({ queryKey: ["classroom-context", sessionId] });
-        },
-      )
-      .subscribe();
+    // Make sure our handle record is initialised before we attach.
+    handleRecords.set(handleId, {
+      sessionId,
+      callbacks: callbacksRef.current,
+      queryClient,
+    });
 
-    channelRef.current = channel;
+    const entry = acquireChannel(sessionId, queryClient, handleId);
+    channelRef.current = entry.channel;
 
     return () => {
-      channel.unsubscribe();
-      supabase.removeChannel(channel);
       channelRef.current = null;
+      releaseChannel(sessionId, handleId);
     };
-  }, [sessionId, queryClient]);
+  }, [sessionId, queryClient, handleId]);
 
   // Broadcast cursor/highlight via Presence (non-critical, best-effort)
   const broadcastPresence = useCallback(

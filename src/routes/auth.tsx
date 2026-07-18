@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
@@ -29,15 +29,19 @@ async function signInWithGoogle(getRedirectTo: (inviteToken?: string | null) => 
     typeof window !== "undefined"
       ? new URLSearchParams(window.location.search).get("invite")
       : null;
-  const redirectTo = await getRedirectTo(inviteToken);
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo,
-    },
-  });
-  if (error) {
-    toast.error(error.message);
+  try {
+    const redirectTo = await getRedirectTo(inviteToken);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo,
+      },
+    });
+    if (error) {
+      toast.error(error.message);
+    }
+  } catch (err) {
+    toast.error((err as Error).message || "Could not start Google sign-in. Please try again.");
   }
 }
 
@@ -97,6 +101,23 @@ const DEMO_ROLES: Array<{
 ];
 
 function AuthPage() {
+  // `/auth` has child routes (login, signup, callback, forgot-password, etc.
+  // — see routeTree.gen.ts) registered with this route as their parent. Without
+  // this check, none of them ever render: TanStack Router still matches and
+  // runs their loaders/head, but the *component tree* only shows whatever the
+  // parent route renders unless the parent explicitly delegates to <Outlet/>.
+  // Every child route below has its own distinct page (e.g. AuthCallbackPage
+  // must mount to exchange the Google OAuth code for a session) so we only
+  // render this page's own sign-in/demo UI when `/auth` is matched exactly.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (pathname !== "/auth") {
+    return <Outlet />;
+  }
+
+  return <AuthPageContent />;
+}
+
+function AuthPageContent() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -284,9 +305,12 @@ function AuthPage() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
                     {mode === "signin" && (
-                      <span className="text-xs text-muted-foreground hover:text-primary cursor-pointer">
+                      <Link
+                        to="/auth/forgot-password"
+                        className="text-xs text-muted-foreground hover:text-primary"
+                      >
                         Forgot password?
-                      </span>
+                      </Link>
                     )}
                   </div>
                   <Input

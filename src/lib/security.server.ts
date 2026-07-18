@@ -90,6 +90,10 @@ export function buildContentSecurityPolicy() {
 
   if (supabaseOrigin) connectSources.add(supabaseOrigin);
   if (publicAppOrigin) connectSources.add(publicAppOrigin);
+  // Vercel Live feedback widget + analytics (deployed on every Vercel
+  // preview/production URL — must be allowed for the feedback bar to load).
+  connectSources.add("https://vercel.live");
+  connectSources.add("https://*.vercel.live");
 
   if (!isProductionRuntime()) {
     connectSources.add("http://localhost:*");
@@ -103,11 +107,12 @@ export function buildContentSecurityPolicy() {
     "base-uri 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",
-    "frame-src https://challenges.cloudflare.com",
+    "frame-src https://challenges.cloudflare.com https://vercel.live",
     "form-action 'self'",
     "manifest-src 'self'",
     // TanStack Start injects inline bootstrap data/scripts required for SSR hydration.
-    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+    // vercel.live is whitelisted so the feedback widget can load.
+    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://vercel.live https://*.vercel.live",
     "script-src-attr 'none'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data: https://fonts.gstatic.com",

@@ -277,6 +277,64 @@ export const initializeCourseCheckout = createServerFn({ method: "POST" })
       } satisfies CourseCheckoutResult;
     }
 
+    // Covered by the student's institution plan? A course belongs to the
+    // institution that authored it. If the student is a member of that same
+    // institution and it holds an active platform subscription, they've
+    // already paid for access via the institution — don't charge them again.
+    if (course.institution_id) {
+      const { data: profile } = await supabaseAdmin
+        .from("profiles")
+        .select("institution_id")
+        .eq("id", context.userId)
+        .maybeSingle();
+      let studentInstitutionId = (profile?.institution_id as string | null) ?? null;
+      if (!studentInstitutionId) {
+        const { data: membership } = await supabaseAdmin
+          .from("institution_members")
+          .select("institution_id")
+          .eq("user_id", context.userId)
+          .eq("status", "active")
+          .limit(1)
+          .maybeSingle();
+        studentInstitutionId = (membership?.institution_id as string | null) ?? null;
+      }
+
+      if (studentInstitutionId === course.institution_id) {
+        const { data: subscription } = await supabaseAdmin
+          .from("institution_subscriptions")
+          .select("status, current_period_end")
+          .eq("institution_id", course.institution_id)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        const isActive =
+          subscription?.status === "active" &&
+          (!subscription.current_period_end ||
+            new Date(subscription.current_period_end as string) > new Date());
+        if (isActive) {
+          await supabaseAdmin.from("course_enrollments").upsert(
+            {
+              institution_id: course.institution_id,
+              course_id: course.id,
+              student_id: context.userId,
+              status: "active",
+              enrolled_by: context.userId,
+              enrollment_source: "institution_plan",
+              enrolled_at: new Date().toISOString(),
+            },
+            { onConflict: "course_id,student_id" },
+          );
+          return {
+            free: true,
+            reference: null,
+            authorizationUrl: null,
+            amountUsd,
+            courseId: course.id,
+          } satisfies CourseCheckoutResult;
+        }
+      }
+    }
+
     const reference = randomReference();
     const amountMinor = Math.round(amountUsd * 100);
     const customerEmail =

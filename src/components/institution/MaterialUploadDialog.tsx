@@ -71,17 +71,52 @@ export function MaterialUploadDialog({
       let fileUrl: string | undefined;
       let linkUrl: string | undefined;
       let extractedText: string | undefined;
+      let images: { url: string; caption?: string; extracted_context?: string }[] = [];
 
       if (uploadMethod === "file" && form.file) {
         const file = form.file;
 
         // Pull the text out of the file so lesson generation can ground on it.
         // Loaded lazily: the pdf parser is heavy and browser-only.
-        try {
-          const { extractMaterialText } = await import("@/lib/pdf-extract");
-          extractedText = (await extractMaterialText(file)) ?? undefined;
-        } catch {
-          extractedText = undefined;
+        const pdfExtract = await import("@/lib/pdf-extract").catch(() => null);
+        if (pdfExtract) {
+          try {
+            extractedText = (await pdfExtract.extractMaterialText(file)) ?? undefined;
+          } catch {
+            extractedText = undefined;
+          }
+
+          // Also pull real diagrams/photos already embedded in the PDF so
+          // lessons can illustrate with the actual course content first.
+          // Isolated from the text-extraction try/catch above so an image
+          // failure never discards already-extracted text.
+          try {
+            const pageImages = await pdfExtract.extractPdfPageImages(file);
+            const uploaded = await Promise.all(
+              pageImages.map(async (pageImage) => {
+                const imagePath = `${courseId}/material-images/${crypto.randomUUID()}.png`;
+                const { error: imgErr } = await supabase.storage
+                  .from("resources")
+                  .upload(imagePath, pageImage.blob, { contentType: "image/png" });
+                if (imgErr) return null;
+                // Long-lived signed URL — the "resources" bucket is private,
+                // and material_images.image_url is read directly by the
+                // classroom UI, not re-signed at read time.
+                const { data: signed } = await supabase.storage
+                  .from("resources")
+                  .createSignedUrl(imagePath, 60 * 60 * 24 * 365 * 10);
+                if (!signed?.signedUrl) return null;
+                return {
+                  url: signed.signedUrl,
+                  caption: `Page ${pageImage.pageNumber}`,
+                  extracted_context: pageImage.captionText || undefined,
+                };
+              }),
+            );
+            images = uploaded.flatMap((img) => (img ? [img] : []));
+          } catch {
+            images = [];
+          }
         }
 
         // Store the original file; extraction failure alone shouldn't block upload.
@@ -112,6 +147,7 @@ export function MaterialUploadDialog({
           link_url: linkUrl,
           extracted_text: extractedText,
           syllabus_reference: form.syllabusRef || undefined,
+          images: images.length ? images : undefined,
         },
       });
     },

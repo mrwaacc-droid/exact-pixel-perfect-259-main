@@ -8,14 +8,14 @@ interface ProductSceneProps {
 }
 
 const bgMap = {
-  light: "bg-[#FBF8F5]",
+  light: "bg-[#FAF8F7]",
   dark: "bg-white",
-  beige: "bg-[#F4ECE4]",
+  beige: "bg-[#F5F2F0]",
 };
 
 export function ProductScene({ children, className = "", bg = "light" }: ProductSceneProps) {
   return (
-    <div className={cn("relative overflow-hidden rounded-2xl border border-[#E7DAD1] p-6 lg:p-8", bgMap[bg], className)}>
+    <div className={cn("relative overflow-hidden rounded-2xl border border-[#DDD5D0] p-6 lg:p-8", bgMap[bg], className)}>
       {children}
     </div>
   );

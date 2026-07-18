@@ -35,10 +35,27 @@ function AuthCallbackPage() {
       try {
         const currentUrl =
           typeof window !== "undefined" ? new URL(window.location.href) : null;
+        const hashParams =
+          typeof window !== "undefined"
+            ? new URLSearchParams(window.location.hash.replace(/^#/, ""))
+            : null;
+        const providerError =
+          currentUrl?.searchParams.get("error_description") ??
+          currentUrl?.searchParams.get("error") ??
+          hashParams?.get("error_description") ??
+          hashParams?.get("error");
+
+        if (providerError) {
+          throw new Error(
+            providerError === "access_denied"
+              ? "Google sign-in was cancelled. Please try again to continue."
+              : decodeURIComponent(providerError.replace(/\+/g, " ")),
+          );
+        }
+
         const hasCode = Boolean(currentUrl?.searchParams.get("code"));
         const hasHashTokens =
-          typeof window !== "undefined" &&
-          /access_token=|refresh_token=|error=/.test(window.location.hash);
+          typeof window !== "undefined" && /access_token=|refresh_token=/.test(window.location.hash);
 
         if (hasCode) {
           const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);

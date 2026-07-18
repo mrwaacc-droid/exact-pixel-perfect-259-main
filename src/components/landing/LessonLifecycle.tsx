@@ -6,7 +6,7 @@ const phases = [
     title: "Before the lesson",
     subtitle: "Preparation and approval",
     icon: Upload,
-    color: "text-[#9A3247]",
+    color: "text-[#A63A4B]",
     bgColor: "bg-[#F7E7EA]",
     borderColor: "border-[#F0D7DC]",
     steps: [
@@ -36,7 +36,7 @@ const phases = [
     title: "After the lesson",
     subtitle: "Evidence and follow-up",
     icon: FileText,
-    color: "text-[#f59e0b]",
+    color: "text-[#D97706]",
     bgColor: "bg-[#fffbeb]",
     borderColor: "border-[#fde68a]",
     steps: [

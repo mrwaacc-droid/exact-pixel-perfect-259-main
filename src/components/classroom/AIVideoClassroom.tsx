@@ -23,13 +23,7 @@ import type {
   ClassroomVisualAsset,
 } from "@/lib/classroom-content";
 import { buildDemoLessonContent } from "@/lib/classroom-content.demo";
-import {
-  speak,
-  startListening,
-  stopListening,
-  setNarrationMuted,
-  setGlobalRate,
-} from "@/lib/speech";
+import { speak, startListening, stopListening, setGlobalRate } from "@/lib/speech";
 import { answerLearnerQuestion } from "@/lib/classroom-ai.functions";
 import { recordSessionEvent } from "@/lib/events.functions";
 import { loadAccessibility, prefsForMode, saveAccessibility } from "@/lib/accessibility";
@@ -486,14 +480,12 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
 
   // -- Mode / Settings Selector State --------------------
   const [modeSelectorOpen, setModeSelectorOpen] = useState(false);
-  const [supportMenuOpen, setSupportMenuOpen] = useState(false);
   const [classroomView, setClassroomView] = useState<"simple" | "full">("simple");
 
   // -- Learner Settings (display, sound, captions) -------
   // Backed by the shared accessibility prefs, plus classroom-local extras. Built
   // big and clear so it works for grade-one learners up to tertiary students.
   const [a11y, setA11y] = useState<AccessibilityPrefs>(() => loadAccessibility());
-  const [narrationOn, setNarrationOn] = useState(true);
   const [voiceSpeed, setVoiceSpeed] = useState<"slow" | "normal" | "fast">("normal");
   const [captionSize, setCaptionSize] = useState<"sm" | "md" | "lg">("md");
 
@@ -501,10 +493,6 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
   useEffect(() => {
     saveAccessibility(a11y);
   }, [a11y]);
-  // Mute/unmute the teacher's voice globally.
-  useEffect(() => {
-    setNarrationMuted(!narrationOn);
-  }, [narrationOn]);
   // Narration speed ? global speech rate.
   useEffect(() => {
     setGlobalRate(voiceSpeed === "slow" ? 0.8 : voiceSpeed === "fast" ? 1.25 : 1);
@@ -3586,24 +3574,6 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
               </svg>
               <span>I Don't Understand</span>
             </button>
-            <button
-              className="vc-ctl vc-ctl-amber"
-              onClick={() => setSupportMenuOpen((open) => !open)}
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <circle cx="5" cy="12" r="1.5" />
-                <circle cx="12" cy="12" r="1.5" />
-                <circle cx="19" cy="12" r="1.5" />
-              </svg>
-              <span>More Support</span>
-            </button>
           </div>
         </div>
 
@@ -3640,88 +3610,51 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
               </svg>
               <span>Captions</span>
             </button>
-            <div className="vc-support-menu-wrap">
-              <button
-                className={`vc-ctl ${supportMenuOpen ? "vc-ctl-active" : ""}`}
-                onClick={() => setSupportMenuOpen((open) => !open)}
-                aria-expanded={supportMenuOpen}
-                title="More learning support"
+            <button
+              className={`vc-ctl ${raiseHand !== "idle" ? "vc-ctl-active" : ""}`}
+              onClick={handleRaiseHand}
+              title="Raise hand"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle cx="5" cy="12" r="1.5" />
-                  <circle cx="12" cy="12" r="1.5" />
-                  <circle cx="19" cy="12" r="1.5" />
-                </svg>
-                <span>More Support</span>
-              </button>
-              {supportMenuOpen && (
-                <div className="vc-support-menu" role="menu" aria-label="More learning support">
-                  <button
-                    role="menuitem"
-                    onClick={() => {
-                      if (learningMode !== "deaf") setVoiceEnabled((v) => !v);
-                      setSupportMenuOpen(false);
-                    }}
-                  >
-                    <span>
-                      {voiceEnabled && learningMode !== "deaf" ? "Turn Voice Off" : "Turn Voice On"}
-                    </span>
-                  </button>
-                  <button role="menuitem" onClick={handleRaiseHand}>
-                    <span>
-                      {raiseHand === "idle"
-                        ? "Raise Hand"
-                        : raiseHand === "raised"
-                          ? "Raised..."
-                          : "Hand Seen"}
-                    </span>
-                  </button>
-                  <button
-                    role="menuitem"
-                    onClick={() => {
-                      handleQuickAction("Give example");
-                      setSupportMenuOpen(false);
-                    }}
-                  >
-                    <span>Another Example</span>
-                  </button>
-                  <button
-                    role="menuitem"
-                    onClick={() => {
-                      setLearningDrawerTab("notes");
-                      setSupportMenuOpen(false);
-                    }}
-                  >
-                    <span>Open Notes</span>
-                  </button>
-                  <button
-                    role="menuitem"
-                    onClick={() => {
-                      setLearningDrawerTab("transcript");
-                      setSupportMenuOpen(false);
-                    }}
-                  >
-                    <span>Open Transcript</span>
-                  </button>
-                  <button
-                    role="menuitem"
-                    onClick={() => {
-                      setModeSelectorOpen(true);
-                      setSupportMenuOpen(false);
-                    }}
-                  >
-                    <span>Learning Mode</span>
-                  </button>
-                </div>
-              )}
-            </div>
+                <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0" />
+                <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2" />
+                <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8" />
+                <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-4.53a2 2 0 0 1 3.13-2.5L8 15" />
+              </svg>
+              <span>
+                {raiseHand === "idle"
+                  ? "Raise Hand"
+                  : raiseHand === "raised"
+                    ? "Raised..."
+                    : "Hand Seen"}
+              </span>
+            </button>
+            <button
+              className="vc-ctl"
+              onClick={() => setModeSelectorOpen(true)}
+              title="Settings"
+              aria-haspopup="dialog"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+              <span>Settings</span>
+            </button>
             <button
               className="vc-ctl"
               title="Playback speed"
@@ -3745,29 +3678,6 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
                 <polyline points="12 8 12 12 15 13" />
               </svg>
               <span>Speed {teacherVoiceSpeed.toFixed(2).replace(/0$/, "")}x</span>
-            </button>
-            <button
-              className={`vc-ctl ${classroomView === "simple" ? "vc-ctl-active" : ""}`}
-              onClick={() => setClassroomView((view) => (view === "simple" ? "full" : "simple"))}
-              aria-pressed={classroomView === "simple"}
-              title={
-                classroomView === "simple"
-                  ? "Show full classroom tools"
-                  : "Switch to simple classroom view"
-              }
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <rect x="3" y="4" width="18" height="16" rx="2" />
-                <path d="M8 9h8M8 13h5" />
-              </svg>
-              <span>{classroomView === "simple" ? "Full View" : "Simple View"}</span>
             </button>
           </div>
         </div>
@@ -4215,8 +4125,8 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
           onClose={() => setModeSelectorOpen(false)}
           a11y={a11y}
           setA11y={setA11y}
-          narrationOn={narrationOn}
-          setNarrationOn={setNarrationOn}
+          voiceEnabled={voiceEnabled}
+          setVoiceEnabled={setVoiceEnabled}
           voiceSpeed={voiceSpeed}
           setVoiceSpeed={setVoiceSpeed}
           captionsOn={captionsOn}
@@ -4225,6 +4135,12 @@ export function AIVideoClassroom({ autoPlay = false, content, sessionId, onExit 
           setCaptionSize={setCaptionSize}
           learningMode={learningMode}
           setLearningMode={setLearningMode}
+          classroomView={classroomView}
+          setClassroomView={setClassroomView}
+          onAnotherExample={() => {
+            handleQuickAction("Give example");
+            setModeSelectorOpen(false);
+          }}
         />
       )}
 
@@ -4299,9 +4215,9 @@ function ClassroomTopBar({
 
         <div className="vc-top-bar-breadcrumb">
           <span>{institution}</span>
-          <span className="vc-top-bar-separator">�</span>
+          <span className="vc-top-bar-separator">›</span>
           <span>{course}</span>
-          <span className="vc-top-bar-separator">�</span>
+          <span className="vc-top-bar-separator">›</span>
           <span className="vc-top-bar-crumb-active">{subject || title}</span>
         </div>
       </div>
@@ -4553,8 +4469,8 @@ function SettingsPanel({
   onClose,
   a11y,
   setA11y,
-  narrationOn,
-  setNarrationOn,
+  voiceEnabled,
+  setVoiceEnabled,
   voiceSpeed,
   setVoiceSpeed,
   captionsOn,
@@ -4563,12 +4479,15 @@ function SettingsPanel({
   setCaptionSize,
   learningMode,
   setLearningMode,
+  classroomView,
+  setClassroomView,
+  onAnotherExample,
 }: {
   onClose: () => void;
   a11y: AccessibilityPrefs;
   setA11y: React.Dispatch<React.SetStateAction<AccessibilityPrefs>>;
-  narrationOn: boolean;
-  setNarrationOn: (v: boolean) => void;
+  voiceEnabled: boolean;
+  setVoiceEnabled: (v: boolean) => void;
   voiceSpeed: "slow" | "normal" | "fast";
   setVoiceSpeed: (v: "slow" | "normal" | "fast") => void;
   captionsOn: boolean;
@@ -4577,6 +4496,9 @@ function SettingsPanel({
   setCaptionSize: (v: "sm" | "md" | "lg") => void;
   learningMode: LearningMode;
   setLearningMode: (m: LearningMode) => void;
+  classroomView: "simple" | "full";
+  setClassroomView: (v: "simple" | "full") => void;
+  onAnotherExample: () => void;
 }) {
   const textScales: { value: TextScale; label: string; sample: string }[] = [
     { value: "default", label: "Normal", sample: "A" },
@@ -4622,7 +4544,7 @@ function SettingsPanel({
         <div className="vc-settings-body">
           {/* Reading & display */}
           <section className="vc-set-group">
-            <h3 className="vc-set-group-title">?? Reading &amp; Display</h3>
+            <h3 className="vc-set-group-title">Reading &amp; Display</h3>
 
             <div className="vc-set-row">
               <span className="vc-set-label">Text size</span>
@@ -4671,11 +4593,15 @@ function SettingsPanel({
 
           {/* Sound & voice */}
           <section className="vc-set-group">
-            <h3 className="vc-set-group-title">?? Sound &amp; Voice</h3>
+            <h3 className="vc-set-group-title">Sound &amp; Voice</h3>
 
             <div className="vc-set-row">
               <span className="vc-set-label">Teacher's voice</span>
-              <Toggle on={narrationOn} onChange={setNarrationOn} />
+              <Toggle
+                on={voiceEnabled || learningMode === "deaf"}
+                disabled={learningMode === "deaf"}
+                onChange={setVoiceEnabled}
+              />
             </div>
 
             <div className="vc-set-row">
@@ -4685,7 +4611,7 @@ function SettingsPanel({
                   <button
                     key={s.value}
                     className={`vc-seg-btn ${voiceSpeed === s.value ? "is-on" : ""}`}
-                    disabled={!narrationOn}
+                    disabled={!voiceEnabled}
                     onClick={() => setVoiceSpeed(s.value)}
                   >
                     {s.label}
@@ -4697,7 +4623,7 @@ function SettingsPanel({
 
           {/* Captions */}
           <section className="vc-set-group">
-            <h3 className="vc-set-group-title">?? Captions</h3>
+            <h3 className="vc-set-group-title">Captions</h3>
 
             <div className="vc-set-row">
               <span className="vc-set-label">Show captions</span>
@@ -4726,7 +4652,7 @@ function SettingsPanel({
 
           {/* Accessibility profile */}
           <section className="vc-set-group vc-mode-selector-group">
-            <h3 className="vc-set-group-title">? Learning Mode</h3>
+            <h3 className="vc-set-group-title">Learning Mode</h3>
             <p className="vc-set-hint">
               Pick the classroom setup that fits this lesson. We'll adjust the teacher, captions,
               pacing, and controls right away.
@@ -4753,6 +4679,39 @@ function SettingsPanel({
                   </button>
                 );
               })}
+            </div>
+          </section>
+
+          {/* Support */}
+          <section className="vc-set-group">
+            <h3 className="vc-set-group-title">Support</h3>
+            <div className="vc-set-row">
+              <span className="vc-set-label">Need a different explanation?</span>
+              <button type="button" className="vc-set-action" onClick={onAnotherExample}>
+                Another Example
+              </button>
+            </div>
+          </section>
+
+          {/* Display */}
+          <section className="vc-set-group">
+            <h3 className="vc-set-group-title">Display</h3>
+            <div className="vc-set-row">
+              <span className="vc-set-label">Classroom layout</span>
+              <div className="vc-seg">
+                <button
+                  className={`vc-seg-btn ${classroomView === "simple" ? "is-on" : ""}`}
+                  onClick={() => setClassroomView("simple")}
+                >
+                  Simple
+                </button>
+                <button
+                  className={`vc-seg-btn ${classroomView === "full" ? "is-on" : ""}`}
+                  onClick={() => setClassroomView("full")}
+                >
+                  Full
+                </button>
+              </div>
             </div>
           </section>
         </div>

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { AIVideoClassroom } from "@/components/classroom/AIVideoClassroom";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import {
   DEMO_LESSON_LIST,
   getDemoLessonContent,
@@ -86,7 +87,9 @@ function DemoClassroomPage() {
       );
     }
     return (
-      <AIVideoClassroom content={content} onExit={() => setSelectedLesson(null)} autoPlay={true} />
+      <ErrorBoundary label="This demo lesson hit a problem">
+        <AIVideoClassroom content={content} onExit={() => setSelectedLesson(null)} autoPlay={true} />
+      </ErrorBoundary>
     );
   }
 

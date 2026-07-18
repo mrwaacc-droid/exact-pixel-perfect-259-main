@@ -16,7 +16,7 @@ export const HeliosCanvas: React.FC<HeliosCanvasProps> = () => {
   return (
     <div
       className={`fixed inset-0 pointer-events-none overflow-hidden z-0 transition-colors duration-300 ${
-        isDark ? "bg-[#030712]" : "bg-[#FBF8F5]"
+        isDark ? "bg-[#030712]" : "bg-[#FAF8F7]"
       }`}
       aria-hidden="true"
     >

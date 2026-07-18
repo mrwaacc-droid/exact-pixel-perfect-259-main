@@ -18,5 +18,13 @@ export function getServerConfig() {
   return {
     nodeEnv: process.env.NODE_ENV,
     appUrl: process.env.APP_URL ?? process.env.VITE_APP_URL ?? process.env.PUBLIC_APP_URL ?? null,
+    brand: {
+      supportPhone: process.env.BRAND_SUPPORT_PHONE?.trim() || null,
+      address: process.env.BRAND_ADDRESS?.trim() || null,
+      twitterUrl: process.env.BRAND_TWITTER_URL?.trim() || null,
+      linkedinUrl: process.env.BRAND_LINKEDIN_URL?.trim() || null,
+      instagramUrl: process.env.BRAND_INSTAGRAM_URL?.trim() || null,
+      facebookUrl: process.env.BRAND_FACEBOOK_URL?.trim() || null,
+    },
   };
 }

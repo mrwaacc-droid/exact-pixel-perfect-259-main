@@ -22,7 +22,7 @@ export function FinalCTA() {
               >
                 <span
                   style={{
-                    background: "#fff",
+                    background: "var(--white, #FFFFFF)",
                     height: "1.5px",
                     width: "24px",
                     display: "inline-block",

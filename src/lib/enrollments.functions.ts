@@ -2,6 +2,46 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+/** Aggregate enrollment counts per course, for an institution's "Enrollments" overview. */
+export const listInstitutionEnrollmentSummary = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { institution_id: string }) => data)
+  .handler(async ({ data, context }: any) => {
+    const { data: courses, error: cErr } = await context.supabase
+      .from("courses")
+      .select("id, title, status, price_usd")
+      .eq("institution_id", data.institution_id)
+      .order("created_at", { ascending: false });
+    if (cErr) throw new Error(cErr.message);
+    const courseIds = (courses ?? []).map((c: any) => c.id);
+    if (courseIds.length === 0) return { courses: [] };
+
+    const { data: enrollments, error: eErr } = await context.supabase
+      .from("course_enrollments")
+      .select("course_id, status")
+      .in("course_id", courseIds);
+    if (eErr) throw new Error(eErr.message);
+
+    const counts = new Map<string, { active: number; total: number }>();
+    for (const e of enrollments ?? []) {
+      const bucket = counts.get(e.course_id) ?? { active: 0, total: 0 };
+      bucket.total += 1;
+      if (e.status === "active" || e.status === "completed") bucket.active += 1;
+      counts.set(e.course_id, bucket);
+    }
+
+    return {
+      courses: (courses ?? []).map((c: any) => ({
+        id: c.id,
+        title: c.title,
+        status: c.status,
+        priceUsd: Number(c.price_usd ?? 0),
+        activeEnrollments: counts.get(c.id)?.active ?? 0,
+        totalEnrollments: counts.get(c.id)?.total ?? 0,
+      })),
+    };
+  });
+
 export const listEnrollments = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .validator((data: { course_id: string }) => data)

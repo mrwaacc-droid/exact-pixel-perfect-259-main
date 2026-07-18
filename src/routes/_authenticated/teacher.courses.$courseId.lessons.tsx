@@ -1,13 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { RouteWorkspacePage } from "@/components/route/RouteWorkspacePage";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// The lesson queue already lives inline on the course workspace page.
 export const Route = createFileRoute("/_authenticated/teacher/courses/$courseId/lessons")({
-  component: () => (
-    <RouteWorkspacePage
-      title="Course Lessons"
-      description="View and manage lessons"
-      role="Teacher"
-      items={[]}
-    />
-  ),
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      to: "/teacher/courses/$courseId",
+      params: { courseId: params.courseId },
+    });
+  },
 });
