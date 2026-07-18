@@ -21,6 +21,7 @@ export type PaystackCheckoutOptions = {
   email: string;
   amount: number;
   currency?: string;
+  publicKey?: string;
   onSuccess?: (reference: string) => void;
   onCancel?: () => void;
 };
@@ -63,8 +64,9 @@ export function openPaystackCheckout(options: PaystackCheckoutOptions): void {
     throw new Error("Paystack script is not ready.");
   }
 
+  const key = options.publicKey || import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || undefined;
   const handler = window.PaystackPop.setup({
-    key: undefined,
+    key,
     email: options.email,
     amount: options.amount,
     currency: options.currency ?? "NGN",
